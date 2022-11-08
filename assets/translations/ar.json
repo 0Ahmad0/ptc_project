@@ -1,0 +1,21 @@
+{
+  "app_name": "",
+  "login": "تسجيل الدخول",
+  "signup": "إنشاء حساب",
+  "your_name": "الاسم الثلاثي",
+  "your_age": "العمر",
+  "your_gender": "الجنس",
+  "your_data_birth": "تاريخ الميلاد",
+  "your_nationality": "الجنسية",
+  "your_address": "العنوان",
+  "your_email": "الايميل",
+  "your_phone": "رقم الهاتف",
+  "your_military_status": "الخدمة الالزامية",
+  "your_marital": "الوضع العائلي",
+  "your_qualification": "المؤهلات الدراسية",
+  "your_languages": "اللغات",
+  "your_skils": "الخبرات",
+  "your_courses": "الشهادات"
+
+
+}

@@ -44,7 +44,23 @@ class _HomeViewState extends State<HomeView> {
   double progresValue = .3;
   var db = new MySQL();
   var mail = '';
+  void _getSql()  {
+    db.getConnection().then((conn){
+      //String sql='select * from ptc.temp';
+     // String sql='CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), email varchar(255), age int)';
+    //  String sql='INSERT INTO `ptc`.`users` ( `name`, `email`, `age`) VALUES ( \'Bob\', \'bob@bob.com\', \'25\')';
+      String sql='SELECT * FROM ptc.users';
 
+      //print('co : ${conn}');
+      print(sql);
+      conn.query(sql).then((results){
+        print(results.length);
+        for (var row in results){
+          print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
+        }
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +72,12 @@ class _HomeViewState extends State<HomeView> {
           value: progresValue,
           child: FloatingActionButton(
             backgroundColor: ColorManager.primaryColor,
-            onPressed: ()async{
-await controllerPageView.nextPage(duration: Duration(seconds: 1),
-    curve: Curves.easeInOut);
-            },
+onPressed: _getSql,
+//             onPressed: ()async{
+//                _getSql();
+// await controllerPageView.nextPage(duration: Duration(seconds: 1),
+//     curve: Curves.easeInOut);
+//             },
             child: Text(
               currentIndex == 2?"+":"${currentIndex+1}",
               style: getRegularStyle(
@@ -123,12 +141,12 @@ await controllerPageView.nextPage(duration: Duration(seconds: 1),
           Positioned(
               left: AppSize.s4,
               child: IconButton(onPressed: (){
-                controllerPageView.previousPage(duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                controllerPageView.previousPage(duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
               }, icon: Icon(Icons.arrow_back_ios))),
           Positioned(
               right: AppSize.s4,
               child: IconButton(onPressed: (){
-                controllerPageView.nextPage(duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                controllerPageView.nextPage(duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
               }, icon: Icon(Icons.arrow_forward_ios))),
         ],
       ),

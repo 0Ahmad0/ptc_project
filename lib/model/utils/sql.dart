@@ -3,12 +3,12 @@ class MySQL{
   static String host = 'localhost',
                 user = 'root',
                 password = '1234',
-                db = 'company';
+                db = 'ptc';
   static int port = 3306;
   MySQL();
 
   Future<MySqlConnection> getConnection()async{
-    var setting = ConnectionSettings(
+    var setting =  ConnectionSettings(
       host: host,
       user: user,
       password: password,

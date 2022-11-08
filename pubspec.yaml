@@ -46,6 +46,7 @@ dependencies:
   msix: ^3.7.0
   font_awesome_flutter: ^10.2.1
   circle_progress_bar: ^0.1.2
+  mysql1: ^0.20.0
 
 dev_dependencies:
   flutter_test:

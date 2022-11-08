@@ -2,6 +2,7 @@ import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
+import 'package:ptc_project/model/utils/sql.dart';
 import 'package:ptc_project/translations/locale_keys.g.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/style_manager.dart';
@@ -41,6 +42,8 @@ class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
 
   double progresValue = .3;
+  var db = new MySQL();
+  var mail = '';
 
   @override
   Widget build(BuildContext context) {

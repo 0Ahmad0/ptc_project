@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ptc_project/view/resourse/color_manager.dart';
+import 'package:ptc_project/view/resourse/values_manager.dart';
+import 'package:ptc_project/view/widgets/courses_form.dart';
 import 'package:ptc_project/view/widgets/language_form.dart';
+import 'package:ptc_project/view/widgets/skils_form.dart';
 
 import '../../model/models.dart';
+import 'custom_divider.dart';
 
 class MultiFormLan extends StatefulWidget {
   const MultiFormLan({Key? key}) : super(key: key);
@@ -14,34 +19,63 @@ class _MultiFormLanState extends State<MultiFormLan> {
   List<UserLanguage> userLanguage = [
     UserLanguage()
   ];
+  List<UserSkils> userSkils = [
+    UserSkils()
+  ];
+  List<UserCourses> userCourses = [
+    UserCourses()
+  ];
   @override
   Widget build(BuildContext context) {
     return userLanguage.isEmpty?Center(child: Text("No Data Found"),)
-    :ListView.builder(
-      itemCount: userLanguage.length,
-      itemBuilder: (_,index){
-        return LanguageForm(
-          index: index +1,
-          userLanguage: userLanguage[index],
-          onDelete: ()=> index==0?null:onDelete(index),
-          onAddForm: () {
-            setState(() {
-              userLanguage.add(UserLanguage());
-            });
-          },
-
-        );
-      },
+    :ListView(
+      children: [
+        for(var lan =0 ; lan < userLanguage.length ; lan++)
+          LanguageForm(
+            index: lan +1,
+            userLanguage: userLanguage[lan],
+            onDelete: ()=> lan==0?null:onDelete(userLanguage,lan),
+            onAddForm: () {
+              setState(() {
+                userLanguage.add(UserLanguage());
+              });
+            },
+          ),
+        PTCDvider(),
+        for(var skil =0 ; skil < userSkils.length ; skil++)
+          SkilsForm(
+            index: skil +1,
+            userSkil: userSkils[skil],
+            onDelete: ()=> skil==0?null:onDelete(userSkils,skil),
+            onAddForm: (){
+              setState(() {
+                userSkils.add(UserSkils());
+              });
+            },
+          ),
+        PTCDvider(),
+        for(var course =0 ; course < userCourses.length ; course++)
+          CoursesForm(
+            index: course +1,
+            userCourses: userCourses[course],
+            onDelete: ()=> course==0?null:onDelete(userCourses,course),
+            onAddForm: (){
+              setState(() {
+                userCourses.add(UserCourses());
+              });
+            },
+          )
+      ],
     );
   }
-  void onAddForm(){
+  void onAddForm(List list){
     setState(() {
-      userLanguage.add(UserLanguage());
+      list.add(list);
     });
   }
-  void onDelete(int index){
+  void onDelete(List list,int index){
     setState(() {
-      userLanguage.removeAt(index);
+      list.removeAt(index);
     });
   }
 }

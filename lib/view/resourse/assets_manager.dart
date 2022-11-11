@@ -1,4 +1,4 @@
-const  String pathIMG = 'assets/images';
+const imagePath = 'assets/images';
 class AssetsManager{
-  static const String  logoIMG = '$pathIMG/logo.png';
+  static const logoIMG = '$imagePath/logo.png';
 }

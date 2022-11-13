@@ -47,6 +47,9 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   circle_progress_bar: ^0.1.2
   mysql1: ^0.20.0
+  firebase_core: ^2.2.0
+  flutter_ui: ^0.0.5
+  firedart: ^0.9.0+1
 
 dev_dependencies:
   flutter_test:

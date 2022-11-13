@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "211569831338",
+    "project_id": "ptc-project-84660",
+    "storage_bucket": "ptc-project-84660.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211569831338:android:1df82c1bdf4e578d79cfd3",
+        "android_client_info": {
+          "package_name": "com.example.ptc_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211569831338-2k3n1pitmo7aaahr189nvu7l95rbtaer.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq1A25wMGXJDA6qNgxUAaigKkiEZB8R2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211569831338-2k3n1pitmo7aaahr189nvu7l95rbtaer.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -127,6 +127,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.4"
+  firebase_core:
+    dependency: "direct main"
+    description:
+      name: firebase_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
+  firebase_core_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_core_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.2"
+  firebase_core_web:
+    dependency: transitive
+    description:
+      name: firebase_core_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  firedart:
+    dependency: "direct main"
+    description:
+      name: firedart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.0+1"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -149,6 +184,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_ui:
+    dependency: "direct main"
+    description:
+      name: flutter_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -182,6 +224,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
+  googleapis_auth:
+    dependency: transitive
+    description:
+      name: googleapis_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.1"
+  grpc:
+    dependency: transitive
+    description:
+      name: grpc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   hive:
     dependency: "direct main"
     description:
@@ -189,6 +245,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.5"
+  http2:
+    dependency: transitive
+    description:
+      name: http2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.2"
   image:
     dependency: transitive
     description:
@@ -336,6 +413,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   pub_semver:
     dependency: transitive
     description:
@@ -460,6 +544,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.24"
   win32:
     dependency: transitive
     description:

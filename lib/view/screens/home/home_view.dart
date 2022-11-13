@@ -1,4 +1,6 @@
 import 'package:circle_progress_bar/circle_progress_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
@@ -18,6 +20,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  CollectionReference nameRef = Firestore.instance.collection("name");
   final controllerName = TextEditingController();
 
   final controllerAge = TextEditingController();
@@ -72,7 +75,12 @@ class _HomeViewState extends State<HomeView> {
           value: progresValue,
           child: FloatingActionButton(
             backgroundColor: ColorManager.primaryColor,
-onPressed: _getSql,
+onPressed: ()async{
+  
+print('-------------------------------------------------------');
+print(nameRef);
+print('-------------------------------------------------------');
+},
 //             onPressed: ()async{
 //                _getSql();
 // await controllerPageView.nextPage(duration: Duration(seconds: 1),

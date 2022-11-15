@@ -73,10 +73,16 @@ class BuildCVItem extends StatelessWidget {
         children: [
           Icon(Icons.file_present_sharp),
           const SizedBox(height: AppSize.s10,),
-          Text("Name : "),
-          Text("Hiba Hashem ❤️",style: getBoldStyle(
-              fontSize: Sizer.getH(context) / 38,
-              color: ColorManager.primaryColor),),
+          Row(
+            children: [
+              Text("Name : "),
+              Text("Hiba Hashem ❤️",style: getBoldStyle(
+                  fontSize: Sizer.getH(context) / 38,
+                  color: ColorManager.primaryColor),),
+            ],
+          ),
+          const SizedBox(height: AppSize.s10,),
+          Text("Hiba Hashem ❤️"),
 
         ],
       ),

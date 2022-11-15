@@ -11,6 +11,7 @@ import 'package:ptc_project/view/resourse/style_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/widgets/custom_textfiled.dart';
 import 'package:ptc_project/view/widgets/multi_form_lan.dart';
+import 'package:ptc_project/view/widgets/work_form.dart';
 import '../search/search_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -142,7 +143,7 @@ print('-------------------------------------------------------');
             buildFirstPage(),
 
             buildSecondPage(),
-            buildFirstPage(),
+            BuildThirdPage(formKey: formKey3,)
               ],
             ),
           ),
@@ -316,6 +317,23 @@ print('-------------------------------------------------------');
     return Form(
       key: formKey2,
       child: MultiFormLan(),
+    );
+  }
+}
+
+class BuildThirdPage extends StatelessWidget {
+  const BuildThirdPage({super.key, required this.formKey});
+  final GlobalKey formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: ListView(
+        children: [
+          WorkForm()
+        ],
+      ),
     );
   }
 }

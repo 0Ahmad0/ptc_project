@@ -14,7 +14,6 @@ class SearchView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
-          cursorColor: ColorManager.white,
           decoration: InputDecoration(
             filled: true,
             fillColor: ColorManager.white,

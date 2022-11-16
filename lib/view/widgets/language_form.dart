@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
-typedef OnDelete();
-typedef OnAddForm();
-class LanguageForm extends StatefulWidget {
+
+
+class LanguageForm extends StatelessWidget {
   final UserLanguage? userLanguage;
-  final  state = _LanguageFormState();
-  final OnDelete? onDelete;
-  final OnAddForm? onAddForm;
+  final VoidCallback? onDelete;
+  final VoidCallback? onAddForm;
   final int? index;
   LanguageForm({this.userLanguage,this.onDelete, this.onAddForm, this.index});
-  @override
-  _LanguageFormState createState() => state;
 
-  bool isValid ()=> state.validate();
-
-}
-
-class _LanguageFormState extends State<LanguageForm> {
   final form = GlobalKey<FormState>();
+
+  bool validate(){
+    var valid = form.currentState!.validate();
+    if(valid)  form.currentState!.save();
+    return valid;
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -33,11 +31,11 @@ class _LanguageFormState extends State<LanguageForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text("Language${widget.index}")),
+                  Flexible(child: Text("Language${index}")),
                   Row(
                     children: [
-                      IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
-                      IconButton(onPressed:widget.onAddForm , icon: Icon(Icons.add)),
+                      (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                      (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],
                   ),
@@ -45,29 +43,24 @@ class _LanguageFormState extends State<LanguageForm> {
               ),
               TextFormField(
                 decoration: InputDecoration(
-                  hintText: "Language Name"
+                    hintText: "Language Name"
                 ),
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
                   decoration: InputDecoration(
-                    hintText: "Language Level",
-                    prefixIcon: Icon(Icons.language)
+                      hintText: "Language Level",
+                      prefixIcon: Icon(Icons.language)
                   ),
                   items: [1,2,3,4,5].map((e) => DropdownMenuItem(
 
-                child: Text("$e"),
-                value: e,
-              )).toList(), onChanged: (val){})
+                    child: Text("$e"),
+                    value: e,
+                  )).toList(), onChanged: (val){})
             ],
           ),
         ),
       ),
     );
-  }
-  bool validate(){
-    var valid = form.currentState!.validate();
-    if(valid)  form.currentState!.save();
-    return valid;
   }
 }

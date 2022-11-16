@@ -28,6 +28,11 @@ class UserCourses{
       this.certificateType,
       this.certificateSide});
 }
+class UserWork{
+  String name;
+  String company;
+  UserWork({required this.name,required this.company});
+}
 /*
 flutter pub run easy_localization:generate -S "assets/translations/" -O "lib/translations"
 flutter pub run easy_localization:generate -S "assets/translations/" -O "lib/translations" -o "locale_keys.g.dart" -f keys

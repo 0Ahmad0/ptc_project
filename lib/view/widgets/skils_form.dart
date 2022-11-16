@@ -3,24 +3,20 @@ import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-typedef OnDelete();
-typedef OnAddForm();
-class SkilsForm extends StatefulWidget {
+
+class SkilsForm extends StatelessWidget {
   final UserSkils? userSkil;
-  final  state = _SkilsFormState();
-  final OnDelete? onDelete;
-  final OnAddForm? onAddForm;
+  final VoidCallback? onDelete;
+  final VoidCallback? onAddForm;
   final int? index;
   SkilsForm({this.userSkil,this.onDelete, this.onAddForm, this.index});
-  @override
-  _SkilsFormState createState() => state;
-
-  bool isValid ()=> state.validate();
-
-}
-
-class _SkilsFormState extends State<SkilsForm> {
   final form = GlobalKey<FormState>();
+
+  bool validate(){
+    var valid = form.currentState!.validate();
+    if(valid)  form.currentState!.save();
+    return valid;
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -34,11 +30,11 @@ class _SkilsFormState extends State<SkilsForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text("Skils${widget.index}")),
+                  Flexible(child: Text("Skils${index}")),
                   Row(
                     children: [
-                      IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
-                      IconButton(onPressed:widget.onAddForm , icon: Icon(Icons.add)),
+                     (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                     (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],
                   ),
@@ -66,9 +62,6 @@ class _SkilsFormState extends State<SkilsForm> {
       ),
     );
   }
-  bool validate(){
-    var valid = form.currentState!.validate();
-    if(valid)  form.currentState!.save();
-    return valid;
-  }
 }
+
+

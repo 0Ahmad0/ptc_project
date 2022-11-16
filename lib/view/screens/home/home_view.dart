@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
 import 'package:ptc_project/model/utils/sql.dart';
 import 'package:ptc_project/translations/locale_keys.g.dart';
@@ -141,7 +142,6 @@ print('-------------------------------------------------------');
               scrollDirection: Axis.horizontal,
               children: [
             buildFirstPage(),
-
             buildSecondPage(),
             BuildThirdPage(formKey: formKey3,)
               ],
@@ -321,17 +321,41 @@ print('-------------------------------------------------------');
   }
 }
 
-class BuildThirdPage extends StatelessWidget {
-  const BuildThirdPage({super.key, required this.formKey});
+class BuildThirdPage extends StatefulWidget {
+   BuildThirdPage({super.key, required this.formKey});
   final GlobalKey formKey;
+
+  @override
+  State<BuildThirdPage> createState() => _BuildThirdPageState();
+}
+
+class _BuildThirdPageState extends State<BuildThirdPage> {
+List<UserWork> usersWork = [
+  UserWork(name: "name", company: "company")
+];
+
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: ListView(
         children: [
-          WorkForm()
+         for(var work = 0 ; work < usersWork.length ; work++)
+           WorkForm(
+             index: work +1 ,
+             userWork: usersWork[work],
+             onAddForm: (){
+               setState(() {
+                 usersWork.add(UserWork(name: "name", company: "company"));
+               });
+             },
+             onDelete: (){
+               setState(() {
+                 usersWork.removeAt(work);
+               });
+             },
+           )
         ],
       ),
     );

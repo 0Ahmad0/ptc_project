@@ -5,133 +5,20 @@ import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-typedef OnDelete();
-typedef OnAddForm();
-
-class CoursesForm extends StatefulWidget {
+class CoursesForm extends StatelessWidget {
   final UserCourses? userCourses;
-  final state = _CoursesFormState();
-  final OnDelete? onDelete;
-  final OnAddForm? onAddForm;
+  final VoidCallback? onDelete;
+  final VoidCallback? onAddForm;
   final int? index;
 
   CoursesForm(
       {super.key,
-      this.userCourses,
-      this.onDelete,
-      this.onAddForm,
-      this.index = 1});
-
-  @override
-  _CoursesFormState createState() => state;
-
-  bool isValid() => state.validate();
-}
-
-class _CoursesFormState extends State<CoursesForm> {
+        this.userCourses,
+        this.onDelete,
+        this.onAddForm,
+        this.index = 1});
   final form = GlobalKey<FormState>();
   final dateController = TextEditingController(text: "Date");
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: form,
-      child: Card(
-        color: ColorManager.white,
-        child: Padding(
-          padding: const EdgeInsets.all(AppPadding.p12),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text("Course${widget.index}")),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: widget.onDelete, icon: Icon(Icons.delete)),
-                      IconButton(
-                          onPressed: widget.onAddForm, icon: Icon(Icons.add)),
-                    ],
-                  ),
-                ],
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Course Name"),
-              ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonFormField(
-                        decoration: InputDecoration(
-                            hintText: "Course Level",
-                            prefixIcon: Icon(FontAwesomeIcons.graduationCap)),
-                        items: [1, 2, 3, 4, 5]
-                            .map((e) => DropdownMenuItem(
-                                  child: Text("$e"),
-                                  value: e,
-                                ))
-                            .toList(),
-                        onChanged: (val) {}),
-                  ),
-                  const SizedBox(
-                    width: AppSize.s10,
-                  ),
-                  Expanded(
-                      child: TextFormField(
-                    controller: dateController,
-                    readOnly: true,
-                    onTap: () {
-                      _selectDate(context);
-                    },
-                  )),
-                ],
-              ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Description"),
-              ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Certificate Name",
-                    ),
-                  )),
-                  const SizedBox(width: AppSize.s10,),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Certificate Type",
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: AppSize.s10,),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Certificate Side",
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   DateTime _selectedDate = DateTime.now();
 
   _selectDate(BuildContext context) async {
@@ -159,5 +46,102 @@ class _CoursesFormState extends State<CoursesForm> {
     var valid = form.currentState!.validate();
     if (valid) form.currentState!.save();
     return valid;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: form,
+      child: Card(
+        color: ColorManager.white,
+        child: Padding(
+          padding: const EdgeInsets.all(AppPadding.p12),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text("Course${index}")),
+                  Row(
+                    children: [
+                     (index!-1) ==0?SizedBox(): IconButton(onPressed: onDelete, icon: Icon(Icons.delete)),
+                     (index!-1)!=0?SizedBox():  IconButton(onPressed: onAddForm, icon: Icon(Icons.add)),
+                    ],
+                  ),
+                ],
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "Course Name"),
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField(
+                        decoration: InputDecoration(
+                            hintText: "Course Level",
+                            prefixIcon: Icon(FontAwesomeIcons.graduationCap)),
+                        items: [1, 2, 3, 4, 5]
+                            .map((e) => DropdownMenuItem(
+                          child: Text("$e"),
+                          value: e,
+                        ))
+                            .toList(),
+                        onChanged: (val) {}),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s10,
+                  ),
+                  Expanded(
+                      child: TextFormField(
+                        controller: dateController,
+                        readOnly: true,
+                        onTap: () {
+                          _selectDate(context);
+                        },
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFormField(
+                decoration: InputDecoration(hintText: "Description"),
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Certificate Name",
+                        ),
+                      )),
+                  const SizedBox(width: AppSize.s10,),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Certificate Type",
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSize.s10,),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Certificate Side",
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

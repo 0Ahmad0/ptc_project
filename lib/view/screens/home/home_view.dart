@@ -10,9 +10,13 @@ import 'package:ptc_project/translations/locale_keys.g.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/style_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
+import 'package:ptc_project/view/widgets/custom_divider.dart';
 import 'package:ptc_project/view/widgets/custom_textfiled.dart';
 import 'package:ptc_project/view/widgets/multi_form_lan.dart';
+import 'package:ptc_project/view/widgets/project_form.dart';
+import 'package:ptc_project/view/widgets/skills_technical_form.dart';
 import 'package:ptc_project/view/widgets/work_form.dart';
+import '../../widgets/work_place_form.dart';
 import '../search/search_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -44,6 +48,7 @@ class _HomeViewState extends State<HomeView> {
   final formKey1 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
   final formKey3 = GlobalKey<FormState>();
+  final formKey4 = GlobalKey<FormState>();
   int currentIndex = 0;
 
   double progresValue = .3;
@@ -102,25 +107,7 @@ print('-------------------------------------------------------');
       appBar: AppBar(
         title: Text("Home Screen"),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            UserAccountsDrawerHeader(
-              margin: EdgeInsets.zero,
-              accountName: Text("PTC ADMIN"),
-              accountEmail: Text("ptc@gmail.com"),
-              currentAccountPicture: CircleAvatar(),
-            ),
-            ListTile(
-              onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => SearchView()))
-                  .then((value) => Navigator.pop(context)),
-              leading: Icon(Icons.search),
-              title: Text('Search'),
-            )
-          ],
-        ),
-      ),
+      drawer: buildDrawer(context),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -143,7 +130,9 @@ print('-------------------------------------------------------');
               children: [
             buildFirstPage(),
             buildSecondPage(),
-            BuildThirdPage(formKey: formKey3,)
+            BuildThirdPage(formKey: formKey3,),
+                BuildFourthPage(formKey: formKey4)
+
               ],
             ),
           ),
@@ -162,6 +151,28 @@ print('-------------------------------------------------------');
     );
   }
 
+  Drawer buildDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          UserAccountsDrawerHeader(
+            margin: EdgeInsets.zero,
+            accountName: Text("PTC ADMIN"),
+            accountEmail: Text("ptc@gmail.com"),
+            currentAccountPicture: CircleAvatar(),
+          ),
+          ListTile(
+            onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => SearchView()))
+                .then((value) => Navigator.pop(context)),
+            leading: Icon(Icons.search),
+            title: Text('Search'),
+          )
+        ],
+      ),
+    );
+  }
+  bool gender  = true;
   Widget buildFirstPage() {
     return Form(
       key: formKey1,
@@ -212,14 +223,24 @@ print('-------------------------------------------------------');
                       children: [
                         RadioListTile(
                             title: Text("Female"),
-                            value: true,
-                            groupValue: [false, true],
-                            onChanged: (val) {}),
+                            value: gender,
+                            groupValue: [true,false],
+                            onChanged: (val) {
+                              gender = !gender;
+                              setState(() {
+
+                              });
+                            }),
                         RadioListTile(
                             title: Text("Male"),
-                            value: true,
-                            groupValue: [false, true],
-                            onChanged: (val) {})
+                            value: !gender,
+                            groupValue: [true,false],
+                            onChanged: (val) {
+                              gender = !gender;
+                              setState(() {
+
+                              });
+                            })
                       ],
                     ),
                   ),
@@ -330,8 +351,8 @@ class BuildThirdPage extends StatefulWidget {
 }
 
 class _BuildThirdPageState extends State<BuildThirdPage> {
-List<UserWork> usersWork = [
-  UserWork(name: "name", company: "company")
+List<UserPlaceWork> usersWorkPlace = [
+  UserPlaceWork(name: "name", company: "company")
 ];
 
 
@@ -341,21 +362,80 @@ List<UserWork> usersWork = [
       key: widget.formKey,
       child: ListView(
         children: [
-         for(var work = 0 ; work < usersWork.length ; work++)
-           WorkForm(
+         for(var work = 0 ; work < usersWorkPlace.length ; work++)
+           WorkPlaceForm(
              index: work +1 ,
-             userWork: usersWork[work],
+             userWork: usersWorkPlace[work],
              onAddForm: (){
                setState(() {
-                 usersWork.add(UserWork(name: "name", company: "company"));
+                 usersWorkPlace.add(UserPlaceWork(name: "name", company: "company"));
                });
              },
              onDelete: (){
                setState(() {
-                 usersWork.removeAt(work);
+                 usersWorkPlace.removeAt(work);
                });
              },
            )
+        ],
+      ),
+    );
+  }
+}
+
+class BuildFourthPage extends StatefulWidget {
+  final GlobalKey formKey;
+  const BuildFourthPage({Key? key, required this.formKey}) : super(key: key);
+
+  @override
+  State<BuildFourthPage> createState() => _BuildFourthPageState();
+}
+
+class _BuildFourthPageState extends State<BuildFourthPage> {
+  List<UserProject> usersProject = [
+    UserProject(name: "name",)
+  ];
+  List<UserTechnicalSkills> userThechnicalSkills = [
+    UserTechnicalSkills(name: "name",)
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: widget.formKey,
+      child: ListView(
+        children: [
+          for(var project = 0 ; project < usersProject.length ; project++)
+            ProjectForm(
+              index: project +1 ,
+              userProject: usersProject[project],
+              onAddForm: (){
+                setState(() {
+                  usersProject.add(UserProject(name: "name"));
+                });
+              },
+              onDelete: (){
+                setState(() {
+                  usersProject.removeAt(project);
+                });
+              },
+            ),
+          PTCDvider(),
+          for(var techSkills = 0 ; techSkills < userThechnicalSkills.length ; techSkills++)
+            SkillsTechnicalForm(
+              index: techSkills +1 ,
+              userTechnicalSkills: userThechnicalSkills[techSkills],
+              onAddForm: (){
+                setState(() {
+                  userThechnicalSkills.add(UserTechnicalSkills(name: "name"));
+                });
+              },
+              onDelete: (){
+                setState(() {
+                  userThechnicalSkills.removeAt(techSkills);
+                });
+              },
+            ),
+
         ],
       ),
     );

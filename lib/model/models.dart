@@ -1,3 +1,5 @@
+import 'package:firedart/auth/user_gateway.dart';
+
 class UserLanguage{
   String? lanName;
   int? level;
@@ -30,8 +32,19 @@ class UserCourses{
 }
 class UserWork{
   String name;
+  UserWork({required this.name});
+}
+class UserPlaceWork{
+  String name;
   String company;
-  UserWork({required this.name,required this.company});
+  UserPlaceWork({required this.name,required this.company});
+}
+class UserProject{
+  String name;
+  UserProject({required this.name});
+}class UserTechnicalSkills{
+  String name;
+  UserTechnicalSkills({required this.name});
 }
 /*
 flutter pub run easy_localization:generate -S "assets/translations/" -O "lib/translations"

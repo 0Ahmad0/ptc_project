@@ -4,6 +4,8 @@ import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/widgets/work_form.dart';
+
+import '../../controller/home_controller.dart';
 class WorkPlaceForm extends StatefulWidget {
   final UserPlaceWork? userWork;
   final VoidCallback? onDelete;
@@ -19,6 +21,12 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
   final form = GlobalKey<FormState>();
 
   final dateController = TextEditingController(text: "Start Date");
+  final phoneCompanyController = TextEditingController();
+  final emailCompanyController = TextEditingController();
+  final contactInfoController = TextEditingController();
+  final workTypeController = TextEditingController();
+  final companyWorkPlaceController = TextEditingController();
+  final nameWorkPlaceController = TextEditingController();
 
   bool validate(){
     var valid = form.currentState!.validate();
@@ -29,7 +37,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
   DateTime _selectedDate = DateTime.now();
 
   _selectDate(BuildContext context) async {
-    var newSelectedDate = await showDatePicker(
+   var newSelectedDate = await showDatePicker(
       builder: (context, child) {
         return child!;
       },
@@ -41,6 +49,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
+        HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate=_selectedDate;
       dateController
         ..text = DateFormat.yMd().format(_selectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
@@ -55,6 +64,14 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
 
   @override
   Widget build(BuildContext context) {
+    nameWorkPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].nameWorkPlace;
+    companyWorkPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].companyWorkPlace;
+    contactInfoController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].contactInfo;
+    emailCompanyController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].emailCompany;
+    workTypeController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType;
+    phoneCompanyController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].phoneCompany;
+    HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate.year>0?
+    dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate):null;
     return Form(
       key: form,
       child: Card(
@@ -77,18 +94,27 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
                 ],
               ),
               TextFormField(
+                controller: nameWorkPlaceController,
                 decoration: InputDecoration(
                     hintText: "Work Place Name"
                 ),
+                onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].nameWorkPlace=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
+                controller: companyWorkPlaceController,
                 decoration: InputDecoration(
                     hintText: "Work Place Company"
                 ),
+                onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].companyWorkPlace=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
+                value: HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType!=''?
+                HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType
+                  :null,
                   decoration: InputDecoration(
                       hintText: "Work Type ",
                       prefixIcon: Icon(Icons.work)
@@ -97,12 +123,17 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
 
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){}),
+                  )).toList(), onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType=val.toString();
+              }),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
+                controller: contactInfoController,
                 decoration: InputDecoration(
                     hintText: "Contact Info"
                 ),
+                onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].contactInfo=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
@@ -114,27 +145,39 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
               ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
+                controller: emailCompanyController,
                 decoration: InputDecoration(
                     hintText: "Email Company"
-                ),),
+                ),
+                onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].emailCompany=val;},
+              ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
+                controller: phoneCompanyController,
                 decoration: InputDecoration(
                     hintText: "Phone Company"
-                ),),
+                ),
+                onChanged: (val){
+                  HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].phoneCompany=val;},
+              ),
               const SizedBox(height: AppSize.s10,),
-             for(var work =0 ; work< usersWork.length ; work ++)
+             for(var work =0 ; work< HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].works.listWork.length ; work ++)
                WorkForm(
-                 userWork: usersWork[work],
+                 userWork: usersWork[0],
                  index: work+1,
+                 indexWorkPlace: widget.index,
                  onAddForm: (){
                    usersWork.add(UserWork(name: "name"));
+
+                     HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].works.listWork.add(Work.genCourse());
                    setState(() {
 
                    });
                  },
                  onDelete: (){
-                   usersWork.removeAt(work);
+                  // usersWork.removeAt(work);
+                   HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].works.listWork.removeAt(work);
                    setState(() {
 
                    });

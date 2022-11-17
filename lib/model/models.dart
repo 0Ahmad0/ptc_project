@@ -106,9 +106,15 @@ class CvUser {
         courses: Courses(idUser: '',listCourse: [
           Course.genCourse(),
         ]),
-        workPlaces: WorkPlaces(idUser: '',listWorkPlace: []),
-        projects: Projects(idUser: '',listProject: []),
-        technicalSkills: TechnicalSkills(idUser: '',listTechnicalSkill: []));
+        workPlaces: WorkPlaces(idUser: '',listWorkPlace: [
+          WorkPlace.genCourse()
+        ]),
+        projects: Projects(idUser: '',listProject: [
+          Project.genCourse()
+        ]),
+        technicalSkills: TechnicalSkills(idUser: '',listTechnicalSkill: [
+          TechnicalSkill.genCourse()
+        ]));
   }
 }
 
@@ -368,7 +374,7 @@ class WorkPlace{
   DateTime startDate;
   DateTime endDate;
   bool endDateForNow;
-  List<WorkPlace> listWorkPlace;
+  Works works;
 
   WorkPlace({
     required this.nameWorkPlace,
@@ -377,17 +383,13 @@ class WorkPlace{
     required this.emailCompany,
     required this.phoneCompany,
     required this.workType,
-    this.listWorkPlace=const [],
+    required this.works,
     required this.startDate,
     required this.endDate,
     this.endDateForNow=false,
   });
 
   factory WorkPlace.fromJson(json){
-    List<WorkPlace> tempListWorkPlace = [];
-    for(WorkPlace workPlace in json["listWorkPlace"]){
-      tempListWorkPlace.add(workPlace);
-    }
     return WorkPlace(
       nameWorkPlace: json['nameWorkPlace'],
       companyWorkPlace: json['companyWorkPlace'],
@@ -395,17 +397,13 @@ class WorkPlace{
       emailCompany: json['emailCompany'],
       phoneCompany: json['phoneCompany'],
       workType: json['workType'],
-      listWorkPlace: tempListWorkPlace,
+      works: Works.fromJson(json['works']),
       endDateForNow: json['endDateForNow'],
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
   }
   Map<String,dynamic> toJson() {
-    List<Map<String,dynamic>> tempListWorkPlace = [];
-    for(WorkPlace  workPlace in listWorkPlace){
-      tempListWorkPlace.add(workPlace.toJson());
-    }
     return {
       'nameWorkPlace': nameWorkPlace,
       'companyWorkPlace': companyWorkPlace,
@@ -413,11 +411,14 @@ class WorkPlace{
       'emailCompany': emailCompany,
       'phoneCompany': phoneCompany,
       'workType': workType,
-      'listWorkPlace':tempListWorkPlace,
+      'listWorkPlace':works.toJson(),
       'endDateForNow': endDateForNow,
       'endDate': endDate,
       'startDate': startDate,
     };
+  }
+  factory WorkPlace.genCourse(){
+    return  WorkPlace(nameWorkPlace: '', companyWorkPlace: '', contactInfo: '', emailCompany: '',works: Works(idUser: '', idWorkPlace: '',listWork: [Work.genCourse()]), phoneCompany: '', workType: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
   }
 }
 
@@ -490,6 +491,9 @@ class Work{
     'endDate':endDate,
     'startDate':startDate,
   };
+  factory Work.genCourse(){
+    return Work(positionPersonPlace: '', skillsPersonPlace: '', levelPersonPlace: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
+  }
 }
 
 class Projects {
@@ -565,6 +569,9 @@ class Project{
     'endDate':endDate,
     'startDate':startDate,
   };
+  factory Project.genCourse(){
+    return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
+  }
 }
 
 class TechnicalSkills {
@@ -620,6 +627,9 @@ class TechnicalSkill{
     'skillsName':skillsName,
     'skillsLevel':skillsLevel,
   };
+  factory TechnicalSkill.genCourse(){
+    return TechnicalSkill(skillsType: '', skillsName: '', skillsLevel: 0);
+  }
 }
 /*
 flutter pub run easy_localization:generate -S "assets/translations/" -O "lib/translations"

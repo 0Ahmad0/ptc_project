@@ -33,10 +33,10 @@ class _MultiFormLanState extends State<MultiFormLan> {
     //:
     ListView(
       children: [
-        for(var lan =0 ; lan < userLanguage.length ; lan++)
+        for(var lan =0 ; lan < HomeController.cvUser.languages.listLanguage.length ; lan++)
           LanguageForm(
             index: lan +1,
-            userLanguage: userLanguage[lan],
+            userLanguage: userLanguage[0],
             onDelete: () {
             if (lan > 0) {
               HomeController.cvUser.languages.listLanguage.removeAt(lan);
@@ -51,10 +51,10 @@ class _MultiFormLanState extends State<MultiFormLan> {
             },
           ),
         PTCDvider(),
-        for(var skil =0 ; skil < userSkils.length ; skil++)
+        for(var skil =0 ; skil < HomeController.cvUser.skills.listSkill.length ; skil++)
           SkilsForm(
             index: skil +1,
-            userSkil: userSkils[skil],
+            userSkil: userSkils[0],
             onDelete: (){ if(skil>0) {
               HomeController.cvUser.skills.listSkill.removeAt(skil);
               onDelete(userSkils,skil);
@@ -68,10 +68,10 @@ class _MultiFormLanState extends State<MultiFormLan> {
             },
           ),
         PTCDvider(),
-        for(var course =0 ; course < userCourses.length ; course++)
+        for(var course =0 ; course < HomeController.cvUser.courses.listCourse.length ; course++)
           CoursesForm(
             index: course +1,
-            userCourses: userCourses[course],
+            userCourses: userCourses[0],
             onDelete: () {
               if (course > 0) {
                 HomeController.cvUser.courses.listCourse.removeAt(course);
@@ -95,7 +95,7 @@ class _MultiFormLanState extends State<MultiFormLan> {
   }
   void onDelete(List list,int index){
     setState(() {
-      list.removeAt(index);
+      //list.removeAt(index);
     });
   }
 }

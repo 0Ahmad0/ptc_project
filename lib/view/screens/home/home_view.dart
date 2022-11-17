@@ -370,18 +370,20 @@ List<UserPlaceWork> usersWorkPlace = [
       key: widget.formKey,
       child: ListView(
         children: [
-         for(var work = 0 ; work < usersWorkPlace.length ; work++)
+         for(var work = 0 ; work <   HomeController.cvUser.workPlaces.listWorkPlace.length ; work++)
            WorkPlaceForm(
              index: work +1 ,
-             userWork: usersWorkPlace[work],
+             userWork: usersWorkPlace[0],
              onAddForm: (){
                setState(() {
                  usersWorkPlace.add(UserPlaceWork(name: "name", company: "company"));
+                 HomeController.cvUser.workPlaces.listWorkPlace.add(WorkPlace.genCourse());
                });
              },
              onDelete: (){
                setState(() {
-                 usersWorkPlace.removeAt(work);
+                // usersWorkPlace.removeAt(work);
+                 HomeController.cvUser.workPlaces.listWorkPlace.removeAt(work);
                });
              },
            )

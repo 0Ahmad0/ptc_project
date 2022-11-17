@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ptc_project/model/models.dart';
 
+import '../../controller/home_controller.dart';
 import '../resourse/color_manager.dart';
 import '../resourse/values_manager.dart';
 
@@ -11,10 +12,14 @@ class WorkForm extends StatelessWidget {
   final VoidCallback? onDelete;
   final VoidCallback? onAddForm;
   final int? index;
-  WorkForm({this.userWork,this.onDelete, this.onAddForm, this.index});
+  final int? indexWorkPlace;
+  WorkForm({this.userWork,this.onDelete, this.onAddForm, this.index, this.indexWorkPlace});
   final form = GlobalKey<FormState>();
   final dateController = TextEditingController(text: "Start Date");
   final dateEndController = TextEditingController(text: "End Date");
+  final levelPersonPlaceController = TextEditingController();
+  final skillsPersonPlaceController = TextEditingController();
+  final positionPersonPlaceController = TextEditingController();
   bool validate(){
     var valid = form.currentState!.validate();
     if(valid)  form.currentState!.save();
@@ -45,6 +50,11 @@ class WorkForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    positionPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].positionPersonPlace;
+    skillsPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].skillsPersonPlace;
+    levelPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].levelPersonPlace;
+    dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate);
+    dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate);
     return Card(
       child: ListView(
         padding: const EdgeInsets.all(AppPadding.p12),
@@ -67,6 +77,8 @@ class WorkForm extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "Position Person work"
             ),
+            onChanged: (val){
+              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].positionPersonPlace=val;},
           ),
           const SizedBox(height: AppSize.s10,),
           Row(
@@ -77,6 +89,7 @@ class WorkForm extends StatelessWidget {
                   readOnly: true,
                   onTap: () {
                     _selectDate(context,dateController);
+                    HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate=DateFormat().parse(dateController.text);
                   },
                 ),
               ),
@@ -97,12 +110,16 @@ class WorkForm extends StatelessWidget {
             decoration: InputDecoration(
                 hintText: "level Person work"
             ),
+            onChanged: (val){
+              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].levelPersonPlace=val;},
           ),
           const SizedBox(height: AppSize.s10,),
           TextFormField(
             decoration: InputDecoration(
                 hintText: "skills Person work"
             ),
+            onChanged: (val){
+              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].skillsPersonPlace=val;},
           ),
         ],
       ),

@@ -103,7 +103,9 @@ class CvUser {
         skills: Skills(idUser: '',listSkill: [
           Skill(name: '', level: 0)
         ]),
-        courses: Courses(idUser: '',listCourse: []),
+        courses: Courses(idUser: '',listCourse: [
+          Course.genCourse(),
+        ]),
         workPlaces: WorkPlaces(idUser: '',listWorkPlace: []),
         projects: Projects(idUser: '',listProject: []),
         technicalSkills: TechnicalSkills(idUser: '',listTechnicalSkill: []));
@@ -320,6 +322,9 @@ class Course{
     'certificateSide':certificateSide,
     'date':date,
   };
+  factory Course.genCourse(){
+    return  Course(name: '', level: 0, description: '', certificateName: '', certificateSide: '', certificateType: '', date: DateTime.utc(0));
+  }
 }
 
 class WorkPlaces {
@@ -351,6 +356,7 @@ class WorkPlaces {
       'listWorkPlace':tempListWorkPlace,
     };
   }
+
 }
 class WorkPlace{
   String nameWorkPlace;

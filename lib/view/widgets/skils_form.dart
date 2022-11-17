@@ -22,7 +22,7 @@ class SkilsForm extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    HomeController.cvUser.skills.listSkill.add(Skill(name: '', level: 0));
+    controllerSkillName.text=HomeController.cvUser.skills.listSkill[index!-1].name;
     return Form(
       key: form,
       child: Card(
@@ -64,7 +64,7 @@ class SkilsForm extends StatelessWidget {
 
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){})
+                  )).toList(), onChanged: (val){HomeController.cvUser.skills.listSkill[index!-1].level=int.parse(val.toString());})
             ],
           ),
         ),

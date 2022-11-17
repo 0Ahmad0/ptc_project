@@ -37,7 +37,12 @@ class _MultiFormLanState extends State<MultiFormLan> {
           LanguageForm(
             index: lan +1,
             userLanguage: userLanguage[lan],
-            onDelete: ()=> lan==0?null:onDelete(userLanguage,lan),
+            onDelete: () {
+            if (lan > 0) {
+              HomeController.cvUser.languages.listLanguage.removeAt(lan);
+               onDelete(userLanguage,lan);
+             }
+    },
             onAddForm: () {
               setState(() {
                 userLanguage.add(UserLanguage());
@@ -50,7 +55,11 @@ class _MultiFormLanState extends State<MultiFormLan> {
           SkilsForm(
             index: skil +1,
             userSkil: userSkils[skil],
-            onDelete: ()=> skil==0?null:onDelete(userSkils,skil),
+            onDelete: (){ if(skil>0) {
+              HomeController.cvUser.skills.listSkill.removeAt(skil);
+              onDelete(userSkils,skil);
+            }
+            },
             onAddForm: (){
               setState(() {
                 userSkils.add(UserSkils());
@@ -63,10 +72,16 @@ class _MultiFormLanState extends State<MultiFormLan> {
           CoursesForm(
             index: course +1,
             userCourses: userCourses[course],
-            onDelete: ()=> course==0?null:onDelete(userCourses,course),
+            onDelete: () {
+              if (course > 0) {
+                HomeController.cvUser.courses.listCourse.removeAt(course);
+                onDelete(userCourses, course);
+              }
+            },
             onAddForm: (){
               setState(() {
                 userCourses.add(UserCourses());
+                HomeController.cvUser.courses.listCourse.add(Course.genCourse());
               });
             },
           )

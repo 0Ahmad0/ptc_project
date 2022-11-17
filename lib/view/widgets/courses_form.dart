@@ -5,12 +5,18 @@ import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../controller/home_controller.dart';
+
 class CoursesForm extends StatelessWidget {
   final UserCourses? userCourses;
   final VoidCallback? onDelete;
   final VoidCallback? onAddForm;
   final int? index;
-
+  final controllerCourseName= TextEditingController();
+  final controllerDescription= TextEditingController();
+  final controllerCertificateSide= TextEditingController();
+  final controllerCertificateType= TextEditingController();
+  final controllerCertificateName= TextEditingController();
   CoursesForm(
       {super.key,
         this.userCourses,
@@ -34,6 +40,7 @@ class CoursesForm extends StatelessWidget {
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
+      HomeController.cvUser.courses.listCourse[index!-1].date=_selectedDate;
       dateController
         ..text = DateFormat.yMd().format(_selectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
@@ -49,6 +56,14 @@ class CoursesForm extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    controllerCourseName.text=HomeController.cvUser.courses.listCourse[index!-1].name;
+    controllerDescription.text=HomeController.cvUser.courses.listCourse[index!-1].description;
+    controllerCertificateName.text=HomeController.cvUser.courses.listCourse[index!-1].certificateName;
+    controllerCertificateSide.text=HomeController.cvUser.courses.listCourse[index!-1].certificateSide;
+    controllerCertificateType.text=HomeController.cvUser.courses.listCourse[index!-1].certificateType;
+    HomeController.cvUser.courses.listCourse[index!-1].date.year>0
+        ?dateController.text=DateFormat.yMd().format(HomeController.cvUser.courses.listCourse[index!-1].date)
+    :null;
     return Form(
       key: form,
       child: Card(
@@ -70,7 +85,10 @@ class CoursesForm extends StatelessWidget {
                 ],
               ),
               TextFormField(
+                controller: controllerCourseName,
                 decoration: InputDecoration(hintText: "Course Name"),
+                onChanged: (val){
+                  HomeController.cvUser.courses.listCourse[index!-1].name=val;},
               ),
               const SizedBox(
                 height: AppSize.s10,
@@ -79,6 +97,8 @@ class CoursesForm extends StatelessWidget {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
+                        value: HomeController.cvUser.courses.listCourse[index!-1].level==0
+                            ?null:HomeController.cvUser.courses.listCourse[index!-1].level,
                         decoration: InputDecoration(
                             hintText: "Course Level",
                             prefixIcon: Icon(FontAwesomeIcons.graduationCap)),
@@ -88,7 +108,7 @@ class CoursesForm extends StatelessWidget {
                           value: e,
                         ))
                             .toList(),
-                        onChanged: (val) {}),
+                        onChanged: (val) {HomeController.cvUser.courses.listCourse[index!-1].level=int.parse(val.toString());}),
                   ),
                   const SizedBox(
                     width: AppSize.s10,
@@ -99,6 +119,7 @@ class CoursesForm extends StatelessWidget {
                         readOnly: true,
                         onTap: () {
                           _selectDate(context);
+
                         },
                       )),
                 ],
@@ -107,7 +128,11 @@ class CoursesForm extends StatelessWidget {
                 height: AppSize.s10,
               ),
               TextFormField(
+                controller: controllerDescription,
                 decoration: InputDecoration(hintText: "Description"),
+                onChanged: (val){
+                  HomeController.cvUser.courses.listCourse[index!-1].description=val;
+                },
               ),
               const SizedBox(
                 height: AppSize.s10,
@@ -116,24 +141,35 @@ class CoursesForm extends StatelessWidget {
                 children: [
                   Expanded(
                       child: TextFormField(
+                        controller: controllerCertificateName,
                         decoration: InputDecoration(
                           hintText: "Certificate Name",
-                        ),
+                        ),onChanged: (val){
+                        HomeController.cvUser.courses.listCourse[index!-1].certificateName=val;
+                      },
                       )),
                   const SizedBox(width: AppSize.s10,),
                   Expanded(
                     child: TextFormField(
+                      controller: controllerCertificateType,
                       decoration: InputDecoration(
                         hintText: "Certificate Type",
                       ),
+                      onChanged: (val){
+                        HomeController.cvUser.courses.listCourse[index!-1].certificateType=val;
+                      },
                     ),
                   ),
                   const SizedBox(width: AppSize.s10,),
                   Expanded(
                     child: TextFormField(
+                      controller: controllerCertificateSide,
                       decoration: InputDecoration(
                         hintText: "Certificate Side",
                       ),
+                      onChanged: (val){
+                        HomeController.cvUser.courses.listCourse[index!-1].certificateSide=val;
+                      },
                     ),
                   ),
                 ],

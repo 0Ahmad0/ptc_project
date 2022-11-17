@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptc_project/controller/home_controller.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/widgets/courses_form.dart';
@@ -27,8 +28,10 @@ class _MultiFormLanState extends State<MultiFormLan> {
   ];
   @override
   Widget build(BuildContext context) {
-    return userLanguage.isEmpty?Center(child: Text("No Data Found"),)
-    :ListView(
+    return
+      //userLanguage.isEmpty?Center(child: Text("No Data Found"),)
+    //:
+    ListView(
       children: [
         for(var lan =0 ; lan < userLanguage.length ; lan++)
           LanguageForm(
@@ -38,6 +41,7 @@ class _MultiFormLanState extends State<MultiFormLan> {
             onAddForm: () {
               setState(() {
                 userLanguage.add(UserLanguage());
+                HomeController.cvUser.languages.listLanguage.add(Language(name: '', level: 0));
               });
             },
           ),
@@ -50,6 +54,7 @@ class _MultiFormLanState extends State<MultiFormLan> {
             onAddForm: (){
               setState(() {
                 userSkils.add(UserSkils());
+                HomeController.cvUser.skills.listSkill.add(Skill(name: '', level: 0));
               });
             },
           ),

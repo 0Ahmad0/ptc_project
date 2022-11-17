@@ -3,9 +3,13 @@ import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 
+import '../../controller/home_controller.dart';
+
 
 class LanguageForm extends StatelessWidget {
   final UserLanguage? userLanguage;
+  final controllerLanName= TextEditingController();
+  final controllerLevel = TextEditingController();
   final VoidCallback? onDelete;
   final VoidCallback? onAddForm;
   final int? index;
@@ -20,6 +24,9 @@ class LanguageForm extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    controllerLanName.text=HomeController.cvUser.languages.listLanguage[index!-1].name;
+    controllerLevel.text=HomeController.cvUser.languages.listLanguage[index!-1].level.toString();
+
     return Form(
       key: form,
       child: Card(
@@ -42,21 +49,26 @@ class LanguageForm extends StatelessWidget {
                 ],
               ),
               TextFormField(
+                controller: controllerLanName,
                 decoration: InputDecoration(
                     hintText: "Language Name"
                 ),
+                onChanged: (val){
+                  HomeController.cvUser.languages.listLanguage[index!-1].name=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
+                  value: HomeController.cvUser.languages.listLanguage[index!-1].level==0
+                      ?null:HomeController.cvUser.languages.listLanguage[index!-1].level,
                   decoration: InputDecoration(
                       hintText: "Language Level",
                       prefixIcon: Icon(Icons.language)
                   ),
                   items: [1,2,3,4,5].map((e) => DropdownMenuItem(
-
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){})
+                  )).toList(), onChanged: (val){
+                    HomeController.cvUser.languages.listLanguage[index!-1].level=int.parse(val.toString());})
             ],
           ),
         ),

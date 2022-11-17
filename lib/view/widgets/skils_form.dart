@@ -4,11 +4,14 @@ import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../controller/home_controller.dart';
+
 class SkilsForm extends StatelessWidget {
   final UserSkils? userSkil;
   final VoidCallback? onDelete;
   final VoidCallback? onAddForm;
   final int? index;
+  final controllerSkillName= TextEditingController();
   SkilsForm({this.userSkil,this.onDelete, this.onAddForm, this.index});
   final form = GlobalKey<FormState>();
 
@@ -19,6 +22,7 @@ class SkilsForm extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    HomeController.cvUser.skills.listSkill.add(Skill(name: '', level: 0));
     return Form(
       key: form,
       child: Card(
@@ -41,12 +45,17 @@ class SkilsForm extends StatelessWidget {
                 ],
               ),
               TextFormField(
+                controller: controllerSkillName,
                 decoration: InputDecoration(
                     hintText: "Skils Name"
                 ),
+                onChanged: (val){
+                  HomeController.cvUser.skills.listSkill[index!-1].name=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
+                  value: HomeController.cvUser.skills.listSkill[index!-1].level==0
+                      ?null:HomeController.cvUser.skills.listSkill[index!-1].level,
                   decoration: InputDecoration(
                       hintText: "Skils Level",
                       prefixIcon: Icon(Icons.polymer)

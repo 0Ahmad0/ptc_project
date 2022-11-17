@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ptc_project/controller/home_controller.dart';
 import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
 import 'package:ptc_project/model/utils/sql.dart';
@@ -27,8 +28,9 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   CollectionReference nameRef = Firestore.instance.collection("name");
-  final controllerName = TextEditingController();
 
+  final controllerName = TextEditingController();
+  final HomeController homeController= HomeController();
   final controllerAge = TextEditingController();
 
   final controllerGender = TextEditingController();
@@ -86,6 +88,8 @@ onPressed: ()async{
   
 print('-------------------------------------------------------');
 print(nameRef);
+print('-------------------------------------------------------');
+print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
 },
 //             onPressed: ()async{
@@ -188,7 +192,7 @@ print('-------------------------------------------------------');
                       return null;
                     }
                   },
-                  onChange: null,
+                  onChange:(val)=>HomeController.cvUser.personalInformation.name=val,
                   prefixIcon: Icons.person,
                   hintText: tr(LocaleKeys.your_name)),
               const SizedBox(
@@ -204,7 +208,8 @@ print('-------------------------------------------------------');
                       return null;
                     }
                   },
-                  onChange: null,
+                  onChange: (val)=>HomeController.cvUser.personalInformation.age=int.parse(val),
+                 // onTap:(val)=>,
                   prefixIcon: Icons.person,
                   hintText: tr(LocaleKeys.your_age)),
               const SizedBox(
@@ -227,16 +232,18 @@ print('-------------------------------------------------------');
                             groupValue: [true,false],
                             onChanged: (val) {
                               gender = !gender;
+                                  HomeController.cvUser.personalInformation.gender='Female';
                               setState(() {
 
                               });
-                            }),
+                            },),
                         RadioListTile(
                             title: Text("Male"),
                             value: !gender,
                             groupValue: [true,false],
                             onChanged: (val) {
                               gender = !gender;
+                              HomeController.cvUser.personalInformation.gender='Male';
                               setState(() {
 
                               });
@@ -270,7 +277,7 @@ print('-------------------------------------------------------');
                       return null;
                     }
                   },
-                  onChange: null,
+                  onChange: (val)=>HomeController.cvUser.personalInformation.address=val,
                   prefixIcon: FontAwesomeIcons.addressCard,
                   hintText: tr(LocaleKeys.your_address)),
               const SizedBox(
@@ -285,7 +292,7 @@ print('-------------------------------------------------------');
                       return null;
                     }
                   },
-                  onChange: null,
+                  onChange: (val)=>HomeController.cvUser.personalInformation.email=val,
                   prefixIcon: Icons.email,
                   hintText: tr(LocaleKeys.your_email)),
               const SizedBox(
@@ -301,7 +308,7 @@ print('-------------------------------------------------------');
                     }
                   },
                   textInputType: TextInputType.phone,
-                  onChange: null,
+                  onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
                   prefixIcon: Icons.phone_android,
                   hintText: tr(LocaleKeys.your_phone)),
               const SizedBox(
@@ -327,6 +334,7 @@ print('-------------------------------------------------------');
                 ),
                 onChanged: (val) {
                   controllerMilitary.text = val.toString();
+                   //   HomeController.cvUser.personalInformation.militaryStatus=val;
                 },
               )
             ],

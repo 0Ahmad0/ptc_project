@@ -80,7 +80,13 @@ print(nameRef);
 print('-------------------------------------------------------');
 print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
-await homeController.createCvUser(context);
+var result= await homeController.createCvUser(context);
+if(result['status']){
+  HomeController.cvUser=CvUser.genCvUser();
+  setState(() {
+
+  });
+}
 print('-------------------------------------------------------');
 },
 //             onPressed: ()async{

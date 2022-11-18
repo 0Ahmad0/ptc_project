@@ -98,6 +98,8 @@ print(nameRef);
 print('-------------------------------------------------------');
 print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
+await homeController.createCvUser(context);
+print('-------------------------------------------------------');
 },
 //             onPressed: ()async{
 //                _getSql();

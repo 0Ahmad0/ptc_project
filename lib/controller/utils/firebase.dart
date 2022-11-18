@@ -2,9 +2,10 @@
 import 'dart:io';
 
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firedart/firedart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ptc_project/model/' as model;
+import 'package:ptc_project/model/models.dart' as model;
+import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/translations/locale_keys.g.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firedart/auth/firebase_auth.dart';
@@ -18,31 +19,27 @@ import 'package:easy_localization/easy_localization.dart';
 class FirebaseFun{
   static var rest;
 
-  static createChat( {required model.Chat chat}) async {
-    final result =await FirebaseFirestore.instance
-        .collection('')
+  static createCvUser( {required CvUser cvUser}) async {
+    final result =await Firestore.instance
+        .collection('CvUser')
         .add(
-        model.Message(
-            replayId: "",
-            textMessage: "",
-            deleteUserMessage: [],
-            typeMessage: model.ChatMessageType.text.name,
-            senderId: "",
-            sendingTime:DateTime.now()).toJson(),
-    ).then(onValueCreateChat)
+      cvUser.toJson(),
+    ).then(onValueCreateUser)
         .catchError(onError);
     if(result['status']){
-      print(true);
+    //  print(true);
       // print(user.id);
-      print("id : ${chat.id}");
+      print("idUser : ${cvUser.idUser}");
+      print("id : ${result['body']['idUser']}");
       return {
         'status':true,
-        'message':'Chat successfully created',
-        'body': chat.toJson()
+        'message':'Cv user successfully created',
+        'body': cvUser.toJson()
       };
     }
     return result;
   }
+/**
   static fetchGroup( {required String id})  async {
     final result=await FirebaseFirestore.instance.collection('AppConstants.collectionGroup')
         .doc(id)
@@ -70,17 +67,18 @@ class FirebaseFun{
     result['status']?result['message']="group successfully ${updateGroupType.name}":"";
     return result;
   }
+  *//**
   static deleteMessage( {required String idGroup,required String idMessage}) async {
-    final result =await FirebaseFirestore.instance
+    final result =await Firestore.instance
         .collection('AppConstants.collectionGroup')
-        .doc(idGroup)
+        //.doc(idGroup)
         .collection('AppConstants.collectionChat')
         .doc(idMessage).delete().then(onValueDeleteMessage)
         .catchError(onError);
     return result;
-  }
+  }*/
   static fetchGroups()  async {
-    final result=await FirebaseFirestore.instance.collection('AppConstants.collectionGroup')
+    final result=await Firestore.instance.collection('AppConstants.collectionGroup')
        // .orderBy("sort")
         .get()
         .then((onValueFetchGroups))
@@ -97,6 +95,19 @@ class FirebaseFun{
       //'body':""
     };
   }
+
+
+  static Future<Map<String,dynamic>> onValueCreateUser(value) async{
+    return {
+      'status':true,
+      'message':'Cv user successfully created',
+        'body': {'idUser':value.id}
+    };
+  }
+
+
+
+
 
   static Future<Map<String,dynamic>> onValueSignup(value) async{
     print(true);
@@ -156,6 +167,7 @@ class FirebaseFun{
       'body':{}
     };
   }
+  /**
   static Future<Map<String,dynamic>> onValueFetchUser(value) async{
     print(true);
     print(await (value.docs.length>0)?value.docs[0]['uid']:null);
@@ -225,6 +237,7 @@ class FirebaseFun{
       'body':chat.toJson(),
     };
   }
+  */
   static Future<Map<String,dynamic>> onValueAddMessage(value) async{
     return {
       'status':true,
@@ -302,6 +315,7 @@ class FirebaseFun{
       'body':value.docs
     };
   }
+  /**
   static Future<Map<String,dynamic>> onValuefetchPaySession(value) async{
     print(true);
     print("PaySession count : ${value.docs.length}");
@@ -312,6 +326,7 @@ class FirebaseFun{
       'body':(value.docs.length>0)?value.docs:body
     };
   }
+      **/
   static Future<Map<String,dynamic>> onValueFetchUsers(value) async{
     print(true);
     print("Users count : ${value.docs.length}");

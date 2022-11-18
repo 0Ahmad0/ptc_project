@@ -15,7 +15,8 @@ const apiKEY = 'AIzaSyDmnCLByB0__hIi4xVUbVLllnC8fJBMGBo';
 const projectID = 'ptc-project-84660';
 Future<void> main() async{
   await WidgetsFlutterBinding.ensureInitialized();
-  Firestore.initialize(projectID);
+  //await  Firebase.initializeApp();
+  await Firestore.initialize('ptc-project-84660');
   if(Platform.isAndroid){
     await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

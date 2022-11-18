@@ -66,9 +66,9 @@ class ProjectForm extends StatelessWidget {
     linkProjectController.text = HomeController.cvUser.projects.listProject[index!-1].linkProject;
     descriptionProjectController.text = HomeController.cvUser.projects.listProject[index!-1].descriptionProject;
     typeProjectController.text = HomeController.cvUser.projects.listProject[index!-1].typeProject;
-    HomeController.cvUser.projects.listProject[index!-1].startDate.year>0?
+    HomeController.cvUser.projects.listProject[index!-1].startDate.year>1?
     dateController.text =DateFormat.yMd().format(HomeController.cvUser.projects.listProject[index!-1].startDate):null;
-    HomeController.cvUser.projects.listProject[index!-1].endDate.year>0?
+    HomeController.cvUser.projects.listProject[index!-1].endDate.year>1?
     dateEndController.text =DateFormat.yMd().format(HomeController.cvUser.projects.listProject[index!-1].endDate):null;
     return Form(
       key: form,

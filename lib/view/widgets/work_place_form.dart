@@ -70,7 +70,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
     emailCompanyController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].emailCompany;
     workTypeController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType;
     phoneCompanyController.text=HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].phoneCompany;
-    HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate.year>0?
+    HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate.year>1?
     dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].startDate):null;
     return Form(
       key: form,

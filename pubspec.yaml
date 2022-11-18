@@ -53,6 +53,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
+  multi_select_search: ^0.0.3
 
 dev_dependencies:
   flutter_test:

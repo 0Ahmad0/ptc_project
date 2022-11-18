@@ -75,6 +75,13 @@ class _HomeViewState extends State<HomeView> {
   }
   @override
   Widget build(BuildContext context) {
+    controllerName.text=HomeController.cvUser.personalInformation.name;
+    controllerGender.text=HomeController.cvUser.personalInformation.gender;
+    controllerPhone.text=HomeController.cvUser.personalInformation.phone;
+    controllerEmail.text=HomeController.cvUser.personalInformation.email;
+    controllerAddress.text=HomeController.cvUser.personalInformation.address;
+    if(HomeController.cvUser.personalInformation.age>0)
+    controllerAge.text=HomeController.cvUser.personalInformation.age.toString();
     return Scaffold(
       floatingActionButton:  SizedBox(
         height: Sizer.getH(context)*0.175,
@@ -315,6 +322,7 @@ print('-------------------------------------------------------');
                 height: AppSize.s20,
               ),
               DropdownButtonFormField<String>(
+                value: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':null,
                 validator: (String? val) {
                   if (val!.trim().isEmpty) {
                     return "this filed is required";
@@ -333,8 +341,10 @@ print('-------------------------------------------------------');
                     prefixIcon: Icon(FontAwesomeIcons.personMilitaryRifle)
                 ),
                 onChanged: (val) {
-                  controllerMilitary.text = val.toString();
-                   //   HomeController.cvUser.personalInformation.militaryStatus=val;
+                  (val.toString().contains('yes'))?
+                    HomeController.cvUser.personalInformation.militaryStatus=true
+                    :HomeController.cvUser.personalInformation.militaryStatus=false;
+
                 },
               )
             ],
@@ -414,34 +424,38 @@ class _BuildFourthPageState extends State<BuildFourthPage> {
       key: widget.formKey,
       child: ListView(
         children: [
-          for(var project = 0 ; project < usersProject.length ; project++)
+          for(var project = 0 ; project < HomeController.cvUser.projects.listProject.length ; project++)
             ProjectForm(
               index: project +1 ,
-              userProject: usersProject[project],
+              userProject: usersProject[0],
               onAddForm: (){
                 setState(() {
                   usersProject.add(UserProject(name: "name"));
+                  HomeController.cvUser.projects.listProject.add(Project.genCourse());
                 });
               },
               onDelete: (){
                 setState(() {
-                  usersProject.removeAt(project);
+                  HomeController.cvUser.projects.listProject.removeAt(project);
+                  // usersProject.removeAt(project);
                 });
               },
             ),
           PTCDvider(),
-          for(var techSkills = 0 ; techSkills < userThechnicalSkills.length ; techSkills++)
+          for(var techSkills = 0 ; techSkills < HomeController.cvUser.technicalSkills.listTechnicalSkill.length ; techSkills++)
             SkillsTechnicalForm(
               index: techSkills +1 ,
-              userTechnicalSkills: userThechnicalSkills[techSkills],
+              userTechnicalSkills: userThechnicalSkills[0],
               onAddForm: (){
                 setState(() {
                   userThechnicalSkills.add(UserTechnicalSkills(name: "name"));
+                  HomeController.cvUser.technicalSkills.listTechnicalSkill.add(TechnicalSkill.genCourse());
                 });
               },
               onDelete: (){
                 setState(() {
-                  userThechnicalSkills.removeAt(techSkills);
+                  HomeController.cvUser.technicalSkills.listTechnicalSkill.removeAt(techSkills);
+                  // userThechnicalSkills.removeAt(techSkills);
                 });
               },
             ),

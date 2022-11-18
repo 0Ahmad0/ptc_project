@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ptc_project/model/models.dart';
@@ -27,7 +29,7 @@ class WorkForm extends StatelessWidget {
   }
   DateTime _selectedDate = DateTime.now();
 
-  _selectDate(BuildContext context,TextEditingController controller) async {
+  _selectDate(BuildContext context,TextEditingController controller,int typeDate) async {
     var newSelectedDate = await showDatePicker(
       builder: (context, child) {
         return child!;
@@ -40,6 +42,12 @@ class WorkForm extends StatelessWidget {
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
+      if(typeDate==0)
+        HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate=_selectedDate;
+      else {
+        HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate=_selectedDate;
+        HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDateForNow=true;
+      }
       controller
         ..text = DateFormat.yMd().format(_selectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
@@ -53,8 +61,10 @@ class WorkForm extends StatelessWidget {
     positionPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].positionPersonPlace;
     skillsPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].skillsPersonPlace;
     levelPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].levelPersonPlace;
-    dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate);
-    dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate);
+    HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate.year>0?
+    dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate):null;
+    HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate.year>0?
+    dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate):null;
     return Card(
       child: ListView(
         padding: const EdgeInsets.all(AppPadding.p12),
@@ -66,7 +76,9 @@ class WorkForm extends StatelessWidget {
               Flexible(child: Text("Work ${index}")),
               Row(
                 children: [
-                  (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                  (HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork.length<2)
+                      ?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                  //(index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
                   (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                 ],
@@ -88,7 +100,7 @@ class WorkForm extends StatelessWidget {
                   controller: dateController,
                   readOnly: true,
                   onTap: () {
-                    _selectDate(context,dateController);
+                    _selectDate(context,dateController,0);
                     HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate=DateFormat().parse(dateController.text);
                   },
                 ),
@@ -99,7 +111,7 @@ class WorkForm extends StatelessWidget {
                   controller: dateEndController,
                   readOnly: true,
                   onTap: () {
-                    _selectDate(context,dateEndController);
+                    _selectDate(context,dateEndController,1);
                   },
                 ),
               ),

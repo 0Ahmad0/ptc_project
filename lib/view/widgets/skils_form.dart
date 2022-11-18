@@ -37,7 +37,7 @@ class SkilsForm extends StatelessWidget {
                   Flexible(child: Text("Skils${index}")),
                   Row(
                     children: [
-                     (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                     (HomeController.cvUser.skills.listSkill.length<2)?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
                      (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],

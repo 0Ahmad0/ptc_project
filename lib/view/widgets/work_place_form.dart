@@ -86,7 +86,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
                   Flexible(child: Text("Work Place${widget.index}")),
                   Row(
                     children: [
-                      (widget.index!-1) ==0?SizedBox(): IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
+                      (HomeController.cvUser.workPlaces.listWorkPlace.length<2)?SizedBox(): IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
                       (widget.index!-1)!=0?SizedBox(): IconButton(onPressed:widget.onAddForm , icon: Icon(Icons.add)),
 
                     ],

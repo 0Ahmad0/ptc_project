@@ -41,7 +41,7 @@ class LanguageForm extends StatelessWidget {
                   Flexible(child: Text("Language${index}")),
                   Row(
                     children: [
-                      (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                      (HomeController.cvUser.languages.listLanguage.length<2)?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
                       (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],

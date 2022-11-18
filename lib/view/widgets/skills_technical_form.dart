@@ -5,6 +5,8 @@ import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 
+import '../../controller/home_controller.dart';
+
 
 class SkillsTechnicalForm extends StatelessWidget {
   final UserTechnicalSkills? userTechnicalSkills;
@@ -16,6 +18,9 @@ class SkillsTechnicalForm extends StatelessWidget {
   final form = GlobalKey<FormState>();
   final dateController = TextEditingController(text: "Start Date");
   final dateEndController = TextEditingController(text: "End Date");
+  final skillsNameController = TextEditingController();
+  final skillsLevelController = TextEditingController();
+  final skillsTypeController = TextEditingController();
   bool validate(){
     var valid = form.currentState!.validate();
     if(valid)  form.currentState!.save();
@@ -46,6 +51,9 @@ class SkillsTechnicalForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    skillsLevelController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel.toString();
+    skillsTypeController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsType;
+    skillsNameController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsName;
     return Form(
       key: form,
       child: Card(
@@ -60,7 +68,8 @@ class SkillsTechnicalForm extends StatelessWidget {
                   Flexible(child: Text("Thechnical Skills ${index}")),
                   Row(
                     children: [
-                      (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                     // (index!-1) ==0?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                      (HomeController.cvUser.technicalSkills.listTechnicalSkill.length<2)?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
                       (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],
@@ -68,18 +77,25 @@ class SkillsTechnicalForm extends StatelessWidget {
                 ],
               ),
               TextFormField(
+                controller: skillsTypeController,
                 decoration: InputDecoration(
                     hintText: "Skills Type"
                 ),
+                onChanged: (val)=> HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsType=val,
               ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
+                controller: skillsNameController,
                 decoration: InputDecoration(
                     hintText: "Skills Name"
                 ),
+                onChanged: (val)=> HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsName=val,
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
+                value:  HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel>0
+                    ?HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel
+                  :null,
                   decoration: InputDecoration(
                       hintText: "Skill Level",
                       prefixIcon: Icon(Icons.polymer)
@@ -88,7 +104,7 @@ class SkillsTechnicalForm extends StatelessWidget {
 
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){})
+                  )).toList(), onChanged: (val){HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel=int.parse(val.toString());})
 
 
             ],

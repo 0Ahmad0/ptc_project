@@ -27,8 +27,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  CollectionReference nameRef = Firestore.instance.collection("name");
 
+  CollectionReference nameRef = Firestore.instance.collection("name");
   final controllerName = TextEditingController();
   final HomeController homeController= HomeController();
   final controllerAge = TextEditingController();
@@ -54,25 +54,7 @@ class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
 
   double progresValue = .3;
-  var db = new MySQL();
-  var mail = '';
-  void _getSql()  {
-    db.getConnection().then((conn){
-      //String sql='select * from ptc.temp';
-     // String sql='CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), email varchar(255), age int)';
-    //  String sql='INSERT INTO `ptc`.`users` ( `name`, `email`, `age`) VALUES ( \'Bob\', \'bob@bob.com\', \'25\')';
-      String sql='SELECT * FROM ptc.users';
 
-      //print('co : ${conn}');
-      print(sql);
-      conn.query(sql).then((results){
-        print(results.length);
-        for (var row in results){
-          print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-        }
-      });
-    });
-  }
   @override
   Widget build(BuildContext context) {
     controllerName.text=HomeController.cvUser.personalInformation.name;
@@ -183,7 +165,7 @@ print('-------------------------------------------------------');
       ),
     );
   }
-  bool gender  = true;
+  String gender  = "Male";
   Widget buildFirstPage() {
     return Form(
       key: formKey1,
@@ -233,28 +215,29 @@ print('-------------------------------------------------------');
                         border: Border.all(color: ColorManager.primaryColor)),
                     child: Column(
                       children: [
-                        RadioListTile(
-                            title: Text("Female"),
-                            value: gender,
-                            groupValue: [true,false],
-                            onChanged: (val) {
-                              gender = !gender;
-                                  HomeController.cvUser.personalInformation.gender='Female';
-                              setState(() {
 
-                              });
-                            },),
                         RadioListTile(
                             title: Text("Male"),
-                            value: !gender,
-                            groupValue: [true,false],
+                            value: "Male",
+                            groupValue: gender,
                             onChanged: (val) {
-                              gender = !gender;
-                              HomeController.cvUser.personalInformation.gender='Male';
+                              gender = val.toString();
+                              HomeController.cvUser.personalInformation.gender=gender;
                               setState(() {
 
                               });
-                            })
+                            }),
+                        RadioListTile(
+                          title: Text("Female"),
+                          value: "Female",
+                          groupValue: gender,
+                          onChanged: (val) {
+                            gender = val.toString();
+                            HomeController.cvUser.personalInformation.gender=gender;
+                            setState(() {
+
+                            });
+                          },),
                       ],
                     ),
                   ),

@@ -107,8 +107,8 @@ print('-------------------------------------------------------');
         alignment: Alignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppPadding.p40
+            padding:  EdgeInsets.symmetric(
+              horizontal: Platform.isWindows?AppPadding.p40:0.0
             ),
             child: PageView(
               onPageChanged: (index){

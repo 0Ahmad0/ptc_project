@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
@@ -36,9 +38,23 @@ Future<void> main() async{
   ),);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  void chechConnactivity()async{
+   var result = await Connectivity().checkConnectivity();
+   print(result.name);
+  }
+  @override
+  void initState() {
+    super.initState();
+    chechConnactivity();
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -47,7 +63,26 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       locale: context.deviceLocale,
       theme: ThemeManager.myTheme,
-      home: SplashView(),
+      home: StreamBuilder<ConnectivityResult>(
+        stream: Connectivity().onConnectivityChanged,
+        builder: (context, snapshot) {
+          if(snapshot.data == ConnectivityResult.none){
+            // AwesomeDialog(
+            //   context: context,
+            //   dialogType: DialogType.error,
+            //   animType: AnimType.rightSlide,
+            //   title: 'Connection Error',
+            //   desc: 'Please check your internet',
+            //   btnCancelOnPress: () {},
+            //   btnOkOnPress: () {},
+            // )..show();
+            return Center(child: Text("data"));
+
+          }else{
+            return SplashView();
+          }
+        }
+      ),
     );
   }
 }

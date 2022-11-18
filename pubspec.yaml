@@ -54,6 +54,8 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   multi_select_search: ^0.0.3
+  connectivity_plus: ^3.0.2
+  awesome_dialog: ^3.0.2
 
 dev_dependencies:
   flutter_test:

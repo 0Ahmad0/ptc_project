@@ -68,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
     controllerAge.text=HomeController.cvUser.personalInformation.age.toString();
     return Scaffold(
       floatingActionButton:  SizedBox(
-        height: Sizer.getH(context)*0.175,
+        height: Sizer.getH(context)*0.125,
         child: CircleProgressBar(
           foregroundColor: ColorManager.success,
           backgroundColor: Colors.white,

@@ -19,6 +19,9 @@ Map<int, Color> color =
 };
 class ThemeManager{
   static var myTheme = ThemeData(
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateColor.resolveWith((states) => ColorManager.primaryColor)
+    ),
     primarySwatch: MaterialColor(0xff334F76,color),
     primaryColor: ColorManager.primaryColor,
     iconTheme: IconThemeData(

@@ -38,6 +38,9 @@ class _InformationPageState extends State<InformationPage> {
                 padding: EdgeInsets.only(
                   bottom: AppPadding.p18
                 ),
+                children: [
+
+                ],
               ),
               ElevatedButton(onPressed: (){}, child: Text("Save"))
             ],

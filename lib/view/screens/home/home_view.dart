@@ -123,8 +123,16 @@ print('-------------------------------------------------------');
               controller: controllerPageView,
               scrollDirection: Axis.horizontal,
               children: [
-            buildFirstPage(),
-            buildSecondPage(),
+               BuildFirstPage(
+                 gender: gender,
+                 controllerName: controllerName,
+                 controllerAge: controllerAge,
+                 controllerAddress: controllerAddress,
+                 controllerPhone: controllerPhone,
+                 controllerEmail: controllerEmail,
+                 form: formKey1,
+               ),
+            BuildSecondPage(form: formKey2),
             BuildThirdPage(formKey: formKey3,),
                 BuildFourthPage(formKey: formKey4)
 
@@ -170,183 +178,212 @@ print('-------------------------------------------------------');
     );
   }
   String gender  = "Male";
-  Widget buildFirstPage() {
-    return Form(
-      key: formKey1,
+
+  List<Widget> languages = [];
+}
+
+class BuildFirstPage extends StatefulWidget {
+  final GlobalKey<FormState> form;
+  final TextEditingController controllerName
+  ,controllerAge,controllerAddress,controllerEmail,controllerPhone;
+  String gender;
+
+   BuildFirstPage({super.key, required this.form, required this.controllerName, required this.controllerAge, required this.gender, required this.controllerAddress, required this.controllerEmail, required this.controllerPhone});
+  @override
+  State<BuildFirstPage> createState() => _BuildFirstPageState();
+}
+
+class _BuildFirstPageState extends State<BuildFirstPage> {
+  @override
+  Widget build(BuildContext context) {
+    return  Form(
+      key: widget.form,
       child: ListView(
-            padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(10.0),
+        children: [
+          CustomTextFiled(
+              controller: widget.controllerName,
+              validator: (String? val) {
+                if (val!.trim().isEmpty) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              onChange:(val)=>HomeController.cvUser.personalInformation.name=val,
+              prefixIcon: Icons.person,
+              hintText: tr(LocaleKeys.your_name)),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          CustomTextFiled(
+              controller: widget.controllerAge,
+              textInputType: TextInputType.number,
+              validator: (String? val) {
+                if (val!.trim().isEmpty) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              onChange: (val)=>HomeController.cvUser.personalInformation.age=int.parse(val),
+              // onTap:(val)=>,
+              prefixIcon: Icons.person,
+              hintText: tr(LocaleKeys.your_age)),
+          const SizedBox(
+            height: AppSize.s10,
+          ),
+          Stack(
             children: [
-              CustomTextFiled(
-                  controller: controllerName,
-                  validator: (String? val) {
-                    if (val!.trim().isEmpty) {
-                      return "this filed is required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange:(val)=>HomeController.cvUser.personalInformation.name=val,
-                  prefixIcon: Icons.person,
-                  hintText: tr(LocaleKeys.your_name)),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextFiled(
-                  controller: controllerAge,
-                  textInputType: TextInputType.number,
-                  validator: (String? val) {
-                    if (val!.trim().isEmpty) {
-                      return "this filed is required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (val)=>HomeController.cvUser.personalInformation.age=int.parse(val),
-                 // onTap:(val)=>,
-                  prefixIcon: Icons.person,
-                  hintText: tr(LocaleKeys.your_age)),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                        top: AppMargin.m10
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppSize.s8),
-                        border: Border.all(color: ColorManager.primaryColor)),
-                    child: Column(
-                      children: [
-
-                        RadioListTile(
-                            title: Text("Male"),
-                            value: "Male",
-                            groupValue: gender,
-                            onChanged: (val) {
-                              gender = val.toString();
-                              HomeController.cvUser.personalInformation.gender=gender;
-                              setState(() {
-
-                              });
-                            }),
-                        RadioListTile(
-                          title: Text("Female"),
-                          value: "Female",
-                          groupValue: gender,
-                          onChanged: (val) {
-                            gender = val.toString();
-                            HomeController.cvUser.personalInformation.gender=gender;
-                            setState(() {
-
-                            });
-                          },),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: AppSize.s30,
-                    top: AppSize.s4,
-                    child: Container(
-                      color: ColorManager.white,
-                      child: Text(tr(LocaleKeys.your_gender),style: getBoldStyle(
-                          color: ColorManager.black,
-                          fontSize: AppSize.s10
-                      ),),
-                    ),
-                  ),
-
-                ],
-              ),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextFiled(
-                  controller: controllerAddress,
-                  validator: (String? val) {
-                    if (val!.trim().isEmpty) {
-                      return "this filed is required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (val)=>HomeController.cvUser.personalInformation.address=val,
-                  prefixIcon: FontAwesomeIcons.addressCard,
-                  hintText: tr(LocaleKeys.your_address)),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextFiled(
-                  controller: controllerEmail,
-                  validator: (String? val) {
-                    if (val!.trim().isEmpty) {
-                      return "this filed is required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onChange: (val)=>HomeController.cvUser.personalInformation.email=val,
-                  prefixIcon: Icons.email,
-                  hintText: tr(LocaleKeys.your_email)),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextFiled(
-                  controller: controllerPhone,
-                  validator: (String? val) {
-                    if (val!.trim().isEmpty) {
-                      return "this filed is required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  textInputType: TextInputType.phone,
-                  onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
-                  prefixIcon: Icons.phone_android,
-                  hintText: tr(LocaleKeys.your_phone)),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              DropdownButtonFormField<String>(
-                value: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':null,
-                validator: (String? val) {
-                  if (val!.trim().isEmpty) {
-                    return "this filed is required";
-                  } else {
-                    return null;
-                  }
-                },
-                items: ['yes', 'no']
-                    .map((e) => DropdownMenuItem<String>(
-                  child: Text(e),
-                  value: e,
-                ))
-                    .toList(),
-                decoration: InputDecoration(
-                    hintText: tr(LocaleKeys.your_military_status),
-                    prefixIcon: Icon(FontAwesomeIcons.personMilitaryRifle)
+              Container(
+                margin: const EdgeInsets.only(
+                    top: AppMargin.m10
                 ),
-                onChanged: (val) {
-                  (val.toString().contains('yes'))?
-                    HomeController.cvUser.personalInformation.militaryStatus=true
-                    :HomeController.cvUser.personalInformation.militaryStatus=false;
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSize.s8),
+                    border: Border.all(color: ColorManager.primaryColor)),
+                child: Column(
+                  children: [
 
-                },
-              )
+                    RadioListTile(
+                        title: Text("Male"),
+                        value: "Male",
+                        groupValue: widget.gender,
+                        onChanged: (val) {
+                          widget.gender = val.toString();
+                          HomeController.cvUser.personalInformation.gender=widget.gender;
+                          setState(() {
+
+                          });
+                        }),
+                    RadioListTile(
+                      title: Text("Female"),
+                      value: "Female",
+                      groupValue: widget.gender,
+                      onChanged: (val) {
+                        widget.gender = val.toString();
+                        HomeController.cvUser.personalInformation.gender=widget.gender;
+                        setState(() {
+
+                        });
+                      },),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: AppSize.s30,
+                top: AppSize.s4,
+                child: Container(
+                  color: ColorManager.white,
+                  child: Text(tr(LocaleKeys.your_gender),style: getBoldStyle(
+                      color: ColorManager.black,
+                      fontSize: AppSize.s10
+                  ),),
+                ),
+              ),
+
             ],
           ),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          CustomTextFiled(
+              controller: widget.controllerAddress,
+              validator: (String? val) {
+                if (val!.trim().isEmpty) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              onChange: (val)=>HomeController.cvUser.personalInformation.address=val,
+              prefixIcon: FontAwesomeIcons.addressCard,
+              hintText: tr(LocaleKeys.your_address)),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          CustomTextFiled(
+              controller: widget.controllerEmail,
+              validator: (String? val) {
+                if (val!.trim().isEmpty) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              onChange: (val)=>HomeController.cvUser.personalInformation.email=val,
+              prefixIcon: Icons.email,
+              hintText: tr(LocaleKeys.your_email)),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          CustomTextFiled(
+              controller: widget.controllerPhone,
+              validator: (String? val) {
+                if (val!.trim().isEmpty) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              textInputType: TextInputType.phone,
+              onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
+              prefixIcon: Icons.phone_android,
+              hintText: tr(LocaleKeys.your_phone)),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          DropdownButtonFormField<String>(
+            value: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':null,
+            validator: (String? val) {
+              if (val!.trim().isEmpty) {
+                return "this filed is required";
+              } else {
+                return null;
+              }
+            },
+            items: ['yes', 'no']
+                .map((e) => DropdownMenuItem<String>(
+              child: Text(e),
+              value: e,
+            ))
+                .toList(),
+            decoration: InputDecoration(
+                hintText: tr(LocaleKeys.your_military_status),
+                prefixIcon: Icon(FontAwesomeIcons.personMilitaryRifle)
+            ),
+            onChanged: (val) {
+              (val.toString().contains('yes'))?
+              HomeController.cvUser.personalInformation.militaryStatus=true
+                  :HomeController.cvUser.personalInformation.militaryStatus=false;
+
+            },
+          )
+        ],
+      ),
     );
   }
-  List<Widget> languages = [];
-  Widget buildSecondPage() {
+}
+/**/
+class BuildSecondPage extends StatefulWidget {
+  final GlobalKey<FormState> form;
+  const BuildSecondPage({Key? key, required this.form}) : super(key: key);
+
+  @override
+  State<BuildSecondPage> createState() => _BuildSecondPageState();
+}
+
+class _BuildSecondPageState extends State<BuildSecondPage> {
+  @override
+  Widget build(BuildContext context) {
     return Form(
-      key: formKey2,
+      key: widget.form,
       child: MultiFormLan(),
     );
   }
 }
 
+/**/
 class BuildThirdPage extends StatefulWidget {
    BuildThirdPage({super.key, required this.formKey});
   final GlobalKey formKey;

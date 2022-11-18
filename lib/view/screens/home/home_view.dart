@@ -1,3 +1,4 @@
+
 import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
@@ -20,6 +21,7 @@ import 'package:ptc_project/view/widgets/work_form.dart';
 import '../../widgets/work_place_form.dart';
 import '../search/search_view.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'dart:io';
 
 class HomeView extends StatefulWidget {
   @override
@@ -129,12 +131,14 @@ print('-------------------------------------------------------');
               ],
             ),
           ),
+          if(Platform.isWindows)
           Positioned(
               left: AppSize.s4,
               child: IconButton(onPressed: (){
                 controllerPageView.previousPage(duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
               }, icon: Icon(Icons.arrow_back_ios))),
-          Positioned(
+          if(Platform.isWindows)
+            Positioned(
               right: AppSize.s4,
               child: IconButton(onPressed: (){
                 controllerPageView.nextPage(duration: Duration(milliseconds: 100), curve: Curves.easeInOut);

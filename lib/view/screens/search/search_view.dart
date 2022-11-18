@@ -136,6 +136,9 @@ class _SearchViewState extends State<SearchView> {
                 SizedBox(
                   width: Sizer.getH(context) / 3.5,
                   child: TextFormField(
+                    onFieldSubmitted: (val){
+
+                    },
                     controller: searchController,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(

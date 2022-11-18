@@ -110,7 +110,8 @@ class _SearchViewState extends State<SearchView> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: ColorManager.primaryColor
+                color: ColorManager.primaryColor,
+                width: .3
               )
             )
           ),

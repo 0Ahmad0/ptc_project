@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_search/multi_select_search.dart';
+import 'package:ptc_project/model/utils/const.dart';
 
 import '../../../model/utils/sizer.dart';
 import '../../resourse/color_manager.dart';
+import '../../resourse/font_manager.dart';
 import '../../resourse/style_manager.dart';
 import '../../resourse/values_manager.dart';
 import '../information/information_page.dart';
@@ -108,29 +110,73 @@ class _SearchViewState extends State<SearchView> {
       ),
       body: Column(
         children: [
+
           Expanded(
-            child: MultiSelectSearch<Contact>(
-              emptyListIndicator: Center(
-                child: Text("Empty Data"),
-              ),
-              itemBuilder: (Contact item) => ListTile(
-                key: ObjectKey(item),
-                leading: const Icon(Icons.person),
-                title: Text(item.name),
-              ),
-              chipLabelKey: 'name',
-              items: list,
-              initialValue: initial,
-              onChanged: (List<Contact> items) =>
-                  setState(() => selectedItems = items),
-              decoration: BoxDecoration(
-                border: const Border(
-                  bottom: BorderSide(color: Colors.grey),
+            child: Theme(
+              data: ThemeData(
+                inputDecorationTheme: InputDecorationTheme(
+                  contentPadding:const EdgeInsets.all(AppPadding.p8),
+                  hintStyle: getRegularStyle(
+                      color: ColorManager.lightGray, fontSize: FontSize.s14),
+                  //label
+                  labelStyle: getMediumStyle(
+                      color: ColorManager.black, fontSize: FontSize.s14),
+                  //error
+                  errorStyle: getRegularStyle(
+                      color: ColorManager.error, fontSize: FontSize.s14),
+
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                    borderSide: BorderSide(
+                      color: Colors.transparent
+                    )
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      )
+                  ),
+
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      )
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppSize.s8),
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      )
+                  ),
                 ),
+
               ),
-              clearAll: const Padding(
-                padding: EdgeInsets.only(top: 10.0, right: 6.0),
-                child: Icon(Icons.clear),
+              child: MultiSelectSearch<Contact>(
+                emptyListIndicator: Center(
+                  child: Text("Empty Data"),
+                ),
+                itemBuilder: (Contact item) => ListTile(
+                  key: ObjectKey(item),
+                  leading: const Icon(Icons.person),
+                  title: Text(item.name),
+                ),
+                chipLabelKey: 'name',
+                items: list,
+                initialValue: initial,
+                onChanged: (List<Contact> items) =>
+                    setState(() => selectedItems = items),
+                decoration: BoxDecoration(
+                  border: const Border(
+                    bottom: BorderSide(color: Colors.grey),
+                  ),
+                ),
+                clearAll: const Padding(
+                  padding: EdgeInsets.only(top: 10.0, right: 6.0),
+                  child: Icon(Icons.clear),
+                ),
               ),
             ),
           ),

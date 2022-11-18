@@ -61,7 +61,7 @@ class CoursesForm extends StatelessWidget {
     controllerCertificateName.text=HomeController.cvUser.courses.listCourse[index!-1].certificateName;
     controllerCertificateSide.text=HomeController.cvUser.courses.listCourse[index!-1].certificateSide;
     controllerCertificateType.text=HomeController.cvUser.courses.listCourse[index!-1].certificateType;
-    HomeController.cvUser.courses.listCourse[index!-1].date.year>0
+    HomeController.cvUser.courses.listCourse[index!-1].date.year>1
         ?dateController.text=DateFormat.yMd().format(HomeController.cvUser.courses.listCourse[index!-1].date)
     :null;
     return Form(

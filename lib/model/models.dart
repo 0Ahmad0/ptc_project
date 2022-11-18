@@ -316,7 +316,7 @@ class Course{
       certificateType: json['certificateType'],
       certificateSide: json['certificateSide'],
       certificateName: json['certificateName'],
-      date: json['date'],
+      date: json['date'].toDate(),
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -329,7 +329,7 @@ class Course{
     'date':date,
   };
   factory Course.genCourse(){
-    return  Course(name: '', level: 0, description: '', certificateName: '', certificateSide: '', certificateType: '', date: DateTime.utc(0));
+    return  Course(name: '', level: 0, description: '', certificateName: '', certificateSide: '', certificateType: '', date: DateTime.utc(1));
   }
 }
 
@@ -399,8 +399,8 @@ class WorkPlace{
       workType: json['workType'],
       works: Works.fromJson(json['works']),
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startDate: json['startDate'].toDate(),
+      endDate: json['endDate'].toDate(),
     );
   }
   Map<String,dynamic> toJson() {
@@ -418,7 +418,7 @@ class WorkPlace{
     };
   }
   factory WorkPlace.genCourse(){
-    return  WorkPlace(nameWorkPlace: '', companyWorkPlace: '', contactInfo: '', emailCompany: '',works: Works(idUser: '', idWorkPlace: '',listWork: [Work.genCourse()]), phoneCompany: '', workType: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
+    return  WorkPlace(nameWorkPlace: '', companyWorkPlace: '', contactInfo: '', emailCompany: '',works: Works(idUser: '', idWorkPlace: '',listWork: [Work.genCourse()]), phoneCompany: '', workType: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
 }
 
@@ -479,8 +479,8 @@ class Work{
       levelPersonPlace: json['levelPersonPlace'],
       skillsPersonPlace: json['skillsPersonPlace'],
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startDate: json['startDate'].toDate(),
+      endDate: json['endDate'].toDate(),
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -492,7 +492,7 @@ class Work{
     'startDate':startDate,
   };
   factory Work.genCourse(){
-    return Work(positionPersonPlace: '', skillsPersonPlace: '', levelPersonPlace: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
+    return Work(positionPersonPlace: '', skillsPersonPlace: '', levelPersonPlace: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
 }
 
@@ -555,8 +555,8 @@ class Project{
       linkProject: json['linkProject'],
       stakeholder: json['stakeholder'],
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startDate: json['startDate'].toDate(),
+      endDate: json['endDate'].toDate(),
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -570,7 +570,7 @@ class Project{
     'startDate':startDate,
   };
   factory Project.genCourse(){
-    return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: '', startDate: DateTime.utc(0), endDate: DateTime.utc(0));
+    return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
 }
 

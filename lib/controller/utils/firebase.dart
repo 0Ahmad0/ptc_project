@@ -37,6 +37,14 @@ class FirebaseFun{
     }
     return result;
   }
+  static fetchCvUsers()  async {
+    final result=await Firestore.instance.collection('AppConstants.collectionGroup')
+    // .orderBy("sort")
+        .get()
+        .then((onValueFetchGroups))
+        .catchError(onError);
+    return result;
+  }
 /**
   static fetchGroup( {required String id})  async {
     final result=await FirebaseFirestore.instance.collection('AppConstants.collectionGroup')

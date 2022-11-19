@@ -67,8 +67,12 @@ class WorkForm extends StatelessWidget {
     dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate):null;
     return Card(
       child: ListView(
-        padding: const EdgeInsets.all(AppPadding.p12),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppPadding.p12,
+          horizontal: AppPadding.p20
+        ),
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

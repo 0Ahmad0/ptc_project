@@ -32,6 +32,8 @@ class _MultiFormLanState extends State<MultiFormLan> {
       //userLanguage.isEmpty?Center(child: Text("No Data Found"),)
     //:
     ListView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         for(var lan =0 ; lan < HomeController.cvUser.languages.listLanguage.length ; lan++)
           LanguageForm(

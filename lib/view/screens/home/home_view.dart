@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ptc_project/controller/home_controller.dart';
 import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
-import 'package:ptc_project/model/utils/sql.dart';
 import 'package:ptc_project/translations/locale_keys.g.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/style_manager.dart';
@@ -216,6 +215,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(10.0),
         children: [
+
           CustomTextFiled(
               controller: widget.controllerName,
               validator: (String? val) {

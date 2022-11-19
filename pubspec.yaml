@@ -40,20 +40,18 @@ dependencies:
   animate_do: ^2.1.0
   loading_animation_widget: ^1.2.0+3
   get: ^4.6.5
-  fluttertoast: ^8.1.1
+
   hive: ^2.2.3
   easy_localization: ^3.0.1
   msix: ^3.7.0
   font_awesome_flutter: ^10.2.1
   circle_progress_bar: ^0.1.2
-  mysql1: ^0.20.0
   firebase_core: ^2.2.0
   flutter_ui: ^0.0.5
   firedart: ^0.9.0+1
   firebase_auth:
   cloud_firestore:
   firebase_storage:
-  multi_select_search: ^0.0.3
   connectivity_plus: ^3.0.2
   awesome_dialog: ^3.0.2
   oktoast: ^3.3.1

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oktoast/oktoast.dart';
 import '../../view/resourse/color_manager.dart';
 import '../../view/resourse/style_manager.dart';
@@ -29,7 +28,11 @@ class CONSTANTSAPP{
 
 
 
-  static TOAST(BuildContext context,{String textToast = "This Is Toast"}){
+  static TOAST(
+      BuildContext context,
+  {String textToast = "This Is Toast",
+        Color color = ColorManager.lightGray,
+      }){
     // showToast(
     //     textToast,
     //     context: context,
@@ -38,10 +41,20 @@ class CONSTANTSAPP{
     // );
     showToast(
         '$textToast',
-      backgroundColor: ColorManager.primaryColor,
       context: context,
-      textStyle: getRegularStyle(color: ColorManager.white),
-      animationCurve: Curves.fastOutSlowIn
+      animationCurve: Curves.easeInOut,
+      backgroundColor: color.withOpacity(.75),
+      textStyle: TextStyle(
+        color: ColorManager.black
+      ),
+
+      position: ToastPosition.bottom,
+      radius: 100,
+      textPadding: EdgeInsets.symmetric(
+        vertical: AppPadding.p8,
+        horizontal: AppPadding.p14
+      )
+
     );
   }
 

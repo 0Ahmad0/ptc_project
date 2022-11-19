@@ -8,6 +8,7 @@ import 'package:firedart/firedart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:ptc_project/view/resourse/theme_manager.dart';
 
 import 'firebase_options.dart';
@@ -57,31 +58,33 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      locale: context.deviceLocale,
-      theme: ThemeManager.myTheme,
-      home: StreamBuilder<ConnectivityResult>(
-        stream: Connectivity().onConnectivityChanged,
-        builder: (context, snapshot) {
-          if(snapshot.data == ConnectivityResult.none){
-            // AwesomeDialog(
-            //   context: context,
-            //   dialogType: DialogType.error,
-            //   animType: AnimType.rightSlide,
-            //   title: 'Connection Error',
-            //   desc: 'Please check your internet',
-            //   btnCancelOnPress: () {},
-            //   btnOkOnPress: () {},
-            // )..show();
-            return Center(child: Text("data"));
+    return OKToast(
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        locale: context.deviceLocale,
+        theme: ThemeManager.myTheme,
+        home: StreamBuilder<ConnectivityResult>(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, snapshot) {
+            if(snapshot.data == ConnectivityResult.none){
+              // AwesomeDialog(
+              //   context: context,
+              //   dialogType: DialogType.error,
+              //   animType: AnimType.rightSlide,
+              //   title: 'Connection Error',
+              //   desc: 'Please check your internet',
+              //   btnCancelOnPress: () {},
+              //   btnOkOnPress: () {},
+              // )..show();
+              return Center(child: Text("data"));
 
-          }else{
-            return SplashView();
+            }else{
+              return SplashView();
+            }
           }
-        }
+        ),
       ),
     );
   }

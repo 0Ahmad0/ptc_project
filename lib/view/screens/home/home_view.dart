@@ -82,6 +82,13 @@ print(nameRef);
 print('-------------------------------------------------------');
 print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
+var result= await homeController.createCvUser(context);
+if(result['status']){
+  HomeController.cvUser=CvUser.genCvUser();
+  setState(() {
+  });
+}
+print('-------------------------------------------------------');
 },
 //             onPressed: ()async{
 //                _getSql();
@@ -130,6 +137,9 @@ print('-------------------------------------------------------');
                  controllerAddress: controllerAddress,
                  controllerPhone: controllerPhone,
                  controllerEmail: controllerEmail,
+                 controllerMilitary: TextEditingController(
+                   text: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':'no'
+                 ),
                  form: formKey1,
                ),
             BuildSecondPage(form: formKey2),
@@ -187,8 +197,9 @@ class BuildFirstPage extends StatefulWidget {
   final TextEditingController controllerName
   ,controllerAge,controllerAddress,controllerEmail,controllerPhone;
   String gender;
+  final TextEditingController? controllerMilitary;
 
-   BuildFirstPage({super.key, required this.form, required this.controllerName, required this.controllerAge, required this.gender, required this.controllerAddress, required this.controllerEmail, required this.controllerPhone});
+   BuildFirstPage({super.key, required this.form, required this.controllerName, required this.controllerAge, required this.gender, required this.controllerAddress, required this.controllerEmail, required this.controllerPhone, required this.controllerMilitary});
   @override
   State<BuildFirstPage> createState() => _BuildFirstPageState();
 }
@@ -334,7 +345,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
             height: AppSize.s20,
           ),
           DropdownButtonFormField<String>(
-            value: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':null,
+            value: widget.controllerMilitary!.text,
             validator: (String? val) {
               if (val!.trim().isEmpty) {
                 return "this filed is required";

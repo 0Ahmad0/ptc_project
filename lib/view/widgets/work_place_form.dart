@@ -112,6 +112,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
+
                 value: HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType!=''?
                 HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].workType
                   :null,

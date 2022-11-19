@@ -86,6 +86,7 @@ class WorkForm extends StatelessWidget {
             ],
           ),
           TextFormField(
+            controller: positionPersonPlaceController,
             decoration: InputDecoration(
               hintText: "Position Person work"
             ),
@@ -119,6 +120,7 @@ class WorkForm extends StatelessWidget {
           ),
           const SizedBox(height: AppSize.s10,),
           TextFormField(
+            controller: levelPersonPlaceController,
             decoration: InputDecoration(
                 hintText: "level Person work"
             ),
@@ -127,6 +129,7 @@ class WorkForm extends StatelessWidget {
           ),
           const SizedBox(height: AppSize.s10,),
           TextFormField(
+            controller: skillsPersonPlaceController,
             decoration: InputDecoration(
                 hintText: "skills Person work"
             ),

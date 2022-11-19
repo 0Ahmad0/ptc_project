@@ -27,9 +27,7 @@ class FirebaseFun{
     ).then(onValueCreateUser)
         .catchError(onError);
     if(result['status']){
-    //  print(true);
-      // print(user.id);
-      print("idUser : ${cvUser.idUser}");
+      cvUser.idUser=result['body']['idUser'];
       print("id : ${result['body']['idUser']}");
       return {
         'status':true,

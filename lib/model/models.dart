@@ -51,6 +51,33 @@ class UserProject{
 }
 
 
+
+class CvUsers {
+  List<CvUser> listCvUser;
+
+  CvUsers({
+    this.listCvUser=const []
+  });
+
+  factory CvUsers.fromJson(json){
+    List<CvUser> tempListCvUser = [];
+    for(CvUser cvUser in json["listCvUser"]){
+      tempListCvUser.add(cvUser);
+    }
+    return CvUsers(
+      listCvUser: tempListCvUser,
+    );
+  }
+  Map<String,dynamic> toJson(){
+    List<Map<String,dynamic>> tempListCvUser = [];
+    for(CvUser cvUser in listCvUser){
+      tempListCvUser.add(cvUser.toJson());
+    }
+    return{
+      'listCvUser':tempListCvUser,
+    };
+  }
+}
 class CvUser {
   String idUser;
   PersonalInformation personalInformation;

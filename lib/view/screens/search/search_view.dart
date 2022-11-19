@@ -103,7 +103,7 @@ class _SearchViewState extends State<SearchView> {
       ),
     );
   }
-
+  String categorySearch = 'All';
   Container buildContainerSearch(BuildContext context) {
     return Container(
           width: double.infinity,
@@ -123,7 +123,7 @@ class _SearchViewState extends State<SearchView> {
                   Container(
                     margin: EdgeInsets.all(AppMargin.m8),
                     child: Chip(
-                      label: Text(selectedItems[i].name),
+                      label: Text('${categorySearch}: '+selectedItems[i].name),
                       onDeleted: () {
                         setState(() {
                           selectedItems.removeAt(i);
@@ -133,6 +133,26 @@ class _SearchViewState extends State<SearchView> {
 
                     ),
                   ),
+                SizedBox(
+                  width: Sizer.getH(context) / 3.5,
+                  child: DropdownButtonFormField(
+                    value: categorySearch,
+                    decoration: InputDecoration(
+                        hintText: 'Search By'
+                    ),
+                    items: ['All','PersonalInformation','Languages','Skills',
+                      'Courses',
+                      'WorkPlaces',
+                      'Projects',
+                      'TechnicalSkills'].map((e) => DropdownMenuItem(
+                      child: Text('$e'),
+                      value: e,
+                    )).toList(),
+                    onChanged: (String? value) {
+                      categorySearch = value!;
+                    },
+                  ),
+                ),
                 SizedBox(
                   width: Sizer.getH(context) / 3.5,
                   child: TextFormField(
@@ -179,7 +199,7 @@ class _SearchViewState extends State<SearchView> {
                           )),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

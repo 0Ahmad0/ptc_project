@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ptc_project/model/utils/const.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 
 import '../../resourse/color_manager.dart';
@@ -20,6 +21,7 @@ class _InformationPageState extends State<InformationPage> {
         backgroundColor: ColorManager.secondaryColor,
         actions: [
           IconButton(onPressed: (){
+            CONSTANTSAPP.TOAST(context,textToast: "SAghel");
             setState(() {
               isEdit = false;
             });

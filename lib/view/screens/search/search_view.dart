@@ -1,7 +1,12 @@
+
+import 'package:firedart/firedart.dart' as firedart;
+import 'package:firedart/firestore/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:multi_select_search/multi_select_search.dart';
+import 'package:ptc_project/controller/home_controller.dart';
+import 'package:ptc_project/controller/utils/firebase.dart';
 import 'package:ptc_project/model/utils/const.dart';
 
 import '../../../model/utils/sizer.dart';
@@ -75,7 +80,8 @@ class BuildCVItem extends StatelessWidget {
 }
 
 class SearchView extends StatefulWidget {
-  const SearchView({Key? key}) : super(key: key);
+   SearchView({Key? key}) : super(key: key);
+
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -93,12 +99,40 @@ class _SearchViewState extends State<SearchView> {
       body: Column(
         children: [
           buildContainerSearch(context),
-          Expanded(child: ListView.builder(
-            itemCount: selectedItems.length,
-            itemBuilder: (_,index)=>BuildCVItem(
-              name: selectedItems[index].name,
-            ),
-          ))
+          Expanded(child:
+          FutureBuilder(
+            //prints the messages to the screen0
+              future: HomeController().fetchCvUsers(context),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CONSTANTSAPP.SHOWLOADINGINDECATOR();
+                  //Const.CIRCLE(context);
+                }
+                else if (snapshot.connectionState ==
+                    ConnectionState.active) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  } else if (snapshot.hasData) {
+
+                   // return StatefulBuilder(builder: (_, setStateChat) {
+                      return  ListView.builder(
+                        itemCount: selectedItems.length,
+                        itemBuilder: (_,index)=>BuildCVItem(
+                          name: selectedItems[index].name,
+                        ),
+                      );
+                 //   });
+
+                    /// }));
+                  } else {
+                    return const Text('Empty data');
+                  }
+                }
+                else {
+                  return Text('State: ${snapshot.connectionState}');
+                }
+              })
+          )
         ],
       ),
     );

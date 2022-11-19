@@ -38,10 +38,9 @@ class FirebaseFun{
     return result;
   }
   static fetchCvUsers()  async {
-    final result=await Firestore.instance.collection('AppConstants.collectionGroup')
-    // .orderBy("sort")
+    final result=await Firestore.instance.collection('CvUser')
         .get()
-        .then((onValueFetchGroups))
+        .then((onValueFetchCvUsers))
         .catchError(onError);
     return result;
   }
@@ -108,6 +107,17 @@ class FirebaseFun{
       'status':true,
       'message':'Cv user successfully created',
         'body': {'idUser':value.id}
+    };
+  }
+  static Future<Map<String,dynamic>> onValueFetchCvUsers(value) async{
+    print(true);
+    //print(await value.docs[0]);
+    print("CvUser count : ${value.docs.length}");
+
+    return {
+      'status':true,
+      'message':'CvUser successfully fetch',
+      'body':value.docs
     };
   }
 

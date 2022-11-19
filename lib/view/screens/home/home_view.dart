@@ -18,6 +18,7 @@ import 'package:ptc_project/view/widgets/multi_form_lan.dart';
 import 'package:ptc_project/view/widgets/project_form.dart';
 import 'package:ptc_project/view/widgets/skills_technical_form.dart';
 import 'package:ptc_project/view/widgets/work_form.dart';
+import '../../../model/utils/const.dart';
 import '../../widgets/work_place_form.dart';
 import '../search/search_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -82,6 +83,7 @@ print(nameRef);
 print('-------------------------------------------------------');
 print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
+CONSTANTSAPP.TOAST(context,textToast: "Aghhhel");
 var result= await homeController.createCvUser(context);
 if(result['status']){
   HomeController.cvUser=CvUser.genCvUser();

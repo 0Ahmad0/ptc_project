@@ -12,6 +12,7 @@ import '../model/models.dart';
 class HomeController {
   //static CvUser cvUser = CvUser.genCvUser();
   static CvUser cvUser = TestModel().cvUser1;//CvUser.genCvUser();
+  static CvUsers cvUsers = CvUsers();//CvUser.genCvUser();
   createCvUser(context) async{
     var result =await FirebaseFun.createCvUser(cvUser: cvUser);
     print(result);
@@ -19,5 +20,13 @@ class HomeController {
     //Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
-
+  fetchCvUsers(context) async {
+    var result =await FirebaseFun.fetchCvUsers();
+    print(result);
+    if(result['status']){
+      cvUsers=CvUsers.fromJson(result['body']);
+    }
+   // (!result['status'])?Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString())):"";
+    return result;
+  }
 }

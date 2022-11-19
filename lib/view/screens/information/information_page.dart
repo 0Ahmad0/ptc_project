@@ -7,6 +7,8 @@ import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/screens/home/home_view.dart';
 import 'package:ptc_project/view/widgets/custom_divider.dart';
 
+import '../../../controller/home_controller.dart';
+import '../../../model/models.dart';
 import '../../resourse/color_manager.dart';
 
 class InformationPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class InformationPage extends StatefulWidget {
 
 class _InformationPageState extends State<InformationPage> {
   bool isEdit = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +29,9 @@ class _InformationPageState extends State<InformationPage> {
         backgroundColor: ColorManager.secondaryColor,
         actions: [
           IconButton(onPressed: (){
-            CONSTANTSAPP.TOAST(context,textToast: "SAghel");
+            //CONSTANTSAPP.TOAST(context,textToast: "SAghel");
             setState(() {
+              HomeController.cvUser=CvUser.fromJson(HomeController.cvUserView.toJson());
               isEdit = false;
             });
           }, icon: Icon(Icons.edit)),
@@ -53,7 +57,16 @@ class _InformationPageState extends State<InformationPage> {
                  ),
                  const SizedBox(width: AppSize.s4,),
                  BuildButtonDialog(
-                   onTap: ()=>Get.back(),
+                   onTap: () async {
+                     Get.back();
+                     CONSTANTSAPP.LOADIG(context);
+                     final result= await HomeController().deleteCvUser(context);
+                     Get.back();
+                     if(result['status']) {
+                       HomeController.setStateSearch((){});
+                       Get.back();
+                     }
+                     },
                    text: "Yes",
                    color: ColorManager.primaryColor,
                  ),
@@ -82,13 +95,13 @@ class _InformationPageState extends State<InformationPage> {
 
                 child: BuildFirstPage(
                     form: GlobalKey(),
-                    controllerName: TextEditingController(text: "No"),
-                    controllerAge: TextEditingController(text: "No"),
+                    controllerName: TextEditingController(text: HomeController.cvUser.personalInformation.name),
+                    controllerAge: TextEditingController(text: HomeController.cvUser.personalInformation.age.toString()),
                     gender: "Male",
-                    controllerAddress: TextEditingController(text: "No"),
-                    controllerEmail: TextEditingController(text: "No"),
-                    controllerPhone: TextEditingController(text: "No"),
-                    controllerMilitary: TextEditingController(text: 'yes'),
+                    controllerAddress: TextEditingController(text: HomeController.cvUser.personalInformation.address),
+                    controllerEmail: TextEditingController(text: HomeController.cvUser.personalInformation.email),
+                    controllerPhone: TextEditingController(text:HomeController. cvUser.personalInformation.phone),
+                    controllerMilitary: TextEditingController(text: HomeController.cvUser.personalInformation.militaryStatus?'yes':'no'),
                 ),
               ),
               PTCDvider(
@@ -135,7 +148,20 @@ class _InformationPageState extends State<InformationPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(AppPadding.p10),
-            child: ElevatedButton(onPressed: isEdit?null:(){}, child: Text("Save")),
+            child: ElevatedButton(onPressed: isEdit?null:() async {
+              CONSTANTSAPP.LOADIG(context);
+             final result= await HomeController().updateCvUser(context);
+              Get.back();
+              if(result['status']){
+                isEdit=!isEdit;
+                HomeController.setStateSearch((){});
+              }
+
+
+              setState(() {
+
+              });
+            }, child: Text("Save")),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:ptc_project/controller/home_controller.dart';
 import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/model/utils/sizer.dart';
@@ -59,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    HomeController.cvUser=HomeController.cvUserHome;
     controllerName.text=HomeController.cvUser.personalInformation.name;
     controllerGender.text=HomeController.cvUser.personalInformation.gender;
     controllerPhone.text=HomeController.cvUser.personalInformation.phone;
@@ -82,10 +84,11 @@ print(nameRef);
 print('-------------------------------------------------------');
 print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
-CONSTANTSAPP.TOAST(context,textToast: "Aghhhel");
+CONSTANTSAPP.LOADIG(context);
 var result= await homeController.createCvUser(context);
+Get.back();
 if(result['status']){
-  HomeController.cvUser=CvUser.genCvUser();
+  HomeController.cvUserHome=CvUser.genCvUser();
   setState(() {
   });
 }
@@ -178,9 +181,11 @@ print('-------------------------------------------------------');
             currentAccountPicture: CircleAvatar(),
           ),
           ListTile(
-            onTap: () => Navigator.push(context,
+            onTap: () {
+              HomeController.mapSearch.clear();
+              Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => SearchView()))
-                .then((value) => Navigator.pop(context)),
+                .then((value) => Navigator.pop(context));},
             leading: Icon(Icons.search),
             title: Text('Search'),
           )

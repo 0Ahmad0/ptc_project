@@ -51,7 +51,7 @@ class SkillsTechnicalForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    skillsLevelController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel.toString();
+    skillsLevelController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel;
     skillsTypeController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsType;
     skillsNameController.text=HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsName;
     return Form(
@@ -93,18 +93,18 @@ class SkillsTechnicalForm extends StatelessWidget {
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
-                value:  HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel>0
+                value:  HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel!=''
                     ?HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel
                   :null,
                   decoration: InputDecoration(
                       hintText: "Skill Level",
                       prefixIcon: Icon(Icons.polymer)
                   ),
-                  items: [1,2,3,4,5].map((e) => DropdownMenuItem(
+                  items: ['trainer','junior','mid','senior'].map((e) => DropdownMenuItem(
 
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel=int.parse(val.toString());})
+                  )).toList(), onChanged: (val){HomeController.cvUser.technicalSkills.listTechnicalSkill[index!-1].skillsLevel=val.toString();})
 
 
             ],

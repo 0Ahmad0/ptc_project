@@ -44,6 +44,38 @@ class FirebaseFun{
         .catchError(onError);
     return result;
   }
+  static updateCvUser( {required CvUser cvUser}) async {
+    final result =await Firestore.instance
+        .collection('CvUser')
+    .document(cvUser.idUser)
+        .update(
+      cvUser.toJson(),
+    ).then(onValueupdateUser)
+        .catchError(onError);
+    if(result['status']){
+      return {
+        'status':true,
+        'message':'Cv user successfully update',
+        'body': cvUser.toJson()
+      };
+    }
+    return result;
+  }
+  static deleteCvUser( {required CvUser cvUser}) async {
+    final result =await Firestore.instance
+        .collection('CvUser')
+    .document(cvUser.idUser)
+        .delete().then(onValueupdateUser)
+        .catchError(onError);
+    if(result['status']){
+      return {
+        'status':true,
+        'message':'Cv user successfully delete',
+        'body': cvUser.toJson()
+      };
+    }
+    return result;
+  }
 /**
   static fetchGroup( {required String id})  async {
     final result=await FirebaseFirestore.instance.collection('AppConstants.collectionGroup')
@@ -112,12 +144,18 @@ class FirebaseFun{
   static Future<Map<String,dynamic>> onValueFetchCvUsers(value) async{
     print(true);
     //print(await value.docs[0]);
-    print("CvUser count : ${value.docs.length}");
-
+    print("CvUser count : ${value.toList().length}");
     return {
       'status':true,
       'message':'CvUser successfully fetch',
-      'body':value.docs
+      'body':value.toList()
+    };
+  }
+  static Future<Map<String,dynamic>> onValueupdateUser(value) async{
+    return {
+      'status':true,
+      'message':'CvUser successfully update',
+      'body':{}
     };
   }
 

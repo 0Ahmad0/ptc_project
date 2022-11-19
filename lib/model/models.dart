@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firedart/auth/user_gateway.dart';
+import 'package:flutter/cupertino.dart';
 
 class UserLanguage {
   String? lanName;
@@ -59,9 +61,11 @@ class CvUsers {
     this.listCvUser=const []
   });
 
-  factory CvUsers.fromJson(json){
+  factory CvUsers.fromJson(List json){
     List<CvUser> tempListCvUser = [];
-    for(CvUser cvUser in json["listCvUser"]){
+    for(int i=0;i<json.length;i++){
+      CvUser cvUser =CvUser.fromJson(json[i]);
+      cvUser.index=i;
       tempListCvUser.add(cvUser);
     }
     return CvUsers(
@@ -79,6 +83,7 @@ class CvUsers {
   }
 }
 class CvUser {
+  int index;
   String idUser;
   PersonalInformation personalInformation;
   Languages languages;
@@ -89,6 +94,7 @@ class CvUser {
   TechnicalSkills technicalSkills;
 
   CvUser({
+     this.index=0,
      this.idUser='',
     required this.personalInformation,
     required this.languages,
@@ -100,8 +106,10 @@ class CvUser {
   });
 
   factory CvUser.fromJson(json){
+
     return CvUser(
-      idUser:json['idUser'],
+      index: json['index'],
+      idUser:json.toString().contains('/CvUser/')?json.id:json['idUser'],
       personalInformation: PersonalInformation.fromJson(json['personalInformation']),
       languages: Languages.fromJson(json['languages']),
       skills: Skills.fromJson(json['skills']),
@@ -112,6 +120,7 @@ class CvUser {
     );
   }
   Map<String,dynamic> toJson()=>{
+    'index':index,
     'idUser':idUser,
     'personalInformation':personalInformation.toJson(),
     'languages':languages.toJson(),
@@ -197,8 +206,9 @@ class Languages {
 
   factory Languages.fromJson(json){
     List<Language> tempListLanguage = [];
-    for(Language language in json["listLanguage"]){
-      tempListLanguage.add(language);
+
+    for(var language in json["listLanguage"]){
+      tempListLanguage.add(Language.fromJson(language));
     }
     return Languages(
       idUser: json['idUser'],
@@ -247,8 +257,8 @@ class Skills {
 
   factory Skills.fromJson(json){
     List<Skill> tempListSkill = [];
-    for(Skill skill in json["listSkill"]){
-      tempListSkill.add(skill);
+    for(var skill in json["listSkill"]){
+      tempListSkill.add(Skill.fromJson(skill));
     }
     return Skills(
       idUser: json['idUser'],
@@ -297,8 +307,8 @@ class Courses {
 
   factory Courses.fromJson(json){
     List<Course> tempListCourse = [];
-    for(Course course in json["listCourse"]){
-      tempListCourse.add(course);
+    for(var course in json["listCourse"]){
+      tempListCourse.add(Course.fromJson(course));
     }
     return Courses(
       idUser: json['idUser'],
@@ -336,6 +346,10 @@ class Course{
   });
 
   factory Course.fromJson(json){
+
+   // Timestamp timestamp=json['date'] as Timestamp;
+  //  print(json['date']);
+
     return Course(
       name: json['name'],
       level: json['level'],
@@ -343,7 +357,7 @@ class Course{
       certificateType: json['certificateType'],
       certificateSide: json['certificateSide'],
       certificateName: json['certificateName'],
-      date: json['date'].toDate(),
+      date: json['date'],
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -371,8 +385,8 @@ class WorkPlaces {
 
   factory WorkPlaces.fromJson(json){
     List<WorkPlace> tempListWorkPlace = [];
-    for(WorkPlace workPlace in json["listWorkPlace"]){
-      tempListWorkPlace.add(workPlace);
+    for(var workPlace in json["listWorkPlace"]){
+      tempListWorkPlace.add(WorkPlace.fromJson(workPlace));
     }
     return WorkPlaces(
       idUser: json['idUser'],
@@ -424,10 +438,10 @@ class WorkPlace{
       emailCompany: json['emailCompany'],
       phoneCompany: json['phoneCompany'],
       workType: json['workType'],
-      works: Works.fromJson(json['works']),
+      works: Works.fromJson(json['listWorkPlace']),
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'].toDate(),
-      endDate: json['endDate'].toDate(),
+      startDate: json['startDate'],
+      endDate: json['endDate'],
     );
   }
   Map<String,dynamic> toJson() {
@@ -462,8 +476,9 @@ class Works {
 
   factory Works.fromJson(json){
     List<Work> tempListWork = [];
-    for(Work work in json["listWork"]){
-      tempListWork.add(work);
+    for(var work in json["listWork"]){
+
+      tempListWork.add(Work.fromJson(work));
     }
     return Works(
       idUser: json['idUser'],
@@ -506,8 +521,8 @@ class Work{
       levelPersonPlace: json['levelPersonPlace'],
       skillsPersonPlace: json['skillsPersonPlace'],
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'].toDate(),
-      endDate: json['endDate'].toDate(),
+      startDate: json['startDate'],
+      endDate: json['endDate'],
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -534,8 +549,8 @@ class Projects {
 
   factory Projects.fromJson(json){
     List<Project> tempListProject= [];
-    for(Project project in json["listProject"]){
-      tempListProject.add(project);
+    for(var project in json["listProject"]){
+      tempListProject.add(Project.fromJson(project));
     }
     return Projects(
       idUser: json['idUser'],
@@ -582,8 +597,8 @@ class Project{
       linkProject: json['linkProject'],
       stakeholder: json['stakeholder'],
       endDateForNow: json['endDateForNow'],
-      startDate: json['startDate'].toDate(),
-      endDate: json['endDate'].toDate(),
+      startDate: json['startDate'],
+      endDate: json['endDate'],
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -612,8 +627,8 @@ class TechnicalSkills {
 
   factory TechnicalSkills.fromJson(json){
     List<TechnicalSkill> tempListTechnicalSkill= [];
-    for(TechnicalSkill technicalSkill in json["listTechnicalSkill"]){
-      tempListTechnicalSkill.add(technicalSkill);
+    for(var technicalSkill in json["listTechnicalSkill"]){
+      tempListTechnicalSkill.add(TechnicalSkill.fromJson(technicalSkill));
     }
     return TechnicalSkills(
       idUser: json['idUser'],
@@ -634,7 +649,7 @@ class TechnicalSkills {
 class TechnicalSkill{
   String skillsType;
   String skillsName;
-  int skillsLevel;
+  String skillsLevel;
 
   TechnicalSkill({
     required this.skillsType,
@@ -646,7 +661,7 @@ class TechnicalSkill{
     return TechnicalSkill(
       skillsType: json['skillsType'],
       skillsName:json['skillsName'],
-      skillsLevel: json['skillsLevel'],
+      skillsLevel: '${json['skillsLevel']}',
     );
   }
   Map<String,dynamic> toJson()=>{
@@ -655,7 +670,7 @@ class TechnicalSkill{
     'skillsLevel':skillsLevel,
   };
   factory TechnicalSkill.genCourse(){
-    return TechnicalSkill(skillsType: '', skillsName: '', skillsLevel: 0);
+    return TechnicalSkill(skillsType: '', skillsName: '', skillsLevel: '');
   }
 }
 /*

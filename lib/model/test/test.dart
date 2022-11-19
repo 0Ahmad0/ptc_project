@@ -85,12 +85,12 @@ class TestModel {
       technicalSkills: TechnicalSkills(idUser: '', listTechnicalSkill: [
         TechnicalSkill(skillsType: 'skillsType1',
             skillsName: 'skillsName1',
-            skillsLevel: 3),
+            skillsLevel: 'mid'),
         TechnicalSkill(skillsType: 'skillsType2',
             skillsName: 'skillsName2',
-            skillsLevel: 3),
+            skillsLevel: 'mid'),
         TechnicalSkill(skillsType: 'skillsType3',
             skillsName: 'skillsName3',
-            skillsLevel: 3)
+            skillsLevel: 'mid')
       ]));
 }

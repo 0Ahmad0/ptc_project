@@ -102,6 +102,7 @@ class _InformationPageState extends State<InformationPage> {
                     controllerEmail: TextEditingController(text: HomeController.cvUser.personalInformation.email),
                     controllerPhone: TextEditingController(text:HomeController. cvUser.personalInformation.phone),
                     controllerMilitary: TextEditingController(text: HomeController.cvUser.personalInformation.militaryStatus?'yes':'no'),
+                    controllerDriveLink: TextEditingController(text: HomeController.cvUser.personalInformation.militaryStatus?'yes':'no'),
                 ),
               ),
               PTCDvider(

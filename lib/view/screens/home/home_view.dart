@@ -14,6 +14,7 @@ import 'package:ptc_project/view/resourse/style_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/widgets/custom_divider.dart';
 import 'package:ptc_project/view/widgets/custom_textfiled.dart';
+import 'package:ptc_project/view/widgets/learn_form.dart';
 import 'package:ptc_project/view/widgets/multi_form_lan.dart';
 import 'package:ptc_project/view/widgets/project_form.dart';
 import 'package:ptc_project/view/widgets/skills_technical_form.dart';
@@ -141,6 +142,7 @@ print('-------------------------------------------------------');
                  controllerAddress: controllerAddress,
                  controllerPhone: controllerPhone,
                  controllerEmail: controllerEmail,
+                 controllerDriveLink: TextEditingController(),
                  controllerMilitary: TextEditingController(
                    text: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':'no'
                  ),
@@ -201,23 +203,25 @@ print('-------------------------------------------------------');
 class BuildFirstPage extends StatefulWidget {
   final GlobalKey<FormState> form;
   final TextEditingController controllerName
-  ,controllerAge,controllerAddress,controllerEmail,controllerPhone;
+  ,controllerAge,controllerDriveLink,controllerAddress,controllerEmail,controllerPhone;
   String gender;
   final TextEditingController? controllerMilitary;
 
-   BuildFirstPage({super.key, required this.form, required this.controllerName, required this.controllerAge, required this.gender, required this.controllerAddress, required this.controllerEmail, required this.controllerPhone, required this.controllerMilitary});
+   BuildFirstPage({super.key, required this.form, required this.controllerName, required this.controllerAge, required this.gender, required this.controllerAddress, required this.controllerEmail, required this.controllerPhone, required this.controllerMilitary, required this.controllerDriveLink});
   @override
   State<BuildFirstPage> createState() => _BuildFirstPageState();
 }
 
 class _BuildFirstPageState extends State<BuildFirstPage> {
+  List<UserLearn> learns = [
+    UserLearn(name: "name")
+  ];
   @override
   Widget build(BuildContext context) {
     return  Form(
       key: widget.form,
       child: ListView(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(10.0),
         children: [
 
@@ -353,6 +357,23 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
           const SizedBox(
             height: AppSize.s20,
           ),
+          CustomTextFiled(
+              controller: widget.controllerDriveLink,
+              validator: (String? val) {
+                if (val!.trim().isEmpty || val.isURL) {
+                  return "this filed is required";
+                } else {
+                  return null;
+                }
+              },
+              textInputType: TextInputType.url,
+              onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
+              prefixIcon: Icons.link,
+              hintText: "Your Link"),
+
+          const SizedBox(
+            height: AppSize.s20,
+          ),
           DropdownButtonFormField<String>(
             value: widget.controllerMilitary!.text,
             validator: (String? val) {
@@ -378,7 +399,29 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
                   :HomeController.cvUser.personalInformation.militaryStatus=false;
 
             },
-          )
+          ),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          PTCDvider(),
+          const SizedBox(
+            height: AppSize.s20,
+          ),
+          for(var learn = 0 ; learn < learns.length ; learn++)
+            LearnForm(
+              index: learn+1,
+              userLearn: learns[learn],
+              onDelete: (){
+                setState(() {
+                  learns.removeAt(learn);
+                });
+              },
+              onAddForm: (){
+                setState(() {
+                  learns.add(UserLearn(name: "name"));
+                });
+              },
+            )
         ],
       ),
     );

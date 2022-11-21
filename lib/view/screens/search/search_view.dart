@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firedart/firedart.dart' as firedart;
 import 'package:firedart/firestore/firestore.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,6 @@ class BuildCVItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(AppMargin.m10),
         padding: const EdgeInsets.all(AppPadding.p12),
-        height: Sizer.getH(context) / 6,
         width: double.infinity,
         decoration: BoxDecoration(
             color: ColorManager.white,
@@ -69,23 +69,40 @@ class BuildCVItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text("Name : "),
-                Text(
-                  cvUser!.personalInformation.name,
-                  //name!,
-                  style: getBoldStyle(
-                      fontSize: Sizer.getH(context) / 38,
-                      color: ColorManager.primaryColor),
+                Flexible(child: Text("Name : ")),
+                Flexible(
+                  child: Text(
+                    cvUser!.personalInformation.name,
+                    //name!,
+                    style: getBoldStyle(
+                        fontSize: Sizer.getH(context) / 38,
+                        color: ColorManager.primaryColor),
+                  ),
                 ),
               ],
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
-
               Text(
               item
               ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(child: Text("Last Year : ${DateFormat.y().format(DateTime.now())}")),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: AppMargin.m12),
+                  width: .5,
+                  height: AppSize.s12,
+                  color: ColorManager.primaryColor,
+                ),
+                Expanded(child: Text("Last Work: ${"llaskcnkancsknakcsnkasnkalaskcnkancsknakcsnkasnkalaskcnkancsknakcsnkasnkaaskcnkancsknakcsnkasnkal"}")),
+              ],
+            )
           ],
         ),
       ),
@@ -182,7 +199,7 @@ class _SearchViewState extends State<SearchView> {
               children: [
                 for (var i = 0; i < selectedItems.length; i++)
                   Container(
-                    margin: EdgeInsets.all(AppMargin.m8),
+                    margin: EdgeInsets.symmetric(horizontal: AppMargin.m4,vertical: 1),
                     child: Chip(
                       label: Text('${itemSearch[selectedItems[i].id]}: '+selectedItems[i].name),
                       onDeleted: () {
@@ -194,70 +211,76 @@ class _SearchViewState extends State<SearchView> {
 
                     ),
                   ),
-                SizedBox(
-                  width: Sizer.getH(context) / 3.5,
-                  child: DropdownButtonFormField(
-                    value: categorySearch,
-                    decoration: InputDecoration(
-                        hintText: 'Search By'
-                    ),
-                    items: itemSearch.map((e) => DropdownMenuItem(
-                      child: Text('$e'),
-                      value: e,
-                    )).toList(),
-                    onChanged: (String? value) {
-                      categorySearch = value!;
-                      categorySearchId = itemSearch.indexOf(value);
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: Sizer.getH(context) / 3.5,
-                  child: TextFormField(
-                    onFieldSubmitted: (val){
+               Row(
+                 children: [
+                   Expanded(
+                     child: DropdownButtonFormField(
+                       style: TextStyle(
+                         fontSize: 14,
+                         color: ColorManager.secondaryColor
+                       ),
+                       value: categorySearch,
+                       decoration: InputDecoration(
+                           hintText: 'Search By'
+                       ),
+                       items: itemSearch.map((e) => DropdownMenuItem(
+                         child: Text('$e'),
+                         value: e,
+                       )).toList(),
+                       onChanged: (String? value) {
+                         categorySearch = value!;
+                         categorySearchId = itemSearch.indexOf(value);
+                       },
+                     ),
+                   ),
+                   Expanded(
+                     child: TextFormField(
+                       onFieldSubmitted: (val){
 
-                    },
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: (){
-                          setState(() {
-                            if(searchController.text.trim().isNotEmpty){
-                              selectedItems.add(
-                                  DataSearch(categorySearchId, searchController.text)
-                              );
-                              searchController.clear();
-                            }
-                          });
-                        },
-                        icon: Icon(Icons.search),
-                      ),
-                      hintText: "Search here",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(AppSize.s8),
-                          borderSide: BorderSide(
-                              color: Colors.transparent
-                          )
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(AppSize.s8),
-                          borderSide: BorderSide(
-                              color: Colors.transparent
-                          )
-                      ),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(AppSize.s8),
-                          borderSide: BorderSide(
-                              color: Colors.transparent
-                          )),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(AppSize.s8),
-                          borderSide: BorderSide(
-                              color: Colors.transparent
-                          )),
-                    ),
-                  ),
-                ),
+                       },
+                       controller: searchController,
+                       decoration: InputDecoration(
+                         suffixIcon: IconButton(
+                           onPressed: (){
+                             setState(() {
+                               if(searchController.text.trim().isNotEmpty){
+                                 selectedItems.add(
+                                     DataSearch(categorySearchId, searchController.text)
+                                 );
+                                 searchController.clear();
+                               }
+                             });
+                           },
+                           icon: Icon(Icons.search),
+                         ),
+                         hintText: "Search here",
+                         enabledBorder: OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(AppSize.s8),
+                             borderSide: BorderSide(
+                                 color: Colors.transparent
+                             )
+                         ),
+                         focusedBorder: OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(AppSize.s8),
+                             borderSide: BorderSide(
+                                 color: Colors.transparent
+                             )
+                         ),
+                         errorBorder: OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(AppSize.s8),
+                             borderSide: BorderSide(
+                                 color: Colors.transparent
+                             )),
+                         focusedErrorBorder: OutlineInputBorder(
+                             borderRadius: BorderRadius.circular(AppSize.s8),
+                             borderSide: BorderSide(
+                                 color: Colors.transparent
+                             )),
+                       ),
+                     ),
+                   )
+                 ],
+               )
               ],
             ),
           ),

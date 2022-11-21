@@ -53,6 +53,17 @@ class LearnForm extends StatelessWidget {
     if(valid)  form.currentState!.save();
     return valid;
   }
+  List<String> listYears = [
+    'First Year',
+    'Second Year',
+    'Third Year',
+    'Fourth Year',
+    'Fifth Year',
+    'Sixth Year',
+    'Master',
+    'Doctor',
+    'Other...',
+  ];
   @override
   Widget build(BuildContext context) {
     controllerLearnName.text=HomeController.cvUser.skills.listSkill[index!-1].name;
@@ -95,42 +106,13 @@ class LearnForm extends StatelessWidget {
                   HomeController.cvUser.skills.listSkill[index!-1].name=val;},
               ),
               const SizedBox(height: AppSize.s10,),
-              TextFormField(
-                readOnly: true,
-                onTap: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Select Year"),
-                        content: Container( // Need to use container to add size constraint.
-                          width: Sizer.getH(context)/2,
-                          height: Sizer.getH(context)/2,
-                          child: YearPicker(
-                            firstDate: DateTime(DateTime.now().year - 100, 1),
-                            lastDate: DateTime(DateTime.now().year + 100, 1),
-                            initialDate: DateTime.now(),
-                            selectedDate: _selectedDate,
-                            onChanged: (DateTime dateTime) {
-                              print(dateTime);
-                              controllerLearnYear.text =
-                              
-                              DateFormat.y().format(dateTime);
-                                 Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-                controller: controllerLearnYear,
-                decoration: InputDecoration(
-                    hintText: "Learn Year"
-                ),
-                onChanged: (val){
-                  HomeController.cvUser.skills.listSkill[index!-1].name=val;},
-              ),
+              DropdownButtonFormField(items: [
+                for(var i = 0 ; i < listYears.length ; i ++)
+                  DropdownMenuItem(
+                    child: Text(listYears[i]),
+                    value: listYears[i],
+                  )
+              ], onChanged: (val){}),
               const SizedBox(height: AppSize.s10,),
               Row(
                 children: [

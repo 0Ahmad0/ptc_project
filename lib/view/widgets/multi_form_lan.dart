@@ -33,7 +33,6 @@ class _MultiFormLanState extends State<MultiFormLan> {
     //:
     ListView(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       children: [
         for(var lan =0 ; lan < HomeController.cvUser.languages.listLanguage.length ; lan++)
           LanguageForm(

@@ -467,7 +467,6 @@ List<UserPlaceWork> usersWorkPlace = [
       key: widget.formKey,
       child: ListView(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         children: [
          for(var work = 0 ; work <   HomeController.cvUser.workPlaces.listWorkPlace.length ; work++)
            WorkPlaceForm(
@@ -513,7 +512,6 @@ class _BuildFourthPageState extends State<BuildFourthPage> {
       key: widget.formKey,
       child: ListView(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         children: [
           for(var project = 0 ; project < HomeController.cvUser.projects.listProject.length ; project++)
             ProjectForm(

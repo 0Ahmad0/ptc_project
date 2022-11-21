@@ -28,15 +28,20 @@ class _InformationPageState extends State<InformationPage> {
         title: Text("Information"),
         backgroundColor: ColorManager.secondaryColor,
         actions: [
+          IconButton(onPressed: () async {
+
+            await HomeController().goToUrl(context,HomeController.cvUserView.urlCv);
+          }, icon: Icon(Icons.description)),
           IconButton(onPressed: (){
             //CONSTANTSAPP.TOAST(context,textToast: "SAghel");
             setState(() {
-              HomeController.cvUser=CvUser.fromJson(HomeController.cvUserView.toJson());
+
               isEdit = false;
             });
           }, icon: Icon(Icons.edit)),
           IconButton(onPressed: (){
             setState(() {
+              HomeController.cvUser=CvUser.fromJson(HomeController.cvUserView.toJson());
               isEdit = true;
             });
           }, icon: Icon(Icons.restore)),
@@ -102,7 +107,7 @@ class _InformationPageState extends State<InformationPage> {
                     controllerEmail: TextEditingController(text: HomeController.cvUser.personalInformation.email),
                     controllerPhone: TextEditingController(text:HomeController. cvUser.personalInformation.phone),
                     controllerMilitary: TextEditingController(text: HomeController.cvUser.personalInformation.militaryStatus?'yes':'no'),
-                    controllerDriveLink: TextEditingController(text: HomeController.cvUser.personalInformation.militaryStatus?'yes':'no'),
+                    controllerDriveLink: TextEditingController(text: HomeController.cvUser.urlCv),
                 ),
               ),
               PTCDvider(

@@ -85,7 +85,9 @@ class CvUsers {
 class CvUser {
   int index;
   String idUser;
+  String urlCv;
   PersonalInformation personalInformation;
+  Learns learns;
   Languages languages;
   Skills skills;
   Courses courses;
@@ -96,7 +98,9 @@ class CvUser {
   CvUser({
      this.index=0,
      this.idUser='',
+     this.urlCv='',
     required this.personalInformation,
+    required this.learns,
     required this.languages,
     required this.skills,
     required this.courses,
@@ -109,8 +113,10 @@ class CvUser {
 
     return CvUser(
       index: json['index'],
+      urlCv: json['urlCv']!=null?json['urlCv']:'',
       idUser:json.toString().contains('/CvUser/')?json.id:json['idUser'],
       personalInformation: PersonalInformation.fromJson(json['personalInformation']),
+      learns: json['learns']!=null?Learns.fromJson(json['learns']):Learns(idUser: ''),
       languages: Languages.fromJson(json['languages']),
       skills: Skills.fromJson(json['skills']),
       courses: Courses.fromJson(json['courses']),
@@ -122,7 +128,9 @@ class CvUser {
   Map<String,dynamic> toJson()=>{
     'index':index,
     'idUser':idUser,
+    'urlCv':urlCv,
     'personalInformation':personalInformation.toJson(),
+    'learns':learns.toJson(),
     'languages':languages.toJson(),
     'skills':skills.toJson(),
     'courses':courses.toJson(),
@@ -133,6 +141,9 @@ class CvUser {
   factory CvUser.genCvUser(){
     return CvUser(
         personalInformation: PersonalInformation(name: '', email: '', phone: '', address: '', age: 0, gender: ''),
+        learns: Learns(idUser: '',listLearn: [
+          Learn.genCourse()
+        ]),
         languages: Languages(idUser: '',listLanguage: [
           Language(name: '', level: 0)
         ]),
@@ -152,6 +163,38 @@ class CvUser {
           TechnicalSkill.genCourse()
         ]));
   }
+  List values(){
+    List tempList = [];
+    tempList.addAll(projects.values());
+    tempList.addAll(personalInformation.values());
+    tempList.addAll(learns.values());
+    tempList.addAll(languages.values());
+    tempList.addAll(skills.values());
+    tempList.addAll(technicalSkills.values());
+    tempList.addAll(courses.values());
+    tempList.addAll(workPlaces.values());
+    return tempList;
+  }
+  bool validate(){
+    if(!projects.validate())
+      return false;
+    if(!personalInformation.validate())
+      return false;
+    if(!learns.validate())
+      return false;
+    if(!languages.validate())
+      return false;
+    if(!skills.validate())
+      return false;
+    if(!technicalSkills.validate())
+      return false;
+    if(!courses.validate())
+      return false;
+    if(!workPlaces.validate())
+      return false;
+    return true;
+  }
+
 }
 
 class PersonalInformation {
@@ -192,6 +235,19 @@ class PersonalInformation {
     'gender':gender,
     'militaryStatus':militaryStatus,
   };
+  List values(){
+    List tempList = toJson().values.toList();
+    tempList.addAll(name.split(' '));
+    tempList.addAll(address.split(' '));
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(age<1)
+      return false;
+    return true;
+  }
 }
 
 
@@ -225,6 +281,20 @@ class Languages {
     'listLanguage':tempListLanguage,
   };
   }
+  List values(){
+    List tempList = [];
+    for(var element in listLanguage){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listLanguage){
+      if(!element.validate())
+        return false;
+    }
+    return true;
+  }
 }
 class Language {
   String name;
@@ -245,6 +315,16 @@ class Language {
     'name':name,
     'level':level,
   };
+  List values(){
+    return toJson().values.toList();
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(level<1)
+      return false;
+    return true;
+  }
 }
 class Skills {
   String idUser;
@@ -275,6 +355,20 @@ class Skills {
       'listSkill':tempListSkill,
     };
   }
+  List values(){
+    List tempList = [];
+    for(var element in listSkill){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listSkill){
+      if(!element.validate())
+        return false;
+    }
+    return true;
+  }
 }
 class Skill{
   String name;
@@ -295,6 +389,18 @@ Skill({
     'name':name,
     'level':level,
   };
+  List values(){
+    List tempList = toJson().values.toList();
+    tempList.addAll(name.split(' '));
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(level<1)
+      return false;
+    return true;
+  }
 }
 class Courses {
   String idUser;
@@ -324,6 +430,20 @@ class Courses {
       'idUser':idUser,
       'listCourse':tempListCourse,
     };
+  }
+  List values(){
+    List tempList = [];
+    for(var element in listCourse){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listCourse){
+      if(!element.validate())
+        return false;
+    }
+    return true;
   }
 }
 class Course{
@@ -372,6 +492,22 @@ class Course{
   factory Course.genCourse(){
     return  Course(name: '', level: 0, description: '', certificateName: '', certificateSide: '', certificateType: '', date: DateTime.utc(1));
   }
+  List values(){
+    List tempList =[];// toJson().values.toList();
+    tempList.addAll(name.split(' '));
+    tempList.addAll(certificateName.split(' '));
+    tempList.add(date);
+    tempList.addAll(certificateType.split(' '));
+    tempList.addAll(certificateSide.split(' '));
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(date.year<2)
+      return false;
+    return true;
+  }
 }
 
 class WorkPlaces {
@@ -403,7 +539,20 @@ class WorkPlaces {
       'listWorkPlace':tempListWorkPlace,
     };
   }
-
+  List values(){
+    List tempList = [];
+    for(var element in listWorkPlace){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listWorkPlace){
+      if(!element.validate())
+        return false;
+    }
+    return true;
+  }
 }
 class WorkPlace{
   String nameWorkPlace;
@@ -461,6 +610,30 @@ class WorkPlace{
   factory WorkPlace.genCourse(){
     return  WorkPlace(nameWorkPlace: '', companyWorkPlace: '', contactInfo: '', emailCompany: '',works: Works(idUser: '', idWorkPlace: '',listWork: [Work.genCourse()]), phoneCompany: '', workType: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
+  List values(){
+    List tempList = valuesWorkPlace();
+    tempList.addAll(works.values());
+    return tempList;
+  }
+  List valuesWorkPlace(){
+    List tempList = [];
+    for(var key in toJson().keys){
+      if(!key.contains('listWorkPlace')){
+        tempList.add(toJson()[key]);
+        tempList.addAll(toJson()[key].toString().split(' '));
+      }
+    }
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(startDate.year<2)
+      return false;
+    if(!works.validate())
+      return false;
+    return true;
+  }
 }
 
 class Works {
@@ -496,6 +669,20 @@ class Works {
       'idWorkPlace':idWorkPlace,
       'listWork':tempListWork,
     };
+  }
+  List values(){
+    List tempList = [];
+    for(var element in listWork){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listWork){
+      if(!element.validate())
+        return false;
+    }
+    return true;
   }
 }
 class Work{
@@ -536,6 +723,123 @@ class Work{
   factory Work.genCourse(){
     return Work(positionPersonPlace: '', skillsPersonPlace: '', levelPersonPlace: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
+
+  List values(){
+    List tempList = toJson().values.toList();
+    tempList.addAll(positionPersonPlace.split(' '));
+    tempList.addAll(levelPersonPlace.split(' '));
+    tempList.addAll(skillsPersonPlace.split(' '));
+    tempList.add(endDateForNow);
+    tempList.add(startDate);
+    tempList.add(endDate);
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(startDate.year<2)
+      return false;
+    return true;
+  }
+}
+
+class Learns {
+  String idUser;
+  List<Learn> listLearn;
+
+  Learns({
+    required this.idUser,
+    this.listLearn=const []
+  });
+
+  factory Learns.fromJson(json){
+    List<Learn> tempListLearn = [];
+    for(var learn in json["listLearn"]){
+
+      tempListLearn.add(Learn.fromJson(learn));
+    }
+    return Learns(
+      idUser: json['idUser'],
+      listLearn: tempListLearn,
+    );
+  }
+  Map<String,dynamic> toJson(){
+    List<Map<String,dynamic>> tempListLearn= [];
+    for(Learn learn in listLearn){
+      tempListLearn.add(learn.toJson());
+    }
+    return{
+      'idUser':idUser,
+      'listLearn':tempListLearn,
+    };
+  }
+  List values(){
+    List tempList = [];
+    for(var element in listLearn){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listLearn){
+      if(!element.validate())
+        return false;
+    }
+    return true;
+  }
+}
+class Learn{
+  String state;
+  DateTime startDate;
+  DateTime endDate;
+  bool endDateForNow;
+  String learnYear;
+  String nameUniversity;
+
+  Learn({
+    required this.nameUniversity,
+    required this.state,
+    required this.learnYear,
+    required this.startDate,
+    required this.endDate,
+    this.endDateForNow=false,
+  });
+
+  factory Learn.fromJson(json){
+    return Learn(
+      learnYear: json['learnYear'],
+      state: json['state'],
+      nameUniversity: json['nameUniversity'],
+      endDateForNow: json['endDateForNow'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
+    );
+  }
+  Map<String,dynamic> toJson()=>{
+    'learnYear':learnYear,
+    'state':state,
+    'nameUniversity':nameUniversity,
+    'endDateForNow':endDateForNow,
+    'endDate':endDate,
+    'startDate':startDate,
+  };
+  factory Learn.genCourse(){
+    return Learn(learnYear: '', state: '', nameUniversity: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
+  }
+  List values(){
+    List tempList = toJson().values.toList();
+    tempList.addAll(state.split(' '));
+    tempList.addAll(learnYear.split(' '));
+    tempList.addAll(nameUniversity.split(' '));
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(startDate.year<2)
+      return false;
+    return true;
+  }
 }
 
 class Projects {
@@ -566,6 +870,20 @@ class Projects {
       'idUser':idUser,
       'listProject':tempListProject,
     };
+  }
+  List values(){
+    List tempList = [];
+    for(var element in listProject){
+      tempList.addAll(element.values());
+    }
+    return tempList;
+  }
+  bool validate(){
+    for(var element in listProject){
+      if(!element.validate())
+        return false;
+    }
+    return true;
   }
 }
 class Project{
@@ -614,6 +932,17 @@ class Project{
   factory Project.genCourse(){
     return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
+  List values(){
+    return toJson().values.toList();
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    if(startDate.year<2)
+      return false;
+    return true;
+  }
+
 }
 
 class TechnicalSkills {
@@ -645,6 +974,20 @@ class TechnicalSkills {
       'listTechnicalSkill':tempListTechnicalSkill,
     };
   }
+  List values(){
+    List tempListTechnicalSkill = [];
+    for(TechnicalSkill technicalSkill in listTechnicalSkill){
+      tempListTechnicalSkill.addAll(technicalSkill.toJson().values);
+    }
+    return tempListTechnicalSkill;
+  }
+  bool validate(){
+    for(var element in listTechnicalSkill){
+      if(!element.validate())
+         return false;
+    }
+    return true;
+  }
 }
 class TechnicalSkill{
   String skillsType;
@@ -671,6 +1014,18 @@ class TechnicalSkill{
   };
   factory TechnicalSkill.genCourse(){
     return TechnicalSkill(skillsType: '', skillsName: '', skillsLevel: '');
+  }
+  List values(){
+    List tempList = toJson().values.toList();
+    tempList.addAll(skillsLevel.split(' '));
+    tempList.addAll(skillsName.split(' '));
+    tempList.addAll(skillsType.split(' '));
+    return tempList;
+  }
+  bool validate(){
+    if(values().contains(''))
+      return false;
+    return true;
   }
 }
 class UserLearn{

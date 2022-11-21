@@ -421,9 +421,14 @@ class FirebaseFun{
       // return tr(LocaleKeys.toast_network_error);
      }else if(text.contains("field does not exist within the DocumentSnapshotPlatform")){
       // return tr(LocaleKeys.toast_Bad_data_fetch);
+       return 'Bad data fetch';
      }else if(text.contains("Account successfully logged")){
     //   return tr(LocaleKeys.toast);
-     }
+       return 'Account successfully logged';
+     } else if(text.contains("No such host is known")){
+  //   return tr(LocaleKeys.toast);
+       return 'network error';
+  }
 
 
      return text;

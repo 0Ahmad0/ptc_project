@@ -80,7 +80,10 @@ class _MyAppState extends State<MyApp> {
               // )..show();
               return Center(child: Text("data"));
 
-            }else{
+            }else if(snapshot.hasError){
+              return Center(child: Text("data"));
+            }
+            else {
               return SplashView();
             }
           }

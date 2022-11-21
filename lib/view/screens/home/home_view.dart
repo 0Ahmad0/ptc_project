@@ -48,6 +48,7 @@ class _HomeViewState extends State<HomeView> {
   final controllerMilitary = TextEditingController();
 
   final controllerMarital = TextEditingController();
+  final controllerUrl = TextEditingController();
 
   final controllerPageView = PageController(
   );
@@ -142,7 +143,9 @@ print('-------------------------------------------------------');
                  controllerAddress: controllerAddress,
                  controllerPhone: controllerPhone,
                  controllerEmail: controllerEmail,
-                 controllerDriveLink: TextEditingController(),
+                 controllerDriveLink: TextEditingController(
+                   text: HomeController.cvUser.urlCv
+                 ),
                  controllerMilitary: TextEditingController(
                    text: (HomeController.cvUser.personalInformation.militaryStatus)?'yes':'no'
                  ),
@@ -407,17 +410,19 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
           const SizedBox(
             height: AppSize.s20,
           ),
-          for(var learn = 0 ; learn < learns.length ; learn++)
+          for(var learn = 0 ; learn < HomeController.cvUser.learns.listLearn.length ; learn++)
             LearnForm(
               index: learn+1,
               userLearn: learns[learn],
               onDelete: (){
                 setState(() {
-                  learns.removeAt(learn);
+                  HomeController.cvUser.learns.listLearn.removeAt(learn);
+                 // learns.removeAt(learn);
                 });
               },
               onAddForm: (){
                 setState(() {
+                  HomeController.cvUser.learns.listLearn.add(Learn.genCourse());
                   learns.add(UserLearn(name: "name"));
                 });
               },

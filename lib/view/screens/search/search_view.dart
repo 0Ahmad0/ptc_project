@@ -93,14 +93,15 @@ class BuildCVItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Text("Last Year : ${DateFormat.y().format(DateTime.now())}")),
+                Expanded(child: Text("Last Learn : "
+                    "${HomeController().findLastLearn(cvUser!)}")),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: AppMargin.m12),
                   width: .5,
                   height: AppSize.s12,
                   color: ColorManager.primaryColor,
                 ),
-                Expanded(child: Text("Last Work: ${"llaskcnkancsknakcsnkasnkalaskcnkancsknakcsnkasnkalaskcnkancsknakcsnkasnkaaskcnkancsknakcsnkasnkal"}")),
+                Expanded(child: Text("Last WorkPlace: ${HomeController().findLastWorkPlace(cvUser!)}")),
               ],
             )
           ],
@@ -123,7 +124,9 @@ class _SearchViewState extends State<SearchView> {
     'Courses',
     'WorkPlaces',
     'Projects',
-    'TechnicalSkills'];
+    'TechnicalSkills',
+    'Works',
+    'learns'];
   List<DataSearch> selectedItems =[];// [DataSearch(1, "name")];
   final searchController = TextEditingController();
   @override
@@ -143,7 +146,10 @@ class _SearchViewState extends State<SearchView> {
                 future: HomeController().fetchCvUsers(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CONSTANTSAPP.SHOWLOADINGINDECATOR();
+                    return
+                      HomeController.cvUsers.listCvUser.length>0?
+                      bodyListSearchCv()
+                      :CONSTANTSAPP.SHOWLOADINGINDECATOR();
                     //Const.CIRCLE(context);
                   }
                   else if (snapshot.connectionState ==
@@ -152,16 +158,10 @@ class _SearchViewState extends State<SearchView> {
                       return const Text('Error');
                     } else if (snapshot.hasData) {
                        CONSTANTSAPP.SHOWLOADINGINDECATOR();
+                       HomeController.mapSearch=HomeController().convertToMapSearch(selectedItems, itemSearch);
+                       HomeController.cvUsersSearch=HomeController().search(HomeController.cvUsers);
 
-                       HomeController().convertToMapSearch(selectedItems, itemSearch);
-                      HomeController.cvUsersSearch=HomeController().search(HomeController.cvUsers);
-
-                      return  ListView.builder(
-                        itemCount: HomeController.cvUsersSearch.listCvUser.length,//selectedItems.length,
-                        itemBuilder: (_,index)=>BuildCVItem(
-                          cvUser: HomeController.cvUsersSearch.listCvUser[index],
-                        ),
-                      );
+                       return bodyListSearchCv();
                       //   });
 
                       /// }));
@@ -285,6 +285,14 @@ class _SearchViewState extends State<SearchView> {
             ),
           ),
         );
+  }
+  Widget bodyListSearchCv(){
+    return  ListView.builder(
+      itemCount: HomeController.cvUsersSearch.listCvUser.length,//selectedItems.length,
+      itemBuilder: (_,index)=>BuildCVItem(
+        cvUser: HomeController.cvUsersSearch.listCvUser[index],
+      ),
+    );
   }
 }
 

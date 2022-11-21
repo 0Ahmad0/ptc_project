@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firedart/firedart.dart' as firedart;
 import 'package:firedart/firestore/firestore.dart';
@@ -199,7 +201,9 @@ class _SearchViewState extends State<SearchView> {
               children: [
                 for (var i = 0; i < selectedItems.length; i++)
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: AppMargin.m4,vertical: 1),
+                    margin: Platform.isAndroid
+                        ?EdgeInsets.symmetric(horizontal: AppMargin.m4,vertical: 1)
+                        :EdgeInsets.all(AppMargin.m8),
                     child: Chip(
                       label: Text('${itemSearch[selectedItems[i].id]}: '+selectedItems[i].name),
                       onDeleted: () {

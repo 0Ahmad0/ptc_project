@@ -106,7 +106,11 @@ class LearnForm extends StatelessWidget {
                   HomeController.cvUser.skills.listSkill[index!-1].name=val;},
               ),
               const SizedBox(height: AppSize.s10,),
-              DropdownButtonFormField(items: [
+              DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    hintText: 'year'
+                  ),
+                  items: [
                 for(var i = 0 ; i < listYears.length ; i ++)
                   DropdownMenuItem(
                     child: Text(listYears[i]),

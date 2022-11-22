@@ -429,6 +429,9 @@ class FirebaseFun{
   //   return tr(LocaleKeys.toast);
        return 'network error';
   }
+     else if(text.contains("403")){
+       return 'not vpn';
+     }
 
 
      return text;

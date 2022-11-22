@@ -145,10 +145,11 @@ class _InformationPageState extends State<InformationPage> {
               ),
               IgnorePointer(
                   ignoring: isEdit,
-                  child: BuildFourthPage(formKey: GlobalKey()))
+                  child: BuildFourthPage(formKey: GlobalKey())),
 
-
-
+              const SizedBox(
+                height: AppSize.s50,
+              ),
 
             ],
           ),

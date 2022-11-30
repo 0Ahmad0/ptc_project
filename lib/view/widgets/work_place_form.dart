@@ -83,7 +83,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text("Work Place${widget.index}")),
+                  Flexible(child: Text("Work Experience${widget.index}")),
                   Row(
                     children: [
                       (HomeController.cvUser.workPlaces.listWorkPlace.length<2)?SizedBox(): IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
@@ -96,7 +96,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
               TextFormField(
                 controller: nameWorkPlaceController,
                 decoration: InputDecoration(
-                    hintText: "Work Place Name"
+                    hintText: "Work Experience Name"
                 ),
                 onChanged: (val){
                   HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].nameWorkPlace=val;},

@@ -372,7 +372,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
               textInputType: TextInputType.url,
               onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
               prefixIcon: Icons.link,
-              hintText: "Your Link"),
+              hintText: "Your Link Cv"),
 
           const SizedBox(
             height: AppSize.s20,
@@ -473,7 +473,7 @@ List<UserPlaceWork> usersWorkPlace = [
       child: ListView(
         shrinkWrap: true,
         children: [
-         for(var work = 0 ; work <   HomeController.cvUser.workPlaces.listWorkPlace.length ; work++)
+         for(var work = 0   ; work <   HomeController.cvUser.workPlaces.listWorkPlace.length ; work++)
            WorkPlaceForm(
              index: work +1 ,
              userWork: usersWorkPlace[0],

@@ -16,7 +16,7 @@ abstract class  LocaleKeys {
   static const your_marital = 'your_marital';
   static const your_qualification = 'your_qualification';
   static const your_languages = 'your_languages';
-  static const your_skils = 'your_skils';
+  static const your_skills = 'your_skills';
   static const your_courses = 'your_courses';
 
 }

@@ -15,8 +15,8 @@ import '../view/screens/search/search_view.dart';
 
 class HomeController {
   static CvUser cvUser = CvUser.genCvUser();
-  //static CvUser cvUserHome = CvUser.genCvUser();
-  static CvUser cvUserHome = CvUser.fromJson(TestModel().cvUser1.toJson());//CvUser.genCvUser();
+  static CvUser cvUserHome = CvUser.genCvUser();
+  //static CvUser cvUserHome = CvUser.fromJson(TestModel().cvUser1.toJson());//CvUser.genCvUser();
   static CvUser cvUserView = CvUser.genCvUser();//CvUser.genCvUser();
   static CvUsers cvUsers = CvUsers();//CvUser.genCvUser();
   static CvUsers cvUsersSearch = CvUsers();//CvUser.genCvUser();
@@ -242,7 +242,7 @@ class HomeController {
     var urllaunchable = await canLaunchUrl(Uri.parse(idLink)); //canLaunch is from url_launcher package
     if(urllaunchable){
       CONSTANTSAPP.LOADIG(context);
-      await launchUrl(Uri.parse(idLink));
+      await launchUrl(Uri.parse(idLink),mode: LaunchMode.externalApplication);
       Get.back();//launch is from url_launcher package to launch URL
     }else{
       CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast("URL can't be launched."));

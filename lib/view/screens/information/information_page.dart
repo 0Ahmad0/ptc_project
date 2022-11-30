@@ -6,7 +6,6 @@ import 'package:ptc_project/model/utils/const.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
 import 'package:ptc_project/view/screens/home/home_view.dart';
 import 'package:ptc_project/view/widgets/custom_divider.dart';
-
 import '../../../controller/home_controller.dart';
 import '../../../model/models.dart';
 import '../../resourse/color_manager.dart';
@@ -126,7 +125,7 @@ class _InformationPageState extends State<InformationPage> {
               ),
               PTCDvider(
                   height: AppPadding.p40,
-                text: "Work Places",
+                text: "Work Experience",
                 colors: [
                   ColorManager.primaryColor,
                   ColorManager.primaryColor,

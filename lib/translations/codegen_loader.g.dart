@@ -30,7 +30,7 @@ class CodegenLoader extends AssetLoader{
   "your_marital": "الوضع العائلي",
   "your_qualification": "المؤهلات الدراسية",
   "your_languages": "اللغات",
-  "your_skils": "الخبرات",
+  "your_skills": "الخبرات",
   "your_courses": "الشهادات"
 };
 static const Map<String,dynamic> en = {
@@ -49,7 +49,7 @@ static const Map<String,dynamic> en = {
   "your_marital": "Your Marital",
   "your_qualification": "Your Qualification",
   "your_languages": "Your Languages",
-  "your_skils": "Your Skils",
+  "your_skills": "Your Skills",
   "your_courses": "Your Courses"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};

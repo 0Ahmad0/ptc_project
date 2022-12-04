@@ -13,14 +13,14 @@ class TestModel {
           Work(
               positionPersonPlace: 'positionPersonPlace1',
               skillsPersonPlace: 'skillsPersonPlace1',
-              levelPersonPlace: 'levelPersonPlace1',
+              experienceWork: 'experienceWork',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(2021),
               endDateForNow: true),
           Work(
               positionPersonPlace: 'positionPersonPlace2',
               skillsPersonPlace: 'skillsPersonPlace2',
-              levelPersonPlace: 'levelPersonPlace2',
+              experienceWork: 'experienceWork',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(1))
         ]),
@@ -38,14 +38,14 @@ class TestModel {
           Work(
               positionPersonPlace: 'positionPersonPlace1',
               skillsPersonPlace: 'skillsPersonPlace1',
-              levelPersonPlace: 'levelPersonPlace1',
+              experienceWork: 'experienceWork1',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(2021),
               endDateForNow: true),
           Work(
               positionPersonPlace: 'positionPersonPlace2',
               skillsPersonPlace: 'skillsPersonPlace2',
-              levelPersonPlace: 'levelPersonPlace2',
+              experienceWork: 'experienceWork2',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(1))
         ]),
@@ -63,11 +63,11 @@ class TestModel {
           address: 'address1',
           age: 22,
           gender: 'Male'),
-      learns: Learns(listLearn: [
-        Learn(
-            nameUniversity: 'nameUniversity',
-            state: 'state',
-            learnYear: 'year',
+      educations: Educations(listEducation: [
+        Education(
+            educationPlace: 'educationPlace',
+            educationStatus: 'educationStatus',
+            educationYear: 'educationYear',
             startDate: DateTime.utc(2021),
             endDate: DateTime.utc(1))
       ], idUser: ''),
@@ -75,10 +75,10 @@ class TestModel {
         Language(name: 'name1', level: 5),
         Language(name: 'name2', level: 3)
       ]),
-      skills: Skills(idUser: '', listSkill: [
-        Skill(name: 'skill1', level: 4),
-        Skill(name: 'Skill2', level: 2),
-        Skill(name: 'Skill3', level: 1)
+      personalSkills: PersonalSkills(idUser: '', listPersonalSkill: [
+        PersonalSkill(name: 'personalSkill1', level: 4),
+        PersonalSkill(name: 'personalSkill2', level: 2),
+        PersonalSkill(name: 'personalSkill3', level: 1)
       ]),
       courses: Courses(idUser: '', listCourse: [
         Course(

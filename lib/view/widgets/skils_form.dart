@@ -22,7 +22,7 @@ class SkilsForm extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    controllerSkillName.text=HomeController.cvUser.skills.listSkill[index!-1].name;
+    controllerSkillName.text=HomeController.cvUser.personalSkills.listPersonalSkill[index!-1].name;
     return Form(
       key: form,
       child: Card(
@@ -34,10 +34,10 @@ class SkilsForm extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text("Skils${index}")),
+                  Flexible(child: Text("Personal Skill${index}")),
                   Row(
                     children: [
-                     (HomeController.cvUser.skills.listSkill.length<2)?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
+                     (HomeController.cvUser.personalSkills.listPersonalSkill.length<2)?SizedBox():IconButton(onPressed:onDelete , icon: Icon(Icons.delete)),
                      (index!-1)!=0?SizedBox(): IconButton(onPressed:onAddForm , icon: Icon(Icons.add)),
 
                     ],
@@ -47,24 +47,24 @@ class SkilsForm extends StatelessWidget {
               TextFormField(
                 controller: controllerSkillName,
                 decoration: InputDecoration(
-                    hintText: "Skils Name"
+                    hintText: "Skill"
                 ),
                 onChanged: (val){
-                  HomeController.cvUser.skills.listSkill[index!-1].name=val;},
+                  HomeController.cvUser.personalSkills.listPersonalSkill[index!-1].name=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
-                  value: HomeController.cvUser.skills.listSkill[index!-1].level==0
-                      ?null:HomeController.cvUser.skills.listSkill[index!-1].level,
+                  value: HomeController.cvUser.personalSkills.listPersonalSkill[index!-1].level==0
+                      ?null:HomeController.cvUser.personalSkills.listPersonalSkill[index!-1].level,
                   decoration: InputDecoration(
-                      hintText: "Skils Level",
+                      hintText: "Skill Level",
                       prefixIcon: Icon(Icons.polymer)
                   ),
                   items: [1,2,3,4,5].map((e) => DropdownMenuItem(
 
                     child: Text("$e"),
                     value: e,
-                  )).toList(), onChanged: (val){HomeController.cvUser.skills.listSkill[index!-1].level=int.parse(val.toString());})
+                  )).toList(), onChanged: (val){HomeController.cvUser.personalSkills.listPersonalSkill[index!-1].level=int.parse(val.toString());})
             ],
           ),
         ),

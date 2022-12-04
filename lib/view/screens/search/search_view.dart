@@ -96,7 +96,7 @@ class BuildCVItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(child: Text("Last Learn : "
-                    "${HomeController().findLastLearn(cvUser!)}")),
+                    "${HomeController().findLastEducation(cvUser!)}")),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: AppMargin.m12),
                   width: .5,

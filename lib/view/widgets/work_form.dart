@@ -19,7 +19,7 @@ class WorkForm extends StatelessWidget {
   final form = GlobalKey<FormState>();
   final dateController = TextEditingController(text: "Start Date");
   final dateEndController = TextEditingController(text: "End Date");
-  final levelPersonPlaceController = TextEditingController();
+  final experienceWorkController = TextEditingController();
   final skillsPersonPlaceController = TextEditingController();
   final positionPersonPlaceController = TextEditingController();
   bool validate(){
@@ -60,7 +60,7 @@ class WorkForm extends StatelessWidget {
   Widget build(BuildContext context) {
     positionPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].positionPersonPlace;
     skillsPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].skillsPersonPlace;
-    levelPersonPlaceController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].levelPersonPlace;
+    experienceWorkController.text=HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork;
     HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate.year>1?
     dateController.text=DateFormat.yMd().format(HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].startDate):null;
     HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].endDate.year>1?
@@ -77,7 +77,7 @@ class WorkForm extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(child: Text("Work ${index}")),
+              Flexible(child: Text("Work Experience${index}")),
               Row(
                 children: [
                   (HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork.length<2)
@@ -92,7 +92,7 @@ class WorkForm extends StatelessWidget {
           TextFormField(
             controller: positionPersonPlaceController,
             decoration: InputDecoration(
-              hintText: "Position Person work"
+              hintText: "Position"
             ),
             onChanged: (val){
               HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].positionPersonPlace=val;},
@@ -124,12 +124,12 @@ class WorkForm extends StatelessWidget {
           ),
           const SizedBox(height: AppSize.s10,),
           TextFormField(
-            controller: levelPersonPlaceController,
+            controller: experienceWorkController,
             decoration: InputDecoration(
-                hintText: "level Person work"
+                hintText: "experience"
             ),
             onChanged: (val){
-              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].levelPersonPlace=val;},
+              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork=val;},
           ),
           const SizedBox(height: AppSize.s10,),
           TextFormField(

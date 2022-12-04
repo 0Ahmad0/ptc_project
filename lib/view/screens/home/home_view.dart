@@ -410,19 +410,19 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
           const SizedBox(
             height: AppSize.s20,
           ),
-          for(var learn = 0 ; learn < HomeController.cvUser.learns.listLearn.length ; learn++)
+          for(var learn = 0 ; learn < HomeController.cvUser.educations.listEducation.length ; learn++)
             LearnForm(
               index: learn+1,
               userLearn: learns[learn],
               onDelete: (){
                 setState(() {
-                  HomeController.cvUser.learns.listLearn.removeAt(learn);
+                  HomeController.cvUser.educations.listEducation.removeAt(learn);
                  // learns.removeAt(learn);
                 });
               },
               onAddForm: (){
                 setState(() {
-                  HomeController.cvUser.learns.listLearn.add(Learn.genCourse());
+                  HomeController.cvUser.educations.listEducation.add(Education.genCourse());
                   learns.add(UserLearn(name: "name"));
                 });
               },
@@ -472,6 +472,7 @@ List<UserPlaceWork> usersWorkPlace = [
       key: widget.formKey,
       child: ListView(
         shrinkWrap: true,
+
         children: [
          for(var work = 0   ; work <   HomeController.cvUser.workPlaces.listWorkPlace.length ; work++)
            WorkPlaceForm(

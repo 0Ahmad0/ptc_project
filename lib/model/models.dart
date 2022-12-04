@@ -87,9 +87,9 @@ class CvUser {
   String idUser;
   String urlCv;
   PersonalInformation personalInformation;
-  Learns learns;
+  Educations educations;
   Languages languages;
-  Skills skills;
+  PersonalSkills personalSkills;
   Courses courses;
   WorkPlaces workPlaces;
   Projects projects;
@@ -100,9 +100,9 @@ class CvUser {
      this.idUser='',
      this.urlCv='',
     required this.personalInformation,
-    required this.learns,
+    required this.educations,
     required this.languages,
-    required this.skills,
+    required this.personalSkills,
     required this.courses,
     required this.workPlaces,
     required this.projects,
@@ -116,9 +116,9 @@ class CvUser {
       urlCv: json['urlCv']!=null?json['urlCv']:'',
       idUser:json.toString().contains('/CvUser/')?json.id:json['idUser'],
       personalInformation: PersonalInformation.fromJson(json['personalInformation']),
-      learns: json['learns']!=null?Learns.fromJson(json['learns']):Learns(idUser: ''),
+      educations: json['educations']!=null?Educations.fromJson(json['educations']):Educations(idUser: ''),
       languages: Languages.fromJson(json['languages']),
-      skills: Skills.fromJson(json['skills']),
+      personalSkills: PersonalSkills.fromJson(json['personalSkills']),
       courses: Courses.fromJson(json['courses']),
       workPlaces: WorkPlaces.fromJson(json['workPlaces']),
       projects: Projects.fromJson(json['projects']),
@@ -130,9 +130,9 @@ class CvUser {
     'idUser':idUser,
     'urlCv':urlCv,
     'personalInformation':personalInformation.toJson(),
-    'learns':learns.toJson(),
+    'educations':educations.toJson(),
     'languages':languages.toJson(),
-    'skills':skills.toJson(),
+    'personalSkills':personalSkills.toJson(),
     'courses':courses.toJson(),
     'workPlaces':workPlaces.toJson(),
     'projects':projects.toJson(),
@@ -141,14 +141,14 @@ class CvUser {
   factory CvUser.genCvUser(){
     return CvUser(
         personalInformation: PersonalInformation(name: '', email: '', phone: '', address: '', age: 0, gender: ''),
-        learns: Learns(idUser: '',listLearn: [
-          Learn.genCourse()
+        educations: Educations(idUser: '',listEducation: [
+          Education.genCourse()
         ]),
         languages: Languages(idUser: '',listLanguage: [
           Language(name: '', level: 0)
         ]),
-        skills: Skills(idUser: '',listSkill: [
-          Skill(name: '', level: 0)
+        personalSkills: PersonalSkills(idUser: '',listPersonalSkill: [
+          PersonalSkill(name: '', level: 0)
         ]),
         courses: Courses(idUser: '',listCourse: [
           Course.genCourse(),
@@ -167,9 +167,9 @@ class CvUser {
     List tempList = [];
     tempList.addAll(projects.values());
     tempList.addAll(personalInformation.values());
-    tempList.addAll(learns.values());
+    tempList.addAll(educations.values());
     tempList.addAll(languages.values());
-    tempList.addAll(skills.values());
+    tempList.addAll(personalSkills.values());
     tempList.addAll(technicalSkills.values());
     tempList.addAll(courses.values());
     tempList.addAll(workPlaces.values());
@@ -180,11 +180,11 @@ class CvUser {
       return false;
     if(!personalInformation.validate())
       return false;
-    if(!learns.validate())
+    if(!educations.validate())
       return false;
     if(!languages.validate())
       return false;
-    if(!skills.validate())
+    if(!personalSkills.validate())
       return false;
     if(!technicalSkills.validate())
       return false;
@@ -326,61 +326,61 @@ class Language {
     return true;
   }
 }
-class Skills {
+class PersonalSkills {
   String idUser;
-  List<Skill> listSkill;
+  List<PersonalSkill> listPersonalSkill;
 
-  Skills({
+  PersonalSkills({
     required this.idUser,
-    this.listSkill=const []
+    this.listPersonalSkill=const []
   });
 
-  factory Skills.fromJson(json){
-    List<Skill> tempListSkill = [];
-    for(var skill in json["listSkill"]){
-      tempListSkill.add(Skill.fromJson(skill));
+  factory PersonalSkills.fromJson(json){
+    List<PersonalSkill> tempListPersonalSkill = [];
+    for(var personalSkill in json["listPersonalSkill"]){
+      tempListPersonalSkill.add(PersonalSkill.fromJson(personalSkill));
     }
-    return Skills(
+    return PersonalSkills(
       idUser: json['idUser'],
-      listSkill: tempListSkill,
+      listPersonalSkill: tempListPersonalSkill,
     );
   }
   Map<String,dynamic> toJson(){
-    List<Map<String,dynamic>> tempListSkill = [];
-    for(Skill skill in listSkill){
-      tempListSkill.add(skill.toJson());
+    List<Map<String,dynamic>> tempListPersonalSkill = [];
+    for(PersonalSkill personalSkill in listPersonalSkill){
+      tempListPersonalSkill.add(personalSkill.toJson());
     }
     return{
       'idUser':idUser,
-      'listSkill':tempListSkill,
+      'listPersonalSkill':tempListPersonalSkill,
     };
   }
   List values(){
     List tempList = [];
-    for(var element in listSkill){
+    for(var element in listPersonalSkill){
       tempList.addAll(element.values());
     }
     return tempList;
   }
   bool validate(){
-    for(var element in listSkill){
+    for(var element in listPersonalSkill){
       if(!element.validate())
         return false;
     }
     return true;
   }
 }
-class Skill{
+class PersonalSkill{
   String name;
   int level;
 
-Skill({
+  PersonalSkill({
     required this.name,
     required this.level,
   });
 
-  factory Skill.fromJson(json){
-    return Skill(
+  factory PersonalSkill.fromJson(json){
+    return PersonalSkill(
       name: json['name'],
       level: json['level'],
     );
@@ -690,13 +690,13 @@ class Work{
   DateTime startDate;
   DateTime endDate;
   bool endDateForNow;
-  String levelPersonPlace;
+  String experienceWork;
   String skillsPersonPlace;
 
   Work({
     required this.positionPersonPlace,
     required this.skillsPersonPlace,
-    required this.levelPersonPlace,
+    required this.experienceWork,
     required this.startDate,
     required this.endDate,
      this.endDateForNow=false,
@@ -705,7 +705,7 @@ class Work{
   factory Work.fromJson(json){
     return Work(
       positionPersonPlace: json['positionPersonPlace'],
-      levelPersonPlace: json['levelPersonPlace'],
+      experienceWork: json['experienceWork'],
       skillsPersonPlace: json['skillsPersonPlace'],
       endDateForNow: json['endDateForNow'],
       startDate: json['startDate'],
@@ -714,20 +714,20 @@ class Work{
   }
   Map<String,dynamic> toJson()=>{
     'positionPersonPlace':positionPersonPlace,
-    'levelPersonPlace':levelPersonPlace,
+    'experienceWork':experienceWork,
     'skillsPersonPlace':skillsPersonPlace,
     'endDateForNow':endDateForNow,
     'endDate':endDate,
     'startDate':startDate,
   };
   factory Work.genCourse(){
-    return Work(positionPersonPlace: '', skillsPersonPlace: '', levelPersonPlace: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
+    return Work(positionPersonPlace: '', skillsPersonPlace: '', experienceWork: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
 
   List values(){
     List tempList = toJson().values.toList();
     tempList.addAll(positionPersonPlace.split(' '));
-    tempList.addAll(levelPersonPlace.split(' '));
+    tempList.addAll(experienceWork.split(' '));
     tempList.addAll(skillsPersonPlace.split(' '));
     tempList.add(endDateForNow);
     tempList.add(startDate);
@@ -743,94 +743,94 @@ class Work{
   }
 }
 
-class Learns {
+class Educations {
   String idUser;
-  List<Learn> listLearn;
+  List<Education> listEducation;
 
-  Learns({
+  Educations({
     required this.idUser,
-    this.listLearn=const []
+    this.listEducation=const []
   });
 
-  factory Learns.fromJson(json){
-    List<Learn> tempListLearn = [];
-    for(var learn in json["listLearn"]){
+  factory Educations.fromJson(json){
+    List<Education> tempListEducation = [];
+    for(var education in json["listEducation"]){
 
-      tempListLearn.add(Learn.fromJson(learn));
+      tempListEducation.add(Education.fromJson(education));
     }
-    return Learns(
+    return Educations(
       idUser: json['idUser'],
-      listLearn: tempListLearn,
+      listEducation: tempListEducation,
     );
   }
   Map<String,dynamic> toJson(){
-    List<Map<String,dynamic>> tempListLearn= [];
-    for(Learn learn in listLearn){
-      tempListLearn.add(learn.toJson());
+    List<Map<String,dynamic>> tempListEducation= [];
+    for(Education education in listEducation){
+      tempListEducation.add(education.toJson());
     }
     return{
       'idUser':idUser,
-      'listLearn':tempListLearn,
+      'listEducation':tempListEducation,
     };
   }
   List values(){
     List tempList = [];
-    for(var element in listLearn){
+    for(var element in listEducation){
       tempList.addAll(element.values());
     }
     return tempList;
   }
   bool validate(){
-    for(var element in listLearn){
+    for(var element in listEducation){
       if(!element.validate())
         return false;
     }
     return true;
   }
 }
-class Learn{
-  String state;
+class Education{
+  String educationStatus;
   DateTime startDate;
   DateTime endDate;
   bool endDateForNow;
-  String learnYear;
-  String nameUniversity;
+  String educationYear;
+  String educationPlace;
 
-  Learn({
-    required this.nameUniversity,
-    required this.state,
-    required this.learnYear,
+  Education({
+    required this.educationPlace,
+    required this.educationStatus,
+    required this.educationYear,
     required this.startDate,
     required this.endDate,
     this.endDateForNow=false,
   });
 
-  factory Learn.fromJson(json){
-    return Learn(
-      learnYear: json['learnYear'],
-      state: json['state'],
-      nameUniversity: json['nameUniversity'],
+  factory Education.fromJson(json){
+    return Education(
+      educationYear: json['educationYear'],
+      educationStatus: json['educationStatus'],
+      educationPlace: json['educationPlace'],
       endDateForNow: json['endDateForNow'],
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
   }
   Map<String,dynamic> toJson()=>{
-    'learnYear':learnYear,
-    'state':state,
-    'nameUniversity':nameUniversity,
+    'educationYear':educationYear,
+    'educationStatus':educationStatus,
+    'educationPlace':educationPlace,
     'endDateForNow':endDateForNow,
     'endDate':endDate,
     'startDate':startDate,
   };
-  factory Learn.genCourse(){
-    return Learn(learnYear: '', state: '', nameUniversity: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
+  factory Education.genCourse(){
+    return Education(educationYear: '', educationStatus: '', educationPlace: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
   List values(){
     List tempList = toJson().values.toList();
-    tempList.addAll(state.split(' '));
-    tempList.addAll(learnYear.split(' '));
-    tempList.addAll(nameUniversity.split(' '));
+    tempList.addAll(educationStatus.split(' '));
+    tempList.addAll(educationYear.split(' '));
+    tempList.addAll(educationPlace.split(' '));
     return tempList;
   }
   bool validate(){

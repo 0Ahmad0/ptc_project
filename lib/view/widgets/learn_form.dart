@@ -21,12 +21,12 @@ class LearnForm extends StatefulWidget {
 }
 
 class _LearnFormState extends State<LearnForm> {
-  final controllerLearnName= TextEditingController();
+  final controllerEducationPlace= TextEditingController();
 
-  final controllerLearnYear= TextEditingController();
+  final controllerEducationYear= TextEditingController();
 
-  final controllerDropLearnYear= TextEditingController();
-  final controllerLearnState= TextEditingController();
+  final controllerDropEducationYear= TextEditingController();
+  final controllerEducationStatus= TextEditingController();
 
   final form = GlobalKey<FormState>();
 
@@ -50,10 +50,10 @@ class _LearnFormState extends State<LearnForm> {
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
        if(typeDate==0)
-         HomeController.cvUser.learns.listLearn[widget.index!-1].startDate=_selectedDate;
+         HomeController.cvUser.educations.listEducation[widget.index!-1].startDate=_selectedDate;
        else {
-         HomeController.cvUser.learns.listLearn[widget.index!-1].endDate=_selectedDate;
-         HomeController.cvUser.learns.listLearn[widget.index!-1].endDateForNow=true;
+         HomeController.cvUser.educations.listEducation[widget.index!-1].endDate=_selectedDate;
+         HomeController.cvUser.educations.listEducation[widget.index!-1].endDateForNow=true;
        }
       controller
         ..text = DateFormat.yMd().format(_selectedDate)
@@ -83,16 +83,16 @@ class _LearnFormState extends State<LearnForm> {
 
   @override
   Widget build(BuildContext context) {
-    controllerLearnName.text=HomeController.cvUser.learns.listLearn[widget.index!-1].nameUniversity;
-    controllerLearnYear.text=HomeController.cvUser.learns.listLearn[widget.index!-1].learnYear;
-    controllerDropLearnYear.text=listYears.contains(HomeController.cvUser.learns.listLearn[widget.index!-1].learnYear)
-    ?HomeController.cvUser.learns.listLearn[widget.index!-1].learnYear
+    controllerEducationPlace.text=HomeController.cvUser.educations.listEducation[widget.index!-1].educationPlace;
+    controllerEducationYear.text=HomeController.cvUser.educations.listEducation[widget.index!-1].educationYear;
+    controllerDropEducationYear.text=listYears.contains(HomeController.cvUser.educations.listEducation[widget.index!-1].educationYear)
+    ?HomeController.cvUser.educations.listEducation[widget.index!-1].educationYear
     :listYears.last;
-    controllerLearnState.text=HomeController.cvUser.learns.listLearn[widget.index!-1].state;
-    HomeController.cvUser.learns.listLearn[widget.index!-1].startDate.year>1?
-    dateController.text=DateFormat.yMd().format(HomeController.cvUser.learns.listLearn[widget.index!-1].startDate):null;
-    HomeController.cvUser.learns.listLearn[widget.index!-1].endDate.year>1?
-    dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.learns.listLearn[widget.index!-1].endDate):null;
+    controllerEducationStatus.text=HomeController.cvUser.educations.listEducation[widget.index!-1].educationStatus;
+    HomeController.cvUser.educations.listEducation[widget.index!-1].startDate.year>1?
+    dateController.text=DateFormat.yMd().format(HomeController.cvUser.educations.listEducation[widget.index!-1].startDate):null;
+    HomeController.cvUser.educations.listEducation[widget.index!-1].endDate.year>1?
+    dateEndController.text=DateFormat.yMd().format(HomeController.cvUser.educations.listEducation[widget.index!-1].endDate):null;
     return Form(
       key: form,
       child: Card(
@@ -104,10 +104,10 @@ class _LearnFormState extends State<LearnForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text("Learn ${widget.index}")),
+                  Flexible(child: Text("Education ${widget.index}")),
                   Row(
                     children: [
-                      (HomeController.cvUser.skills.listSkill.length<2)?SizedBox():IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
+                      (HomeController.cvUser.personalSkills.listPersonalSkill.length<2)?SizedBox():IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
                       (widget.index!-1)!=0?SizedBox(): IconButton(onPressed:widget.onAddForm , icon: Icon(Icons.add)),
 
                     ],
@@ -115,27 +115,27 @@ class _LearnFormState extends State<LearnForm> {
                 ],
               ),
               TextFormField(
-                controller: controllerLearnName,
+                controller: controllerEducationPlace,
                 decoration: InputDecoration(
-                    hintText: "Learn Name"
+                    hintText: "Education Place"
                 ),
                 onChanged: (val){
-                  HomeController.cvUser.learns.listLearn[widget.index!-1].nameUniversity=val;},
+                  HomeController.cvUser.educations.listEducation[widget.index!-1].educationPlace=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               TextFormField(
-                controller: controllerLearnState,
+                controller: controllerEducationStatus,
                 decoration: InputDecoration(
-                    hintText: "Learn Status"
+                    hintText: "Education Status"
                 ),
                 onChanged: (val){
-                  HomeController.cvUser.learns.listLearn[widget.index!-1].state=val;},
+                  HomeController.cvUser.educations.listEducation[widget.index!-1].educationStatus=val;},
               ),
               const SizedBox(height: AppSize.s10,),
               DropdownButtonFormField(
-                value: controllerDropLearnYear.text,
+                value: controllerDropEducationYear.text,
                   decoration: InputDecoration(
-                    hintText: 'year'
+                    hintText: 'Year'
                   ),
                   items: [
                 for(var i = 0 ; i < listYears.length ; i ++)
@@ -144,21 +144,21 @@ class _LearnFormState extends State<LearnForm> {
                     value: listYears[i],
                   )
               ], onChanged: (val){
-                HomeController.cvUser.learns.listLearn[widget.index!-1].learnYear=listYears.last.contains(val.toString())?'':val.toString();
+                HomeController.cvUser.educations.listEducation[widget.index!-1].educationYear=listYears.last.contains(val.toString())?'':val.toString();
                 setState(() {
                 });
 
               }),
-              if(listYears.last.contains(controllerLearnYear.text)||!listYears.contains(controllerLearnYear.text))
+              if(listYears.last.contains(controllerEducationYear.text)||!listYears.contains(controllerEducationYear.text))
                 const SizedBox(height: AppSize.s10,),
-              if(listYears.last.contains(controllerLearnYear.text)||!listYears.contains(controllerLearnYear.text))
+              if(listYears.last.contains(controllerEducationYear.text)||!listYears.contains(controllerEducationYear.text))
                 TextFormField(
-                  controller: controllerLearnYear,
+                  controller: controllerEducationYear,
                   decoration: InputDecoration(
-                      hintText: "Learn Year"
+                      hintText: "Education Year"
                   ),
                   onChanged: (val){
-                    HomeController.cvUser.learns.listLearn[widget.index!-1].learnYear=val;},
+                    HomeController.cvUser.educations.listEducation[widget.index!-1].educationYear=val;},
                 ),
 
               const SizedBox(height: AppSize.s10,),

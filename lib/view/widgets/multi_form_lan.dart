@@ -52,19 +52,19 @@ class _MultiFormLanState extends State<MultiFormLan> {
             },
           ),
         PTCDvider(),
-        for(var skil =0 ; skil < HomeController.cvUser.skills.listSkill.length ; skil++)
+        for(var skil =0 ; skil < HomeController.cvUser.personalSkills.listPersonalSkill.length ; skil++)
           SkilsForm(
             index: skil +1,
             userSkil: userSkils[0],
             onDelete: (){ //if(skil>0) {
-              HomeController.cvUser.skills.listSkill.removeAt(skil);
+              HomeController.cvUser.personalSkills.listPersonalSkill.removeAt(skil);
               onDelete(userSkils,skil);
             //}
             },
             onAddForm: (){
               setState(() {
                 userSkils.add(UserSkils());
-                HomeController.cvUser.skills.listSkill.add(Skill(name: '', level: 0));
+                HomeController.cvUser.personalSkills.listPersonalSkill.add(PersonalSkill(name: '', level: 0));
               });
             },
           ),

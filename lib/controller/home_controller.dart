@@ -133,8 +133,8 @@ class HomeController {
     CvUsers cvUsersSearch = CvUsers(listCvUser: []);
     for(CvUser cvUser in cvUsers.listCvUser){
       bool checkCvSearch=false;
-      for(Learn learn in cvUser.learns.listLearn){
-        if(checkListContainsValues(learn.toJson().values, values)){
+      for(Education education in cvUser.educations.listEducation){
+        if(checkListContainsValues(education.toJson().values, values)){
           checkCvSearch=true;
         }
       }
@@ -159,8 +159,8 @@ class HomeController {
     CvUsers cvUsersSearch = CvUsers(listCvUser: []);
     for(CvUser cvUser in cvUsers.listCvUser){
       bool checkCvSearch=false;
-      for(Skill skill in cvUser.skills.listSkill){
-        if(checkListContainsValues(skill.toJson().values, values)){
+      for(PersonalSkill personalSkill in cvUser.personalSkills.listPersonalSkill){
+        if(checkListContainsValues(personalSkill.toJson().values, values)){
           checkCvSearch=true;
         }
       }
@@ -249,21 +249,21 @@ class HomeController {
     }
   }
 
-findLastLearn(CvUser cvUser){
-    String lastListLearn='';
-    List<Learn> listTemp =[];
-    Learn lastLearn=Learn.genCourse();
-    for(var value in cvUser.learns.listLearn){
+findLastEducation(CvUser cvUser){
+    String lastListEducation='';
+    List<Education> listTemp =[];
+    Education lastEducation=Education.genCourse();
+    for(var value in cvUser.educations.listEducation){
       if(!value.endDateForNow) listTemp.add(value);
-      else if(value.startDate.compareTo(lastLearn.startDate)>0)
-        lastLearn=value;
+      else if(value.startDate.compareTo(lastEducation.startDate)>0)
+        lastEducation=value;
     }
     if(listTemp.length<1)
-      listTemp.add(lastLearn);
+      listTemp.add(lastEducation);
     for(var value in listTemp){
-      lastListLearn+=' ${value.nameUniversity}-${value.learnYear} ,';
+      lastListEducation+=' ${value.educationPlace}-${value.educationYear} ,';
     }
-    return lastListLearn;
+    return lastListEducation;
 }
 findLastWorkPlace(CvUser cvUser){
     String lastList='';
@@ -283,13 +283,13 @@ findLastWorkPlace(CvUser cvUser){
   }
 
   bool validPage1(CvUser cvUser){
-    return cvUser.personalInformation.validate()&&cvUser.learns.validate();
+    return cvUser.personalInformation.validate()&&cvUser.educations.validate();
   }
   bool validPage3(CvUser cvUser){
     return cvUser.workPlaces.validate();
   }
   bool validPage2(CvUser cvUser){
-    return cvUser.languages.validate()&&cvUser.skills.validate()&&cvUser.courses.validate();
+    return cvUser.languages.validate()&&cvUser.personalSkills.validate()&&cvUser.courses.validate();
   }
   bool validPage4(CvUser cvUser){
     return cvUser.projects.validate()&&cvUser.technicalSkills.validate();

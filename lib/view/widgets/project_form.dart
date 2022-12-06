@@ -139,6 +139,7 @@ class ProjectForm extends StatelessWidget {
                   ),
                 ],
               ),
+              /*
               const SizedBox(height: AppSize.s10,),
               TextFormField(
                 controller: stakeholderController,
@@ -146,7 +147,7 @@ class ProjectForm extends StatelessWidget {
                     hintText: "To"
                 ),
                 onChanged: (val)=> HomeController.cvUser.projects.listProject[index!-1].stakeholder=val,
-              ),
+              ),*/
               const SizedBox(height: AppSize.s10,),
               TextFormField(
                 controller: linkProjectController,

@@ -123,19 +123,25 @@ class WorkForm extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSize.s10,),
-          TextFormField(
-            controller: experienceWorkController,
-            decoration: InputDecoration(
-                hintText: "experience"
-            ),
-            onChanged: (val){
-              HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork=val;},
-          ),
+
+          DropdownButtonFormField(
+              value:  HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork!=''
+                  ?HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork
+                  :null,
+              decoration: InputDecoration(
+                  hintText: "experience",
+                  prefixIcon: Icon(Icons.polymer)
+              ),
+              items: ['trainer','junior','mid','senior'].map((e) => DropdownMenuItem(
+
+                child: Text("$e"),
+                value: e,
+              )).toList(), onChanged: (val){HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].experienceWork=val.toString();}),
           const SizedBox(height: AppSize.s10,),
           TextFormField(
             controller: skillsPersonPlaceController,
             decoration: InputDecoration(
-                hintText: "skills Person work"
+                hintText: "type job"
             ),
             onChanged: (val){
               HomeController.cvUser.workPlaces.listWorkPlace[indexWorkPlace!-1].works.listWork[index!-1].skillsPersonPlace=val;},

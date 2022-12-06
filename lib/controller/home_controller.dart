@@ -26,7 +26,7 @@ class HomeController {
     var result =await FirebaseFun.createCvUser(cvUser: cvUser);
     print(result);
 
-    //Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
   fetchCvUsers(context) async {

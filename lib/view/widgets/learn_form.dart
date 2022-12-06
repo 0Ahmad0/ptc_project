@@ -107,7 +107,7 @@ class _LearnFormState extends State<LearnForm> {
                   Flexible(child: Text("Education ${widget.index}")),
                   Row(
                     children: [
-                      (HomeController.cvUser.personalSkills.listPersonalSkill.length<2)?SizedBox():IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
+                      (HomeController.cvUser.educations.listEducation.length<2)?SizedBox():IconButton(onPressed:widget.onDelete , icon: Icon(Icons.delete)),
                       (widget.index!-1)!=0?SizedBox(): IconButton(onPressed:widget.onAddForm , icon: Icon(Icons.add)),
 
                     ],

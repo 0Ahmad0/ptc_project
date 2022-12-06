@@ -19,6 +19,7 @@ import 'package:ptc_project/view/widgets/multi_form_lan.dart';
 import 'package:ptc_project/view/widgets/project_form.dart';
 import 'package:ptc_project/view/widgets/skills_technical_form.dart';
 import 'package:ptc_project/view/widgets/work_form.dart';
+import '../../../controller/utils/firebase.dart';
 import '../../../model/utils/const.dart';
 import '../../widgets/work_place_form.dart';
 import '../search/search_view.dart';
@@ -81,11 +82,12 @@ class _HomeViewState extends State<HomeView> {
             backgroundColor: ColorManager.primaryColor,
 onPressed: ()async{
   
+//print('-------------------------------------------------------');
+//print(nameRef);
+//print('-------------------------------------------------------');
+//print(HomeController.cvUser.toJson());
 print('-------------------------------------------------------');
-print(nameRef);
-print('-------------------------------------------------------');
-print(HomeController.cvUser.toJson());
-print('-------------------------------------------------------');
+if(HomeController.cvUser.validate()){
 CONSTANTSAPP.LOADIG(context);
 var result= await homeController.createCvUser(context);
 Get.back();
@@ -93,6 +95,14 @@ if(result['status']){
   HomeController.cvUserHome=CvUser.genCvUser();
   setState(() {
   });
+}}
+else{
+  CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast("there is empty fileds"));
+  if(HomeController().validPage1(HomeController.cvUser))
+  setState(() {
+
+  });
+
 }
 print('-------------------------------------------------------');
 },
@@ -372,7 +382,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
               textInputType: TextInputType.url,
               onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
               prefixIcon: Icons.link,
-              hintText: "Your Link Cv"),
+              hintText: "Cv Link"),
 
           const SizedBox(
             height: AppSize.s20,
@@ -413,7 +423,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
           for(var learn = 0 ; learn < HomeController.cvUser.educations.listEducation.length ; learn++)
             LearnForm(
               index: learn+1,
-              userLearn: learns[learn],
+              userLearn: learns[0],
               onDelete: (){
                 setState(() {
                   HomeController.cvUser.educations.listEducation.removeAt(learn);

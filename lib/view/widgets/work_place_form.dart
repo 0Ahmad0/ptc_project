@@ -157,7 +157,7 @@ class _WorkPlaceFormState extends State<WorkPlaceForm> {
               TextFormField(
                 controller: phoneCompanyController,
                 decoration: InputDecoration(
-                    hintText: "Phone"
+                    hintText:"Website"// "Phone"
                 ),
                 onChanged: (val){
                   HomeController.cvUser.workPlaces.listWorkPlace[widget.index!-1].phoneCompany=val;},

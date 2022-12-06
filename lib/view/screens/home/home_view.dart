@@ -97,7 +97,7 @@ if(result['status']){
   });
 }}
 else{
-  CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast("there is empty fileds"));
+  CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast("there is empty fields"));
   if(HomeController().validPage1(HomeController.cvUser))
   setState(() {
 

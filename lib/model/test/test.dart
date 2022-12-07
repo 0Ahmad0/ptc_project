@@ -13,14 +13,14 @@ class TestModel {
           Work(
               positionPersonPlace: 'positionPersonPlace1',
               skillsPersonPlace: 'skillsPersonPlace1',
-              experienceWork: 'experienceWork',
+              experienceWork: 'mid',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(2021),
               endDateForNow: true),
           Work(
               positionPersonPlace: 'positionPersonPlace2',
               skillsPersonPlace: 'skillsPersonPlace2',
-              experienceWork: 'experienceWork',
+              experienceWork: 'mid',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(1))
         ]),
@@ -38,14 +38,14 @@ class TestModel {
           Work(
               positionPersonPlace: 'positionPersonPlace1',
               skillsPersonPlace: 'skillsPersonPlace1',
-              experienceWork: 'experienceWork1',
+              experienceWork: 'mid',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(2021),
               endDateForNow: true),
           Work(
               positionPersonPlace: 'positionPersonPlace2',
               skillsPersonPlace: 'skillsPersonPlace2',
-              experienceWork: 'experienceWork2',
+              experienceWork: 'mid',
               startDate: DateTime.utc(2020),
               endDate: DateTime.utc(1))
         ]),

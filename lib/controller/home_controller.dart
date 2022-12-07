@@ -93,8 +93,8 @@ class HomeController {
         case 'TechnicalSkills':
           cvUsersSearch=searchTechnicalSkills(cvUsersSearch, mapSearch['TechnicalSkills']!=null?mapSearch['TechnicalSkills']!:[]);
           break;
-        case 'learns':
-          cvUsersSearch=searchLearns(cvUsersSearch, mapSearch['learns']!=null?mapSearch['learns']!:[]);
+        case 'Education':
+          cvUsersSearch=searchLearns(cvUsersSearch, mapSearch['Education']!=null?mapSearch['Education']!:[]);
           break;
         default:
 

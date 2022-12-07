@@ -60,7 +60,13 @@ class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
 
   double progresValue = .3;
-
+  void showSnackBar({message, color = Colors.red}) {
+    Get.snackbar("Opps!", message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: color,
+        colorText: ColorManager.white,
+        margin: EdgeInsets.all(AppMargin.m10));
+  }
   @override
   Widget build(BuildContext context) {
     HomeController.cvUser=HomeController.cvUserHome;
@@ -69,6 +75,7 @@ class _HomeViewState extends State<HomeView> {
     controllerPhone.text=HomeController.cvUser.personalInformation.phone;
     controllerEmail.text=HomeController.cvUser.personalInformation.email;
     controllerAddress.text=HomeController.cvUser.personalInformation.address;
+    controllerUrl.text=HomeController.cvUser.urlCv;
     if(HomeController.cvUser.personalInformation.age>0)
     controllerAge.text=HomeController.cvUser.personalInformation.age.toString();
     return Scaffold(
@@ -81,30 +88,61 @@ class _HomeViewState extends State<HomeView> {
           child: FloatingActionButton(
             backgroundColor: ColorManager.primaryColor,
 onPressed: ()async{
-  
+    if (!homeController.validPage1(HomeController.cvUserHome)) {
+    controllerPageView.animateToPage(0,
+    duration: Duration(milliseconds: 500),
+    curve: Curves.easeInOut);
+    setState(() {
+    currentIndex = 1;
+    progresValue = .25;
+    });
+    showSnackBar(message: 'Please Fill All Data In Page 1');
+    } else if (!homeController
+        .validPage2(HomeController.cvUserHome)) {
+    controllerPageView.animateToPage(1,
+    duration: Duration(milliseconds: 500),
+    curve: Curves.easeInOut);
+    setState(() {
+    currentIndex = 2;
+    progresValue = .5;
+    });
+    showSnackBar(message: 'Please Fill All Data In Page 2');
+    } else if (!homeController
+        .validPage3(HomeController.cvUserHome)) {
+    controllerPageView.animateToPage(2,
+    duration: Duration(milliseconds: 500),
+    curve: Curves.easeInOut);
+    setState(() {
+    currentIndex = 3;
+    progresValue = .75;
+    });
+    showSnackBar(message: 'Please Fill All Data In Page 3');
+    } else if (!homeController
+        .validPage4(HomeController.cvUserHome)) {
+    controllerPageView.animateToPage(3,
+    duration: Duration(milliseconds: 500),
+    curve: Curves.easeInOut);
+    setState(() {
+    currentIndex = 4;
+    });
+    showSnackBar(message: 'Please Fill All Data In Page 4');
+    } else {
+      progresValue = 1;
 //print('-------------------------------------------------------');
 //print(nameRef);
 //print('-------------------------------------------------------');
 //print(HomeController.cvUser.toJson());
-print('-------------------------------------------------------');
-if(HomeController.cvUser.validate()){
-CONSTANTSAPP.LOADIG(context);
-var result= await homeController.createCvUser(context);
-Get.back();
-if(result['status']){
-  HomeController.cvUserHome=CvUser.genCvUser();
-  setState(() {
-  });
-}}
-else{
-  CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast("there is empty fields"));
-  if(HomeController().validPage1(HomeController.cvUser))
-  setState(() {
+      print('-------------------------------------------------------');
 
-  });
-
-}
-print('-------------------------------------------------------');
+      CONSTANTSAPP.LOADIG(context);
+      var result = await homeController.createCvUser(context);
+      Get.back();
+      if (result['status']) {
+        HomeController.cvUserHome = CvUser.genCvUser();
+        setState(() {});
+      }
+      print('-------------------------------------------------------');
+    }
 },
 //             onPressed: ()async{
 //                _getSql();
@@ -112,7 +150,7 @@ print('-------------------------------------------------------');
 //     curve: Curves.easeInOut);
 //             },
             child: Text(
-              currentIndex == 2?"+":"${currentIndex+1}",
+              (HomeController.cvUser.validate())?"+":"${currentIndex}",
               style: getRegularStyle(
                   color: ColorManager.white,
                 fontSize: Sizer.getH(context) / 24
@@ -380,7 +418,7 @@ class _BuildFirstPageState extends State<BuildFirstPage> {
                 }
               },
               textInputType: TextInputType.url,
-              onChange: (val)=>HomeController.cvUser.personalInformation.phone=val,
+              onChange: (val)=>HomeController.cvUser.urlCv=val,
               prefixIcon: Icons.link,
               hintText: "Cv Link"),
 

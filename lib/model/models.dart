@@ -901,7 +901,7 @@ class Project{
     required this.typeProject,
     required this.descriptionProject,
     required this.linkProject,
-    required this.stakeholder,
+     this.stakeholder="T",
     required this.startDate,
     required this.endDate,
     this.endDateForNow=false,
@@ -930,9 +930,10 @@ class Project{
     'startDate':startDate,
   };
   factory Project.genCourse(){
-    return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: '', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
+    return Project(nameProject: '', typeProject: '', descriptionProject: '', linkProject: '', stakeholder: 't', startDate: DateTime.utc(1), endDate: DateTime.utc(1));
   }
   List values(){
+    this.stakeholder="T";
     return toJson().values.toList();
   }
   bool validate(){

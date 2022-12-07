@@ -128,7 +128,7 @@ class _SearchViewState extends State<SearchView> {
     'Projects',
     'TechnicalSkills',
     'Works',
-    'learns'];
+    'Education'];
   List<DataSearch> selectedItems =[];// [DataSearch(1, "name")];
   final searchController = TextEditingController();
   @override

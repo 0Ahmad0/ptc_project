@@ -1,4 +1,5 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firedart/firedart.dart';
@@ -12,8 +13,10 @@ import 'package:ptc_project/translations/locale_keys.g.dart';
 import 'package:ptc_project/view/resourse/color_manager.dart';
 import 'package:ptc_project/view/resourse/style_manager.dart';
 import 'package:ptc_project/view/resourse/values_manager.dart';
+import 'package:ptc_project/view/screens/information/information_page.dart';
 import 'package:ptc_project/view/widgets/custom_divider.dart';
 import 'package:ptc_project/view/widgets/custom_textfiled.dart';
+import 'package:ptc_project/view/widgets/custom_textfiled2.dart';
 import 'package:ptc_project/view/widgets/learn_form.dart';
 import 'package:ptc_project/view/widgets/multi_form_lan.dart';
 import 'package:ptc_project/view/widgets/project_form.dart';
@@ -37,6 +40,7 @@ class _HomeViewState extends State<HomeView> {
   final controllerName = TextEditingController();
   final HomeController homeController= HomeController();
   final controllerAge = TextEditingController();
+  final controllerGenerate = TextEditingController(text: "");
 
   final controllerGender = TextEditingController();
 
@@ -163,6 +167,38 @@ onPressed: ()async{
 
       appBar: AppBar(
         title: Text("Home Screen"),
+        actions: [IconButton(onPressed: () {
+          controllerGenerate.text=HomeController.cvUser.toJson().toString();
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: "Generate differencesر",
+            body: CustomTextFiled2(
+              maxLines: 12,
+                controller: controllerGenerate,
+                validator: (String? val) {
+                  if (val!.trim().isEmpty) {
+                    return "this filed is required";
+                  } else {
+                    return null;
+                  }
+                },
+                readOnly: true,
+
+                onChange: (val){},
+               // onChange: (val)=>HomeController.cvUser.personalInformation.age=int.parse(val),
+                // onTap:(val)=>,
+                prefixIcon: Icons.code,
+                hintText: tr("code")),
+            desc: "AppStrings",
+           // btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+          )..show();
+        }, icon: Icon(Icons.print),
+          
+        ),
+        SizedBox(width: AppSize.s20,)]
       ),
       drawer: buildDrawer(context),
       body: Stack(

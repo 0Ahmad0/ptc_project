@@ -140,7 +140,7 @@ class CvUser {
   };
   factory CvUser.genCvUser(){
     return CvUser(
-        personalInformation: PersonalInformation(name: '', email: '', phone: '', address: '', age: 0, gender: ''),
+        personalInformation: PersonalInformation(name: '', email: '', phone: '', address: '', age: 0, gender: 'Male'),
         educations: Educations(idUser: '',listEducation: [
           Education.genCourse()
         ]),
@@ -242,9 +242,9 @@ class PersonalInformation {
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
+    if(toJson().values.toList().contains(''))
       return false;
-    if(age<1)
+    if(age<0)
       return false;
     return true;
   }
@@ -502,10 +502,13 @@ class Course{
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
-      return false;
-    if(date.year<2)
-      return false;
+     if(values().contains('')&&!values().contains(''))
+       return false;
+    
+    // if(values().contains(''))
+    //   return false;
+    // if(date.year<2)
+    //   return false;
     return true;
   }
 }
@@ -626,12 +629,16 @@ class WorkPlace{
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
-      return false;
-    if(startDate.year<2)
-      return false;
-    if(!works.validate())
-      return false;
+     if(!values().contains('')&&values().contains(''))
+       return false;
+     if(!works.validate())
+       return false;
+    // if(values().contains(''))
+    //   return false;
+    // if(startDate.year<2)
+    //   return false;
+    // if(!works.validate())
+    //   return false;
     return true;
   }
 }
@@ -735,10 +742,12 @@ class Work{
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
-      return false;
-    if(startDate.year<2)
-      return false;
+     if(values().contains('')&&!values().contains(''))
+       return false;
+    // if(values().contains(''))
+    //   return false;
+    // if(startDate.year<2)
+    //   return false;
     return true;
   }
 }
@@ -834,7 +843,7 @@ class Education{
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
+    if(toJson().values.toList().contains(''))
       return false;
     if(startDate.year<2)
       return false;
@@ -937,10 +946,10 @@ class Project{
     return toJson().values.toList();
   }
   bool validate(){
-    if(values().contains(''))
-      return false;
-    if(startDate.year<2)
-      return false;
+    // if(values().contains(''))
+    //   return false;
+    // if(startDate.year<2)
+    //   return false;
     return true;
   }
 
@@ -1024,7 +1033,7 @@ class TechnicalSkill{
     return tempList;
   }
   bool validate(){
-    if(values().contains(''))
+    if(toJson().values.toList().contains(''))
       return false;
     return true;
   }

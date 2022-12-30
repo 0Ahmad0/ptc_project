@@ -76,6 +76,7 @@ class _HomeViewState extends State<HomeView> {
     controllerEmail.text=HomeController.cvUser.personalInformation.email;
     controllerAddress.text=HomeController.cvUser.personalInformation.address;
     controllerUrl.text=HomeController.cvUser.urlCv;
+    gender=HomeController.cvUser.personalInformation.gender;
     if(HomeController.cvUser.personalInformation.age>0)
     controllerAge.text=HomeController.cvUser.personalInformation.age.toString();
     return Scaffold(

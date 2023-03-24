@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firedart/firedart.dart' as firedart;
 import 'package:firedart/firestore/firestore.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 //import 'package:multi_select_search/multi_select_search.dart';
 import 'package:ptc_project/controller/home_controller.dart';
+import 'package:ptc_project/controller/json_controller.dart';
 import 'package:ptc_project/controller/utils/firebase.dart';
 import 'package:ptc_project/model/models.dart';
 import 'package:ptc_project/model/utils/const.dart';
@@ -18,6 +20,7 @@ import '../../resourse/color_manager.dart';
 import '../../resourse/font_manager.dart';
 import '../../resourse/style_manager.dart';
 import '../../resourse/values_manager.dart';
+import '../../widgets/custom_textfiled2.dart';
 import '../information/information_page.dart';
 
 class SearchBody extends StatelessWidget {
@@ -115,7 +118,7 @@ class BuildCVItem extends StatelessWidget {
 
 class SearchView extends StatefulWidget {
    SearchView({Key? key}) : super(key: key);
-
+   static var setStateSearch;
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -131,11 +134,56 @@ class _SearchViewState extends State<SearchView> {
     'Education'];
   List<DataSearch> selectedItems =[];// [DataSearch(1, "name")];
   final searchController = TextEditingController();
+  late JsonController jsonController;
   @override
   Widget build(BuildContext context) {
+     HomeController.cvUsersSearch = CvUsers();
+     jsonController=JsonController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Search"),
+          ///Export Cvs
+          // actions: [IconButton(onPressed: () {
+          //   final textController=TextEditingController(text: jsonController.pathCVsExport);
+          //   AwesomeDialog(
+          //     context: context,
+          //     dialogType: DialogType.info,
+          //     animType: AnimType.rightSlide,
+          //     title: "Export Cvs",
+          //     body: CustomTextFiled2(
+          //         maxLines: 12,
+          //         controller: textController,
+          //         validator: (String? val) {
+          //           if (val!.trim().isEmpty) {
+          //             return "this filed is required";
+          //           } else {
+          //             return null;
+          //           }
+          //         },
+          //         readOnly: true,
+          //
+          //         onChange: (val){},
+          //         prefixIcon: Icons.link,
+          //         hintText: tr("link")),
+          //     desc: "AppStrings",
+          //      btnCancelOnPress: () {},
+          //     btnOkOnPress: () async {
+          //       jsonController.exportCvs(context, cvUsers: HomeController.cvUsersSearch);
+          //     },
+          //   )..show();
+          // }, icon: Icon(Icons.archive_outlined),
+          //
+          // ),
+          //   SizedBox(width: AppSize.s20,)]
+        // actions: [
+        //   StatefulBuilder(builder: (_,setState1){
+        //     SearchView.setStateSearch=setState1;
+        //     return Visibility(
+        //       visible: HomeController.cvUsersSearch.listCvUser.length>0,
+        //         child: Center(child: Text('${HomeController.cvUsersSearch.listCvUser.length}')))
+        //     ;},),
+        //   const SizedBox(width: 10,)
+        // ],
       ),
       body: Column(
         children: [
@@ -149,9 +197,10 @@ class _SearchViewState extends State<SearchView> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return
-                      HomeController.cvUsers.listCvUser.length>0?
-                      bodyListSearchCv()
-                      :CONSTANTSAPP.SHOWLOADINGINDECATOR();
+                      // HomeController.cvUsers.listCvUser.length>0?
+                      // bodyListSearchCv()
+                      // :
+                      CONSTANTSAPP.SHOWLOADINGINDECATOR();
                     //Const.CIRCLE(context);
                   }
                   else if (snapshot.connectionState ==
@@ -162,7 +211,7 @@ class _SearchViewState extends State<SearchView> {
                        CONSTANTSAPP.SHOWLOADINGINDECATOR();
                        HomeController.mapSearch=HomeController().convertToMapSearch(selectedItems, itemSearch);
                        HomeController.cvUsersSearch=HomeController().search(HomeController.cvUsers);
-
+                       print(HomeController.cvUsersSearch.listCvUser.length);
                        return bodyListSearchCv();
                       //   });
 

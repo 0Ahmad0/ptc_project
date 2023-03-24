@@ -34,7 +34,7 @@ class HomeController {
     if(result['status']){
       cvUsers=CvUsers.fromJson(result['body']);
     }
-    print(cvUsers.toJson());
+    //print(cvUsers.toJson());
     (!result['status'])?CONSTANTSAPP.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString())):"";
     return result;
   }
@@ -58,7 +58,7 @@ class HomeController {
          tempMapSearch['${itemSearch[dataSearch.id]}']=[];
        tempMapSearch['${itemSearch[dataSearch.id]}']?.add(dataSearch.name);
      }
-     print(tempMapSearch);
+    // print(tempMapSearch);
      return tempMapSearch;
   }
   search( CvUsers cvUsers){
@@ -101,6 +101,7 @@ class HomeController {
           break;
       }
     }
+
     return cvUsersSearch;
   }
   searchTechnicalSkills(CvUsers cvUsers,List values){
@@ -230,10 +231,25 @@ class HomeController {
     return cvUsersSearch;
   }
   bool checkListContainsValues(Iterable list,List values){
-
     bool check=true;
+
+
+    // List list=['',' ', 'any', 'XD', 'UI', 'Build' 'code', 'Design'];
+    // print('a s'.contains(''));
     for(var value in values){
-      if(!list.contains(value))
+      bool checkList=false;
+      for(var element in list){
+        if(element.toString()!='.'&&element.toString()!=''&&element.toString()!=' '&&element.toString().toLowerCase().contains(value.toString().toLowerCase()))
+          checkList=true;
+      }
+      // if(checkList){
+      //   print(list);
+      //   print(values);
+      //   print(checkList);
+      // }
+
+     // if(!list.contains(value))
+      if(!checkList)
         check= false;
     }
     return check;

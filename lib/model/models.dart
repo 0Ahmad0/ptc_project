@@ -81,6 +81,27 @@ class CvUsers {
       'listCvUser':tempListCvUser,
     };
   }
+
+  factory CvUsers.fromJson1(List json){
+    List<CvUser> tempListCvUser = [];
+    for(int i=0;i<json.length;i++){
+      CvUser cvUser =CvUser.fromJson1(json[i]);
+      cvUser.index=i;
+      tempListCvUser.add(cvUser);
+    }
+    return CvUsers(
+      listCvUser: tempListCvUser,
+    );
+  }
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListCvUser = [];
+    for(CvUser cvUser in listCvUser){
+      tempListCvUser.add(cvUser.toJson1());
+    }
+    return{
+      'listCvUser':tempListCvUser,
+    };
+  }
 }
 class CvUser {
   int index;
@@ -125,6 +146,35 @@ class CvUser {
       technicalSkills: TechnicalSkills.fromJson(json['technicalSkills']),
     );
   }
+  factory CvUser.fromJson1(json){
+
+    return CvUser(
+      index: json['index'],
+      urlCv: json['urlCv']!=null?json['urlCv']:'',
+      idUser:json.toString().contains('/CvUser/')?json.id:json['idUser'],
+      personalInformation: PersonalInformation.fromJson(json['personalInformation']),
+      educations: json['educations']!=null?Educations.fromJson1(json['educations']):Educations(idUser: ''),
+      languages: Languages.fromJson(json['languages']),
+      personalSkills: PersonalSkills.fromJson(json['personalSkills']),
+      courses: Courses.fromJson1(json['courses']),
+      workPlaces: WorkPlaces.fromJson1(json['workPlaces']),
+      projects: Projects.fromJson1(json['projects']),
+      technicalSkills: TechnicalSkills.fromJson(json['technicalSkills']),
+    );
+  }
+  Map<String,dynamic> toJson1()=>{
+    'index':index,
+    'idUser':idUser,
+    'urlCv':urlCv,
+    'personalInformation':personalInformation.toJson(),
+    'educations':educations.toJson1(),
+    'languages':languages.toJson(),
+    'personalSkills':personalSkills.toJson(),
+    'courses':courses.toJson1(),
+    'workPlaces':workPlaces.toJson1(),
+    'projects':projects.toJson1(),
+    'technicalSkills':technicalSkills.toJson(),
+  };
   Map<String,dynamic> toJson()=>{
     'index':index,
     'idUser':idUser,
@@ -345,6 +395,7 @@ class PersonalSkills {
       listPersonalSkill: tempListPersonalSkill,
     );
   }
+
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListPersonalSkill = [];
     for(PersonalSkill personalSkill in listPersonalSkill){
@@ -421,6 +472,26 @@ class Courses {
       listCourse: tempListCourse,
     );
   }
+  factory Courses.fromJson1(json){
+    List<Course> tempListCourse = [];
+    for(var course in json["listCourse"]){
+      tempListCourse.add(Course.fromJson1(course));
+    }
+    return Courses(
+      idUser: json['idUser'],
+      listCourse: tempListCourse,
+    );
+  }
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListCourse = [];
+    for(Course course in listCourse){
+      tempListCourse.add(course.toJson1());
+    }
+    return{
+      'idUser':idUser,
+      'listCourse':tempListCourse,
+    };
+  }
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListCourse = [];
     for(Course course in listCourse){
@@ -480,6 +551,23 @@ class Course{
       date: json['date'],
     );
   }
+  factory Course.fromJson1(json){
+    Course course=Course(
+      name: json['name'],
+      level: json['level'],
+      description: json['description'],
+      certificateType: json['certificateType'],
+      certificateSide: json['certificateSide'],
+      certificateName: json['certificateName'],
+      date: DateTime.parse(json['date'] as String),
+    );
+    return course;
+  }
+  Map<String,dynamic> toJson1(){
+    Map<String,dynamic> map=toJson();
+    map['date']=date.toIso8601String();
+   return map;
+  }
   Map<String,dynamic> toJson()=>{
     'name':name,
     'level':level,
@@ -531,6 +619,27 @@ class WorkPlaces {
       idUser: json['idUser'],
       listWorkPlace: tempListWorkPlace,
     );
+  }
+  factory WorkPlaces.fromJson1(json){
+    List<WorkPlace> tempListWorkPlace = [];
+    for(var workPlace in json["listWorkPlace"]){
+      tempListWorkPlace.add(WorkPlace.fromJson1(workPlace));
+    }
+    return WorkPlaces(
+      idUser: json['idUser'],
+      listWorkPlace: tempListWorkPlace,
+    );
+  }
+
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListWorkPlace = [];
+    for(WorkPlace workPlace in listWorkPlace){
+      tempListWorkPlace.add(workPlace.toJson1());
+    }
+    return{
+      'idUser':idUser,
+      'listWorkPlace':tempListWorkPlace,
+    };
   }
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListWorkPlace = [];
@@ -595,6 +704,28 @@ class WorkPlace{
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
+  }
+  factory WorkPlace.fromJson1(json){
+    WorkPlace workPlace=WorkPlace(
+      nameWorkPlace: json['nameWorkPlace'],
+      companyWorkPlace: json['companyWorkPlace'],
+      contactInfo: json['contactInfo'],
+      emailCompany: json['emailCompany'],
+      phoneCompany: json['phoneCompany'],
+      workType: json['workType'],
+      works: Works.fromJson1(json['listWorkPlace']),
+      endDateForNow: json['endDateForNow'],
+      startDate: DateTime.parse(json['startDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
+    );
+    return workPlace;
+  }
+  Map<String,dynamic> toJson1(){
+    Map<String,dynamic> map=toJson();
+    map['startDate']=startDate.toIso8601String();
+    map['endDate']=endDate.toIso8601String();
+    map['listWorkPlace']=works.toJson1();
+    return map;
   }
   Map<String,dynamic> toJson() {
     return {
@@ -666,6 +797,29 @@ class Works {
       listWork: tempListWork,
     );
   }
+  factory Works.fromJson1(json){
+    List<Work> tempListWork = [];
+    for(var work in json["listWork"]){
+
+      tempListWork.add(Work.fromJson1(work));
+    }
+    return Works(
+      idUser: json['idUser'],
+      idWorkPlace: json['idWorkPlace'],
+      listWork: tempListWork,
+    );
+  }
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListWork = [];
+    for(Work work in listWork){
+      tempListWork.add(work.toJson1());
+    }
+    return{
+      'idUser':idUser,
+      'idWorkPlace':idWorkPlace,
+      'listWork':tempListWork,
+    };
+  }
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListWork = [];
     for(Work work in listWork){
@@ -718,6 +872,23 @@ class Work{
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
+  }
+  factory Work.fromJson1(json){
+    Work work=Work(
+      positionPersonPlace: json['positionPersonPlace'],
+      experienceWork: json['experienceWork'],
+      skillsPersonPlace: json['skillsPersonPlace'],
+      endDateForNow: json['endDateForNow'],
+      startDate:DateTime.parse(json['startDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
+    );
+    return work;
+  }
+  Map<String,dynamic> toJson1(){
+    Map<String,dynamic> map=toJson();
+    map['startDate']=startDate.toIso8601String();
+    map['endDate']=endDate.toIso8601String();
+    return map;
   }
   Map<String,dynamic> toJson()=>{
     'positionPersonPlace':positionPersonPlace,
@@ -772,6 +943,27 @@ class Educations {
       listEducation: tempListEducation,
     );
   }
+  factory Educations.fromJson1(json){
+    List<Education> tempListEducation = [];
+    for(var education in json["listEducation"]){
+
+      tempListEducation.add(Education.fromJson1(education));
+    }
+    return Educations(
+      idUser: json['idUser'],
+      listEducation: tempListEducation,
+    );
+  }
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListEducation= [];
+    for(Education education in listEducation){
+      tempListEducation.add(education.toJson1());
+    }
+    return{
+      'idUser':idUser,
+      'listEducation':tempListEducation,
+    };
+  }
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListEducation= [];
     for(Education education in listEducation){
@@ -824,6 +1016,23 @@ class Education{
       endDate: json['endDate'],
     );
   }
+  factory Education.fromJson1(json){
+    Education education=Education(
+      educationYear: json['educationYear'],
+      educationStatus: json['educationStatus'],
+      educationPlace: json['educationPlace'],
+      endDateForNow: json['endDateForNow'],
+      startDate: DateTime.parse(json['startDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
+    );
+    return education;
+  }
+  Map<String,dynamic> toJson1(){
+    Map<String,dynamic> map=toJson();
+    map['startDate']=startDate.toIso8601String();
+    map['endDate']=endDate.toIso8601String();
+    return map;
+  }
   Map<String,dynamic> toJson()=>{
     'educationYear':educationYear,
     'educationStatus':educationStatus,
@@ -869,6 +1078,26 @@ class Projects {
       idUser: json['idUser'],
       listProject: tempListProject,
     );
+  }
+  factory Projects.fromJson1(json){
+    List<Project> tempListProject= [];
+    for(var project in json["listProject"]){
+      tempListProject.add(Project.fromJson1(project));
+    }
+    return Projects(
+      idUser: json['idUser'],
+      listProject: tempListProject,
+    );
+  }
+  Map<String,dynamic> toJson1(){
+    List<Map<String,dynamic>> tempListProject = [];
+    for(Project project in listProject){
+      tempListProject.add(project.toJson1());
+    }
+    return{
+      'idUser':idUser,
+      'listProject':tempListProject,
+    };
   }
   Map<String,dynamic> toJson(){
     List<Map<String,dynamic>> tempListProject = [];
@@ -927,6 +1156,25 @@ class Project{
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
+  }
+  factory Project.fromJson1(json){
+    Project project=Project(
+      nameProject: json['nameProject'],
+      typeProject: json['typeProject'],
+      descriptionProject: json['descriptionProject'],
+      linkProject: json['linkProject'],
+      stakeholder: json['stakeholder'],
+      endDateForNow: json['endDateForNow'],
+      startDate: DateTime.parse(json['startDate'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
+    );
+    return project;
+  }
+  Map<String,dynamic> toJson1(){
+    Map<String,dynamic> map=toJson();
+    map['startDate']=startDate.toIso8601String();
+    map['endDate']=endDate.toIso8601String();
+    return map;
   }
   Map<String,dynamic> toJson()=>{
     'nameProject':nameProject,
